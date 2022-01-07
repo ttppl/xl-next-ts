@@ -1,18 +1,18 @@
 import PropTypes from 'prop-types';
-import {useEffect, useRef, useState} from 'react'
-import styles from '/styles/layouts/main.module.scss'
+import {useState} from 'react'
+import '/styles/layouts/main.scss'
 import Transition from "react-transition-group/cjs/Transition";
 import MenuItem from "../menu/MenuItem";
 import Menu from "../menu/menu";
 
-Layout.propTypes = {
+MyLayout.propTypes = {
     theme: PropTypes.string.isRequired
 }
-Layout.defaultProps = {
+MyLayout.defaultProps = {
     theme: 'light'
 }
 
-function Layout({theme, children}) {
+function MyLayout({theme, children}) {
     const [appTheme, setAppTheme] = useState(theme)
     const changeTheme = () => {
         setAppTheme(appTheme === 'light' ? 'dark' : 'light')
@@ -47,9 +47,9 @@ function Layout({theme, children}) {
                 }
             `}</style>
             {/*<div ref={container} className={style.container}></div>*/}
-            <div className={styles['menu-icon']} data-active={showMenu}
+            <div className='xl-menu-icon' data-active={showMenu}
                  onClick={toggleMenu}>
-                <div className='middle-line'/>
+                <div className='xl-menu-icon-middle-line'/>
             </div>
             <Transition in={showMenu} timeout={300}>
                 {state => (
@@ -57,7 +57,7 @@ function Layout({theme, children}) {
                         ...defaultStyle,
                         ...transitions[state]
                     }}>
-                        <Menu className={styles.menu} title={'导航'} afterClick={toggleMenu}>
+                        <Menu className={'xl-main-layout-menu'} title={'导航'} afterClick={toggleMenu}>
                             <MenuItem label='首页'/>
                             <MenuItem label='文章'/>
                             <MenuItem label='随笔'/>
@@ -73,8 +73,8 @@ function Layout({theme, children}) {
     )
 }
 
-export default Layout
+export default MyLayout
 
 export function getDefaultLayout(page) {
-    return <Layout>{page}</Layout>
+    return <MyLayout>{page}</MyLayout>
 }

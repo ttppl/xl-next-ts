@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import styles from '../styles/Home.css'
 import {getDefaultLayout} from "../components/layouts/main";
 import {NextPageWithLayout} from "./_app";
 
@@ -15,7 +15,7 @@ const Home: NextPageWithLayout = () => {
       <Head>
         <title>吞天泡泡龙的主页</title>
         <meta name="description" content="吞天泡泡龙的主页"/>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/my_favicon.ico" />
       </Head>
 
       <main className={styles.main}>

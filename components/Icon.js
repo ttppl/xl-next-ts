@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
-import styles from '/styles/components/Icon.module.scss'
+import '/styles/components/Icon.scss'
 import {useMemo} from "react";
+import {getClasses} from "../utils/dom";
 
 Icon.propTypes = {
     className: PropTypes.string,
@@ -16,7 +17,7 @@ Icon.defaultProps = {
 
 function Icon(props) {
     const className = useMemo(() => {
-        return [styles.iconfont, styles[`xl-${props.className}`]].join(' ')
+        return getClasses(['xl-iconfont', `xl-icon-${props.className}`])
     }, [props.className])
     const style = useMemo(() => {
         const stl = {...props.style}
@@ -24,7 +25,7 @@ function Icon(props) {
         props.onClick&&(stl.cursor='pointer')
         return stl
     }, [props.style, props.size, props.onClick])
-    return <i className={`iconfont ${className}`} onClick={props.onClick} title={props.title} style={style}>{props.children}</i>
+    return <i className={className} onClick={props.onClick} title={props.title} style={style}>{props.children}</i>
 }
 
 export default Icon

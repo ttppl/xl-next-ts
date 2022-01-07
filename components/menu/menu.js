@@ -1,8 +1,9 @@
 import {createContext, useMemo, useState} from "react";
 import PropTypes from 'prop-types'
-import styles from '/styles/components/Menu.module.scss'
+import '/styles/components/Menu.scss'
 import {useRouter} from "next/router";
 import MenuItem from "./MenuItem";
+import {getClasses} from "../../utils/dom";
 
 Menu.propsTypes = {
     type: PropTypes.string,
@@ -23,8 +24,8 @@ export const MenuContext = createContext(null)
 
 function Menu(props) {
     const className = useMemo(() => {
-        const type = props.type && styles[`xl-menu-${props.type}`]
-        return [styles['xl-menu'], type, props.className].join(' ')
+        const type = props.type && `xl-menu-${props.type}`
+        return getClasses(['xl-menu',type,props.className])
     }, [props.type, props.className])
     const router = useRouter()
     const [menuItems] = useState(props.items||[])
@@ -32,7 +33,7 @@ function Menu(props) {
     const [activeItem, setActiveItem] = useState(active>-1?active:0)
     return (
         <div className={className}>
-            {props.title && <div className={styles['xl-menu-title']}>{props.title}</div>}
+            {props.title && (<div className='xl-menu-title'>{props.title}</div>)}
             <MenuContext.Provider value={{activeItem,setActiveItem,menuItems,clickCallback:props.afterClick}}>
                 {
                     props.children ? props.children :

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import styles from '/styles/components/Menu.module.scss'
+import '/styles/components/Menu.scss'
 import {useContext, useMemo} from "react";
 import {getClasses} from "../../utils/dom";
 import Link from 'next/link'
@@ -28,8 +28,8 @@ function MenuItem(props) {
     }) - 1
     const cls = useMemo(() => {
         //console.log(menuContext.activeItem, index)
-        const isActive = menuContext.activeItem === index && styles['active']
-        return getClasses([styles['xl-menu-item'], isActive])
+        const isActive = menuContext.activeItem === index && 'active'
+        return getClasses(['xl-menu-item', isActive])
     }, [menuContext.activeItem])
     const navigation = (event) => {
         menuContext.setActiveItem(index)

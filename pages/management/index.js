@@ -1,5 +1,8 @@
 import {useRouter} from "next/router";
 import {Button} from "antd";
+import {getManagementLayout} from "../../components/layouts/managementLayout";
+
+Management.layout = getManagementLayout
 
 function Management() {
     const session = {a: 1111}

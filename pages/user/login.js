@@ -1,5 +1,5 @@
 import Head from "next/head";
-import styles from '/styles/pages/user/login.module.scss'
+import '/styles/pages/user/login.scss'
 import React, {useRef, useState} from "react";
 import {Form, Input, Button, Checkbox, Spin, message} from 'antd';
 import 'antd/es/button/style/index.css'
@@ -23,9 +23,9 @@ function Login() {
                 <meta name="description" content="管理登录"/>
                 {/*<link rel="icon" href="/favicon.ico"/>*/}
             </Head>
-            <main className={styles['xl-login-card']}>
+            <main className={'xl-login-card'}>
                 <Spin spinning={loading}>
-                    <p className='title'>登录</p>
+                    <p className='xl-login-card-title'>登录</p>
                     <Form
                         id='loginForm'
                         // onSubmitCapture={submit}

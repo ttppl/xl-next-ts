@@ -1,0 +1,21 @@
+@import "/styles/variable";
+
+.xl-login-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: map_get($colors, light);
+  padding: 40px;
+  width: 400px;
+  border-radius: 4px;
+  box-shadow: 0px 3px 21px 0px rgba(0, 0, 0, 0.17);
+
+  .xl-login-card-title {
+    text-align: center;
+    font-size: 60px;
+    font-family: font-rz,serif,sans-serif,cursive;
+    margin-bottom: 40px;
+  }
+
+}

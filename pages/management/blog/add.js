@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import styles from '/styles/pages/management/addBlog.module.scss'
+import styles from '/styles/pages/management/addBlog.scss'
 
 import React, {useEffect, useRef, useState} from "react";
 import Icon from "../../../components/Icon";
@@ -70,7 +70,7 @@ export default function AddBlog(props) {
             <Head>
                 <title>管理</title>
                 <meta name="description" content="管理-添加博客"/>
-                {/*<link rel="icon" href="/favicon.ico"/>*/}
+                <link rel="icon" href="/my_favicon.ico"/>
             </Head>
             {/*<div>{JSON.stringify(data)}</div>*/}
 
