@@ -1,0 +1,54 @@
+//下方划入
+.xl-slide-in-up-enter,.xl-slide-in-up-exit-done{
+  transform: translateY(100vh);
+}
+.xl-slide-in-up-enter-active,.xl-slide-in-up-exit-active{
+  transition: transform 1s ease;
+}
+.xl-slide-in-up-enter-done,.xl-slide-in-up-exit{
+  transition: all 1s ease;
+}
+
+.xl-slide-in-down-enter,.xl-slide-in-down-exit-done{
+  transform: translateY(-100vh);
+}
+.xl-slide-in-down-enter-active,.xl-slide-in-down-exit-active{
+  transition: transform 1s ease;
+}
+.xl-slide-in-down-enter-done,.xl-slide-in-down-exit{
+  transition: all 1s ease;
+}
+//上方划入划出
+.xl-slide-down-enter{
+  transform: translateY(-100vh);
+  transition: all .3s ease;
+}
+.xl-slide-down-enter-active{
+  transform: translateY(0);
+  transition: transform .3s ease;
+}
+.xl-slide-down-exit{
+  transition: transform .3s ease;
+}
+.xl-slide-down-exit-active{
+  transform: translateY(-100vh);
+  transition: transform .3s ease;
+}
+
+.alert-enter {
+  opacity: 0;
+  transform: scale(0.9);
+}
+.alert-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
+}
+.alert-exit {
+  opacity: 1;
+}
+.alert-exit-active {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 300ms, transform 300ms;
+}

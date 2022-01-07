@@ -1,0 +1,37 @@
+@import "/styles/variable";
+
+.xl-menu {
+  font-family: 'font-xk';
+  font-size: 30px;
+  border-radius: 5px;
+  box-shadow: 0px 3px 21px 0px rgba(0, 0, 0, 0.17)
+}
+
+.xl-menu-title {
+  font-family: font-rz;
+  font-size: 40px;
+  padding: 20px;
+}
+
+
+.xl-menu-item {
+  display: block;
+  padding: 10px;
+  cursor: pointer;
+  //display: inline-block;
+
+  &:hover {
+    color: map-get($colors, primary);
+  }
+}
+
+.active {
+  //background-color: map-get($colors,primary);
+  background-color: fade-out(map-get($colors, primary), 0.8);
+}
+
+@each $name, $color in $colors {
+  .xl-menu-#{$name} {
+    color: $color;
+  }
+}
