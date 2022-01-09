@@ -3,9 +3,9 @@ import {login} from "../../../request/modules/userReq";
 import jwt from 'jsonwebtoken'
 
 export default async function handler(req, res) {
-    // console.log('登录中。。。')
+    console.log('登录中。。。')
     const logRes = await login(req.body.userName, req.body.password)
-    // console.log(logRes)
+    console.log(logRes)
     if (logRes?.success) {
         const expireTime= 10//小时
         var exp = new Date();

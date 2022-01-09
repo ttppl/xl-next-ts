@@ -4,6 +4,7 @@ import {useContext, useMemo} from "react";
 import {getClasses} from "../../utils/dom";
 import Link from 'next/link'
 import {MenuContext} from "./menu";
+import useLoading from "../../hooks/useLoading";
 
 MenuItem.propTypes = {
     key: PropTypes.string,
@@ -13,7 +14,7 @@ MenuItem.propTypes = {
 
 MenuItem.defaultProps = {
     label: '',
-    to:'/'
+    to: '/'
 }
 
 function MenuItem(props) {
@@ -26,12 +27,21 @@ function MenuItem(props) {
         label: props.label,
         path: props.path
     }) - 1
+
+    const [loading, setLoading] = useLoading(false, null, {
+        containerCssText:'position:fixed;width:100%;height:100%',
+        mask: true,
+        size: '100',
+        maskClose:true,
+        label:'努力加载中...'
+    })
     const cls = useMemo(() => {
         //console.log(menuContext.activeItem, index)
         const isActive = menuContext.activeItem === index && 'active'
         return getClasses(['xl-menu-item', isActive])
     }, [menuContext.activeItem])
     const navigation = (event) => {
+        setLoading(true)
         menuContext.setActiveItem(index)
         props.onClick?.(event)
         menuContext.clickCallback?.(index, props.label)

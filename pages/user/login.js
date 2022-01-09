@@ -24,7 +24,7 @@ function Login() {
                 {/*<link rel="icon" href="/favicon.ico"/>*/}
             </Head>
             <main className={'xl-login-card'}>
-                <Spin spinning={loading}>
+                <Spin spinning={loading} tip="登录中..." size='large'>
                     <p className='xl-login-card-title'>登录</p>
                     <Form
                         id='loginForm'

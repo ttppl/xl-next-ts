@@ -7,9 +7,9 @@
 
 @font-face {
   font-family: 'iconfont';  /* Project id 3018983 */
-  src: url('//at.alicdn.com/t/font_3018983_179v3gltgk.woff2?t=1640760354893') format('woff2'),
-  url('//at.alicdn.com/t/font_3018983_179v3gltgk.woff?t=1640760354893') format('woff'),
-  url('//at.alicdn.com/t/font_3018983_179v3gltgk.ttf?t=1640760354893') format('truetype');
+  src: url('//at.alicdn.com/t/font_3018983_75ypfuaal7b.woff2?t=1641657941834') format('woff2'),
+  url('//at.alicdn.com/t/font_3018983_75ypfuaal7b.woff?t=1641657941834') format('woff'),
+  url('//at.alicdn.com/t/font_3018983_75ypfuaal7b.ttf?t=1641657941834') format('truetype');
 }
 
 .xl-iconfont {
@@ -20,17 +20,26 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.xl-icon-unknown:before{
+.xl-icon-unknown:before {
   content: "\e605";
 }
-.xl-icon-menu-dot:before{
+
+.xl-icon-menu-dot:before {
   content: "\e907";
 }
-.xl-icon-br:before{
+
+.xl-icon-br:before {
   content: "\e623";
 }
-.xl-icon-view:before{
+
+.xl-icon-view:before {
   content: "\e633";
-}.xl-icon-view-off:before{
-   content: "\e634";
- }
+}
+
+.xl-icon-view-off:before {
+  content: "\e634";
+}
+
+.xl-icon-blog:before {
+  content: "\e603";
+}

@@ -70,12 +70,11 @@ $height: $width*3+$gap*2;
   }
 
   &[data-active="true"] {
-    :global {
-      .middle-line {
-        background-color: transparent;
-        transition: all .5s ease;
-      }
+    .xl-menu-icon-middle-line {
+      background-color: transparent;
+      transition: all .5s ease;
     }
+
   }
 
   .xl-menu-icon-middle-line {

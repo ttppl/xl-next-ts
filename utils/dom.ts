@@ -1,3 +1,5 @@
+import {isObject} from "./check";
+
 export function getKeyCode(e:any) {
     return e.keyCode || e.which || e.charCode
 }
@@ -67,3 +69,20 @@ export function off(
 export function getClasses(arr:Array<string>) {
     return arr.filter(n=>n).join(' ')
 }
+// function splitCamel(str){
+//     return str.replace(/([A-Z])/g,function(s){
+//         return ' '+s.toLowerCase();
+//     }).trim().split(' ');
+// }
+// export function setStyle (element:HTMLElement, styleName:string, value:string):void {
+//     if (!element || !styleName) return
+//
+//     if (isObject(styleName)) {
+//         Object.keys(styleName).forEach(prop => {
+//             setStyle(element, prop, styleName[prop])
+//         })
+//     } else {
+//         styleName = splitCamel(styleName)
+//         element.style[styleName] = value
+//     }
+// }

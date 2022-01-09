@@ -6,6 +6,8 @@ import '/styles/antdCustom.scss'
 import type { AppProps } from 'next/app'
 import React, {Component, ReactElement, ReactNode} from "react";
 import {NextPage} from "next";
+import { ConfigProvider } from 'antd';
+
 export type NextPageWithLayout = NextPage & {
   layout?: (page: ReactElement) => ReactNode
 }
