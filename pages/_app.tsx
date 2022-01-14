@@ -6,7 +6,6 @@ import '/styles/antdCustom.scss'
 import type { AppProps } from 'next/app'
 import React, {Component, ReactElement, ReactNode} from "react";
 import {NextPage} from "next";
-import { ConfigProvider } from 'antd';
 
 export type NextPageWithLayout = NextPage & {
   layout?: (page: ReactElement) => ReactNode
@@ -15,10 +14,11 @@ export type NextPageWithLayout = NextPage & {
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
+
 function MyApp({ Component, pageProps }:AppPropsWithLayout) {
   // return <Component {...pageProps} />
-  const layout = Component.layout || ((page) => page)
-  return layout(<Component {...pageProps} />)
+  const layout = Component.layout || ((page:ReactElement,props:any) => page)
+  return layout(<Component {...pageProps} />,pageProps?.layoutProps)
 }
 
 (global as any).appBaseUrl = 'http://localhost:5000'

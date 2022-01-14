@@ -1,17 +1,15 @@
 import Head from "next/head";
 import '/styles/pages/user/login.scss'
-import React, {useRef, useState} from "react";
+import React, {useContext, useRef, useState} from "react";
 import {Form, Input, Button, Checkbox, Spin, message} from 'antd';
 import 'antd/es/button/style/index.css'
-import {formatFormData} from "../../utils/antdUtil";
 import {postOrig} from "../../request/config";
 function Login() {
     const [loading,setLoading] = useState(false)
     const submit = (formData)=>{
         setLoading(true)
         postOrig('/api/auth/login',formData).then(res=>{
-            console.log(res)
-            message.error(res?.msg)
+            // console.log(res)
             setLoading(false)
         })
         // document.getElementById('loginForm').submit()

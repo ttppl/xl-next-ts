@@ -99,7 +99,7 @@ export function start() {
             if (!eventListener.wrapperFun) {
                 eventListener.wrapperFun = function (e: Event) {
                     eventListener.callbacks.forEach(fun => {
-                        fun(e, dom, event)
+                        fun.call(this,e, dom, event)
                     })
                 }
                 on(dom, event, eventListener.wrapperFun)

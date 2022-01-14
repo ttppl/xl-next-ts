@@ -1,16 +1,17 @@
 import {useRouter} from "next/router";
 import {Button} from "antd";
-import {getManagementLayout} from "../../components/layouts/managementLayout";
-
+import {getManagementLayout, ManagementLayoutContext} from "../../components/layouts/managementLayout";
+import {useContext, useEffect} from "react";
 Management.layout = getManagementLayout
 
 function Management() {
-    const session = {a: 1111}
-    const signOut = () => {
-        console.log('out')
-    }
+
     const router = useRouter()
-    return <div>{JSON.stringify(session)}
+    const layoutContext = useContext(ManagementLayoutContext)
+    useEffect(()=> {
+        layoutContext.setLoading(false)
+    },[])
+    return <div>
         <Button onClick={() => {
             router.push('/api/auth/logoutUser?'+Math.random())
         }}>out</Button>
