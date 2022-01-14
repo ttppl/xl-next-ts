@@ -16,7 +16,7 @@ function formatCategory(categories) {
 }
 
 export async function getBlogCategory(userId) {
-    const categories = await get(`/category/getUserCategory/user/${userId}/type/blog`)
+    const categories = (await get(`/category/getUserCategory/user/${userId}/type/blog`)).data
     return formatCategory(categories)
 }
 
@@ -26,11 +26,13 @@ export async function getBlogCategory(userId) {
 // }
 
 export async function getBlogTags(name,userId) {
-    return await get('/tag/getTag', {name, userId,type:'blog'})
+    const res = await get('/tag/getTag', {name, userId,type:'blog'})
+    return res.data
 }
 
 export async function addBlogTags(name,userId) {
-    return await post('/tag/addTag', {name, userId,type:'blog'})
+    const res =  await post('/tag/addTag', {name, userId,type:'blog'})
+    return res.data
 }
 
 // export async function addBlogTags(tagName) {

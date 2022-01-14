@@ -42,8 +42,10 @@ export function get(url, params = {}) {
             }).then(data => {
             if (!data.success && !isServer) {
                 message.error(data.msg)
+                // throw new Error(data.msg)
+                reject(data.msg)
             }
-            resolve(data.data || data)
+            resolve(data)
         }).catch(function (err) {
             console.log(err)
             if (!isServer) {
@@ -65,8 +67,10 @@ export function post(url, params = {}) {
         }).then(data => {
             if (!data.success && !isServer) {
                 message.error(data.msg)
+                // throw new Error(data.msg)
+                reject(data.msg)
             }
-            resolve(data.data || data)
+            resolve(data)
         }).catch(function (err) {
             if (!isServer) {
                 message.error(err)

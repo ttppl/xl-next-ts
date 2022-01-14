@@ -1,12 +1,12 @@
 import {useMemo} from "react";
-import {isNumber} from "../../utils/check";
+import {isNumber} from "../utils/check";
 
 type useSizeCallback = (style: Object) => any
 type Size = {
     width?: string
     height?: string
 }
- const useSize = ({width, height}) => {
+ const useSize = ({width, height}:any) => {
     return useMemo(() => {
         const style: Size = {}
         style.width = isNumber(width) ? `${width}px` : width
