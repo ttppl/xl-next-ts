@@ -1,1 +1,8 @@
+取消追踪
 git update-index --assume-unchanged pages/_app.tsx
+git ls-files -z node_modules/ | xargs -0 git update-index --assume-unchanged
+
+撤销
+git update-index --no-assume-unchanged <file>
+
+git ls-files -v|grep '^h'
