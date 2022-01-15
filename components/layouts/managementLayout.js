@@ -55,7 +55,8 @@ function MyLayout(props) {
                         <Menu.SubMenu key="blog" icon={<Icon className='blog'/>} title="博客">
                             <Menu.ItemGroup title="更新">
                                 <Menu.Item key="addBlog"><Link href='/management/blog/add'>写博客</Link></Menu.Item>
-                                <Menu.Item key="editBlog">编辑博客</Menu.Item>
+                                <Menu.Item key="editBlog"><Link href='/management/blog/edit/1'>编辑博客</Link></Menu.Item>
+                                <Menu.Item key="editBlogSearch"><Link href='/management/blog/idEdit'>ID编辑博客</Link></Menu.Item>
                             </Menu.ItemGroup>
                             <Menu.ItemGroup title="查询">
                                 <Menu.Item key="blogList">博客列表</Menu.Item>

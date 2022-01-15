@@ -14,16 +14,18 @@ function formatCategory(categories) {
         return category
     }))
 }
-
+function formatTags(tags) {
+    return tags?.map?.(tag => ({
+        id: tag.tagId,
+        label: tag.tagName,
+        value: tag.tagId,
+        color: tag.color
+    })) || []
+}
 export async function getBlogCategory(userId) {
     const categories = (await get(`/category/getUserCategory/user/${userId}/type/blog`)).data
     return formatCategory(categories)
 }
-
-// export async function getBlogChildrenCategory(parentId, userId) {
-//     const categories = await get('/category/getBlogCategory', {parent: parentId, userId})
-//     return formatCategory(categories)
-// }
 
 export async function getBlogTags(name,userId) {
     const res = await get('/tag/getTag', {name, userId,type:'blog'})
@@ -35,8 +37,13 @@ export async function addBlogTags(name,userId) {
     return res.data
 }
 
-// export async function addBlogTags(tagName) {
-//     const tags = await get('/tag/getBlogTag', {name, userId})
-//     return tags
-// }
+
+export async function getInitialTagAndCategory(userId) {
+    const categories = await getBlogCategory(userId)
+    const tags = await getBlogTags(null,userId)
+    return {
+        categories,
+        tags: formatTags(tags)
+    }
+}
 
