@@ -21,6 +21,6 @@ function MyApp({ Component, pageProps }:AppPropsWithLayout) {
   return layout(<Component {...pageProps} />,pageProps?.layoutProps)
 }
 
-(global as any).appBaseUrl = 'http://localhost:5000'
-
+// (global as any).appBaseUrl = 'http://localhost:5000'
+(global as any).appBaseUrl = 'http://www.ttppl.xyz:5000'
 export default MyApp
