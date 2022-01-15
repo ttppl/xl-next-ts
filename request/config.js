@@ -7,6 +7,9 @@ const headers = {
     // 'Content-Type': 'application/x-www-form-urlencoded',
 }
 
+const nodeBaseUrl ='http://www.ttppl.xyz:5000'
+// const nodeBaseUrl ='http://localhost:5000'
+
 export default function request(moduleUrl) {
     return {
         doGet(url, params) {
@@ -25,7 +28,7 @@ export default function request(moduleUrl) {
 }
 
 export function get(url, params = {}) {
-    const baseURL = isServer ? baseUrl : appBaseUrl
+    const baseURL = isServer ? baseUrl : nodeBaseUrl
     const encodedParams = []
     Object.keys(params || {})?.forEach(k => {
         if (params[k]) {
@@ -57,7 +60,7 @@ export function get(url, params = {}) {
 }
 
 export function post(url, params = {}) {
-    const baseURL = isServer ? baseUrl : appBaseUrl
+    const baseURL = isServer ? baseUrl : nodeBaseUrl
     return new Promise((resolve, reject) => {
         fetch(`${baseURL}${url}`, {
             method: 'POST', headers,
