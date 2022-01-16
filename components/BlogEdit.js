@@ -130,7 +130,7 @@ export function BlogEdit(props) {
 
     //提交
     const submit = async (formData) => {
-        console.log('submitting...', formData)
+        // console.log('submitting...', formData)
         setLoading(true)
         let categories = props.categories
         formData.category = formData.category?.map((id, index) => {

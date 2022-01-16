@@ -5,8 +5,9 @@ import {getManagementLayout, ManagementLayoutContext} from "../../../../componen
 import {getInitialTagAndCategory} from "../../../../request/modules/selectOptions";
 import {getCookieParser} from "next/dist/server/api-utils";
 import {BlogEdit} from "../../../../components/BlogEdit";
-import {getBlogById} from "../../../../request/modules/blogRequest";
+import {getBlogById, modifyBlog} from "../../../../request/modules/blogRequest";
 import useManagementFinished from "../../../../hooks/useManagementPageFinished";
+import {message} from "antd";
 
 EditBlog.layout = getManagementLayout
 
@@ -30,12 +31,12 @@ export async function getServerSideProps({req, res,params}) {
 function EditBlog(props) {
     useManagementFinished()
     const submit = async (formData, form) => {
-        // const id = await addBlog(formData)
-        // if (id) {
-        //     message.success('添加成功！')
-        // }
-        // form.setFieldsValue({blogId: id})
-        // // setFormDefaultData({...formDefaultData, blogId: id})
+        try {
+            const id = await modifyBlog(formData)
+            message.success(`修改成功！id:${id}`)
+        }catch (e) {
+            message.error(e)
+        }
     }
     return <>
         <Head>

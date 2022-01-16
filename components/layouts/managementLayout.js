@@ -62,6 +62,11 @@ function MyLayout(props) {
                                 <Menu.Item key="blogList">博客列表</Menu.Item>
                             </Menu.ItemGroup>
                         </Menu.SubMenu>
+                        <Menu.SubMenu key="args" icon={<Icon className='blog'/>} title="参数">
+                            <Menu.ItemGroup title="列表">
+                                <Menu.Item key="categoryList"><Link href='/management/category'>目录列表</Link></Menu.Item>
+                            </Menu.ItemGroup>
+                        </Menu.SubMenu>
                     </Menu>
                 </Header>
                 <Content className="site-layout" style={{padding: '0 20px', marginTop: 64}}>
