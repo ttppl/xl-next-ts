@@ -55,10 +55,12 @@ export function BlogEdit(props) {
             }else {
                 blog.tags = []
             }
+            preview.current.innerHTML = blog.htmlText
             form.setFieldsValue(blog)
         } catch (e) {
             message.error(e.toString())
             // form.resetFields()
+            preview.current.innerHTML = ''
             form.setFieldsValue({
                 blogId, title: '', mdText: '',
                 type: 'article',
@@ -105,8 +107,9 @@ export function BlogEdit(props) {
     }
     //转换markdown
     const parseMd = (e) => {
-        // if(showPreview)
-        preview.current.innerHTML = marked.parse(e.target?.value || e, {breaks: true})
+        if(pre.current) {
+            preview.current.innerHTML = marked.parse(e.target?.value || e, {breaks: true})
+        }
     }
     //快捷键
     useEffect(() => {
@@ -133,6 +136,14 @@ export function BlogEdit(props) {
     // 预览
     const toggleShowPreview = () => {
         pre.current = !pre.current
+        try{
+            if(pre.current) {
+                const input = document.getElementById('md-input')
+                preview.current.innerHTML = marked.parse(input.value, {breaks: true})
+            }
+        }catch (e) {
+            console.log(e.toString())
+        }
         setShowPreview(pre.current)
     }
 
