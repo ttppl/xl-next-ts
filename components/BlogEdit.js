@@ -42,14 +42,22 @@ export function BlogEdit(props) {
         const blogId = e.target.value
         try {
             const blog = await getBlogById(blogId)
-            blog.category = blog.category.map(c => c.categoryId)
-            blog.tags = blog.tags.map(t => (({
-                value: t.tagId,
-                label: t.tagName
-            })))
+            if(Array.isArray(blog.category)) {
+                blog.category = blog.category.map(c => c.categoryId)
+            }else {
+                blog.category = []
+            }
+            if(Array.isArray(blog.tags)) {
+                blog.tags = blog.tags.map(t => (({
+                    value: t.tagId,
+                    label: t.tagName
+                })))
+            }else {
+                blog.tags = []
+            }
             form.setFieldsValue(blog)
         } catch (e) {
-            message.error(e)
+            message.error(e.toString())
             // form.resetFields()
             form.setFieldsValue({
                 blogId, title: '', mdText: '',
@@ -143,10 +151,10 @@ export function BlogEdit(props) {
                     level: index + 1
                 }
             } else return ''
-        })
+        })||[]
         formData.tags = formData.tags?.map(tag => {
             return {id: isNumber(tag.value) ? tag.value : '', name: tag.label}
-        })
+        })||[]
         formData.userId = parseCookie(document.cookie).user.userId
         formData.mdText && (formData.htmlText = marked.parse(formData.mdText, {breaks: true}))
         await props.onSubmit?.(formData, form)
