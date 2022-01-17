@@ -133,7 +133,7 @@ export function BlogEdit(props) {
     // 预览
     const toggleShowPreview = () => {
         pre.current = !pre.current
-        setShowPreview(!pre.current)
+        setShowPreview(pre.current)
     }
 
     //提交
