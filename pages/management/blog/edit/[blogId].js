@@ -40,8 +40,8 @@ function EditBlog(props) {
     }
     return <>
         <Head>
-            <title>管理</title>
-            <meta name="description" content="管理-添加博客"/>
+            <title>编辑博客</title>
+            <meta name="description" content="管理-修改博客"/>
             <link rel="icon" href="/my_favicon.ico"/>
         </Head>
         <BlogEdit tags={props.tags}

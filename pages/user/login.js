@@ -19,7 +19,7 @@ function Login() {
             <Head>
                 <title>登录</title>
                 <meta name="description" content="管理登录"/>
-                {/*<link rel="icon" href="/favicon.ico"/>*/}
+                <link rel="icon" href="/my_favicon.ico"/>
             </Head>
             <main className={'xl-login-card'}>
                 <Spin spinning={loading} tip="登录中..." size='large'>

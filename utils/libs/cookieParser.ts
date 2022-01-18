@@ -55,3 +55,16 @@ export function parseCookie(cookie: string): Cookie {
     })
     return cookieObj
 }
+
+export function getClientCookie(name:string,cookie?:any): any {
+    cookie = cookie||parseCookie(document.cookie)
+    const names = name.split('.')
+    if(names.length>1){
+        const newCookie = cookie[names[0]]
+        if(!newCookie) return null
+        names.shift()
+        return getClientCookie(names.join('.'),newCookie)
+    }else{
+        return cookie[name]||null
+    }
+}

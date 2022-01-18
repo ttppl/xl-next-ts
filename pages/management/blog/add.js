@@ -49,7 +49,7 @@ function AddBlog(props) {
     }
     return <>
         <Head>
-            <title>管理</title>
+            <title>新建博客</title>
             <meta name="description" content="管理-添加博客"/>
             <link rel="icon" href="/my_favicon.ico"/>
         </Head>

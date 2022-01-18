@@ -1,5 +1,5 @@
 import Head from "next/head";
-import {Breadcrumb, Layout, Menu, Spin} from "antd";
+import {Breadcrumb, Button, Layout, Menu, Spin} from "antd";
 
 const {Header, Content, Footer} = Layout;
 import '/styles/layouts/managementLayout.scss'
@@ -48,6 +48,7 @@ function MyLayout(props) {
                     <div className="xl-management-logo">{userName}</div>
                     <Menu theme="light"
                           mode="horizontal"
+                          overflowedIndicator={<Icon className='more'/>}
                           selectedKeys={activeMenu}
                           onClick={menuItemClick}
                     >
@@ -63,8 +64,11 @@ function MyLayout(props) {
                             </Menu.ItemGroup>
                         </Menu.SubMenu>
                         <Menu.SubMenu key="args" icon={<Icon className='blog'/>} title="参数">
+                            <Menu.ItemGroup title="树">
+                                <Menu.Item key="categoryTree"><Link href='/management/category/categoryTree'>目录树</Link></Menu.Item>
+                            </Menu.ItemGroup>
                             <Menu.ItemGroup title="列表">
-                                <Menu.Item key="categoryList"><Link href='/management/category'>目录列表</Link></Menu.Item>
+                                <Menu.Item key="tagList"><Link href='/management/tag/tagList'>标签列表</Link></Menu.Item>
                             </Menu.ItemGroup>
                         </Menu.SubMenu>
                     </Menu>
