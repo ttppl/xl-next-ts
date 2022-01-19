@@ -2,7 +2,7 @@ import Head from 'next/head'
 import React, {useRef, useState} from "react";
 import {getManagementLayout} from "../../../components/layouts/managementLayout";
 import useManagementFinished from "../../../hooks/useManagementPageFinished";
-import {Table, Popconfirm, Form, Button, Space} from 'antd';
+import {Table, Popconfirm, Form, Button, Space, InputNumber, Input} from 'antd';
 import {getCookieParser} from "next/dist/server/api-utils";
 import {addTag, deleteTag, getTags, modifyTag} from "../../../request/modules/selectOptions";
 import {message} from "antd";
@@ -30,10 +30,10 @@ export async function getServerSideProps({req, res, params}) {
     }
 }
 
-tagList.layout = getManagementLayout
+TagList.layout = getManagementLayout
 
 
-function tagList({tags, total, userId}) {
+function TagList({tags, total, userId}) {
     useManagementFinished()
     const [form] = Form.useForm();
     const [data, setData] = useState(tags);
@@ -283,5 +283,4 @@ function tagList({tags, total, userId}) {
         </Form>
     </>
 }
-
-export default tagList
+export default TagList

@@ -2,13 +2,13 @@ import Head from 'next/head'
 import React, {useRef, useState} from "react";
 import {getManagementLayout} from "../../../components/layouts/managementLayout";
 import useManagementFinished from "../../../hooks/useManagementPageFinished";
-import {Table, Popconfirm, Form, Button, Space} from 'antd';
+import {Table, Popconfirm, Form, Button, Space, InputNumber, Input} from 'antd';
 import {getCookieParser} from "next/dist/server/api-utils";
 import {addCategory, deleteCategory, getCategoryTreeList, modifyCategory} from "../../../request/modules/selectOptions";
 import {message} from "antd";
 import lodash from 'lodash'
 import {assignKey, findItem} from "../../../utils/antdUtil";
-import AntdEditableCell from "../../../components/tables/AntdEditableCell";
+// import AntdEditableCell from "../../../components/tables/AntdEditableCell";
 
 function findParent(data, key) {
     for (const d of data) {
@@ -293,5 +293,39 @@ function CategoryList({categories, total,userId}) {
 }
 
 
+const AntdEditableCell = ({
+                              editing,
+                              dataIndex,
+                              title,
+                              inputType,
+                              record,
+                              index,
+                              children,
+                              ...restProps
+                          }) => {
+    const inputNode = inputType === 'number' ? <InputNumber/> : <Input/>;
+    return (
+        <td {...restProps}>
+            {editing ? (
+                <Form.Item
+                    name={dataIndex}
+                    style={{
+                        margin: 0,
+                    }}
+                    rules={[
+                        {
+                            required: true,
+                            message: `Please Input ${title}!`,
+                        },
+                    ]}
+                >
+                    {inputNode}
+                </Form.Item>
+            ) : (
+                children
+            )}
+        </td>
+    );
+}
 
 export default CategoryList
