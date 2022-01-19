@@ -12,3 +12,18 @@
 .ant-menu {
   font-size: 20px;
 }
+
+$messageSize:1.5em;
+.ant-message-notice{
+  font-size: $messageSize;
+  .ant-message-notice-content{
+    .ant-message-custom-content {
+      .anticon{
+        >svg{
+          width: $messageSize;
+          height: $messageSize;
+        }
+      }
+    }
+  }
+}

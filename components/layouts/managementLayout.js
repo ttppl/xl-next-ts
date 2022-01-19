@@ -60,7 +60,7 @@ function MyLayout(props) {
                                 <Menu.Item key="editBlogSearch"><Link href='/management/blog/idEdit'>ID编辑博客</Link></Menu.Item>
                             </Menu.ItemGroup>
                             <Menu.ItemGroup title="查询">
-                                <Menu.Item key="blogList">博客列表</Menu.Item>
+                                <Menu.Item key="blogList"><Link href='/management/blog/blogList'>博客列表</Link></Menu.Item>
                             </Menu.ItemGroup>
                         </Menu.SubMenu>
                         <Menu.SubMenu key="args" icon={<Icon className='blog'/>} title="参数">

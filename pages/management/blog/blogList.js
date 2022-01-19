@@ -5,16 +5,17 @@ import {getCookieParser} from "next/dist/server/api-utils";
 import {addTag, deleteTag, getTags, modifyTag} from "../../../request/modules/selectOptions";
 import {assignKey, showfailMessage, showSuccessMessage} from "../../../utils/antdUtil";
 import EditableTable from "../../../components/tables/EditableTable";
+import {getBlogs} from "../../../request/modules/blogRequest";
+import {useRouter} from "next/router";
 
 
 export async function getServerSideProps({req, res, params}) {
     const userId = getCookieParser(req.headers.cookie).user?.id || 1
     try {
-        const res = await getTags(userId, 1, 10)
-        const tags = assignKey(res.data, 'tagId')
+        const res = await getBlogs(userId)
         return {
             props: {
-                tags,
+                blogs:assignKey(res.data,'blogId'),
                 total: res.total,
                 userId
             }
@@ -27,30 +28,33 @@ export async function getServerSideProps({req, res, params}) {
     }
 }
 
-TagList.layout = getManagementLayout
+BlogList.layout = getManagementLayout
 
 
-function TagList({tags, total, userId}) {
+function BlogList({blogs, total, userId}) {
     useManagementFinished()
+    const router = useRouter()
     const columns = [
         {
-            title: 'tagId',
+            title: 'blogId',
             dataIndex: 'key',
             width: '8%',
             editable: false,
         },
         {
-            title: 'tagName',
-            dataIndex: 'tagName',
+            title: 'title',
+            dataIndex: 'title',
             width: '20%',
-            editable: true,
+            editable: false,
+            ellipsis: true,
         },
         {
-            title: 'tagLevel',
-            dataIndex: 'tagLevel',
-            width: '8%',
+            title: 'mdText',
+            dataIndex: 'mdText',
+            width: '200',
             editable: true,
-            inputType: 'number'
+            inputType: 'number',
+            ellipsis: false,
         },
         {
             title: 'userId',
@@ -59,62 +63,31 @@ function TagList({tags, total, userId}) {
             editable: false,
         },
         {
-            title: 'color',
-            dataIndex: 'color',
+            title: 'category',
+            dataIndex: 'category',
             width: '15%',
-            editable: true,
+            editable: false,
         },
         {
-            title: 'type',
-            dataIndex: 'type',
+            title: 'tags',
+            dataIndex: 'tags',
             width: '10%',
-            editable: true,
+            editable: false,
         },
         {
-            title: 'addTime',
-            dataIndex: 'addTime',
+            title: 'publishTime',
+            dataIndex: 'publishTime',
             width: '20%',
             editable: false,
         }
     ]
 
-    const getTag = async (page, pageSize) => {
+    const getBlog = async (page, pageSize) => {
         try {
-            const res = await getTags(userId, page, pageSize)
-            return assignKey(res.data, 'tagId')
+            const res = await getBlogs(userId, {page, pageSize})
+            return assignKey(res.data,'blogId')
         } catch (e) {
             showfailMessage(e.toString())
-        }
-    }
-
-    const save = async (editItem, formData) => {
-        try {
-            if (editItem.tagId) {
-                const res = await modifyTag({
-                    id: editItem.tagId,
-                    level: formData.tagLevel,
-                    name: formData.tagName,
-                    type: formData.type,
-                    color: formData.color
-                })
-                if (res.success) {
-                    showSuccessMessage(`修改成功！`)
-                    return true
-                }
-            } else {
-                const res = await addTag({
-                    userId: userId, name: formData.tagName,
-                    type: formData.type, level: formData.tagLevel,
-                    color: formData.color, addTime: formData.addTime
-                })
-                if (res.success) {
-                    showSuccessMessage(`添加成功！ID: ${res.data.insertId}`)
-                    return {tagId: res.data.insertId, key: res.data.insertId}
-                }
-            }
-        } catch (errInfo) {
-            showfailMessage(errInfo.toString())
-            return false
         }
     }
     const deleteItem = async (record) => {
@@ -131,13 +104,12 @@ function TagList({tags, total, userId}) {
 
     }
 
-    const addDefault = {
-        tagLevel: '9',
-        categoryName: '',
-        userId: userId,
-        color: 'default',
-        type: 'blog',
-        addTime: new Date().toLocaleString()
+    const addDefault = async ()=>{
+        await router.push('/management/blog/add')
+    }
+
+    const onEdit = async (record)=>{
+        await router.push(`/management/blog/edit/${record.blogId}`)
     }
 
     return <>
@@ -146,15 +118,15 @@ function TagList({tags, total, userId}) {
             <meta name="description" content="管理-添加博客"/>
             <link rel="icon" href="/my_favicon.ico"/>
         </Head>
-        <EditableTable onGetMore={getTag}
+        <EditableTable onGetMore={getBlog}
                        onAddDefault={addDefault}
                        onDeleteItem={deleteItem}
-                       onSave={save}
+                       onEdit={onEdit}
                        columns={columns}
-                       data={tags}
+                       data={blogs}
                        total={total}
         />
     </>
 }
 
-export default TagList
+export default BlogList

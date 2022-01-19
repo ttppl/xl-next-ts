@@ -58,7 +58,7 @@ export function BlogEdit(props) {
             preview.current.innerHTML = blog.htmlText
             form.setFieldsValue(blog)
         } catch (e) {
-            message.error(e.toString())
+            showfailMessage(e.toString())
             // form.resetFields()
             preview.current.innerHTML = ''
             form.setFieldsValue({

@@ -42,7 +42,7 @@ export function get(url, params = {}) {
                 return response.json()
             }).then(data => {
             if (!data.success && !isServer) {
-                // message.error(data.msg)
+                // showfailMessage(data.msg)
                 // throw new Error(data.msg)
                 reject(data.msg)
             }
@@ -50,7 +50,7 @@ export function get(url, params = {}) {
         }).catch(function (err) {
             console.log(err)
             if (!isServer) {
-                message.error(err)
+                showfailMessage(err)
             }
             reject(err)
         })
@@ -67,14 +67,14 @@ export function post(url, params = {}) {
             return response.json()
         }).then(data => {
             if (!data.success && !isServer) {
-                // message.error(data.msg)
+                // showfailMessage(data.msg)
                 // throw new Error(data.msg)
                 reject(data.msg)
             }
             resolve(data)
         }).catch(function (err) {
             if (!isServer) {
-                message.error(err)
+                showfailMessage(err)
             }
             reject(err)
         })

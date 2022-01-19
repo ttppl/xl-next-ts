@@ -8,15 +8,22 @@ import {BlogEdit} from "../../../../components/BlogEdit";
 import {getBlogById, modifyBlog} from "../../../../request/modules/blogRequest";
 import useManagementFinished from "../../../../hooks/useManagementPageFinished";
 import {message} from "antd";
+import {showfailMessage, showSuccessMessage} from "../../../../utils/antdUtil";
 
 EditBlog.layout = getManagementLayout
 
 
-export async function getServerSideProps({req, res,params}) {
+export async function getServerSideProps({req, res, params}) {
     const blogId = params.blogId
     const blog = await getBlogById(blogId)
-    blog.category = blog.category.map(c=>c.categoryName)
-    blog.tags = blog.tags.map(t=>t.tagName)
+    // blog.category = blog.category?.map?.(c=>c.categoryName)
+    // blog.tags = blog.tags?.map?.(t=>t.tagName)
+    blog.category = Array.isArray(blog.category) ? blog.category.map(c => c.categoryId) : []
+
+    blog.tags = Array.isArray(blog.tags) ? blog.tags.map(t => (({
+        value: t.tagId,
+        label: t.tagName
+    }))) : []
     const userId = getCookieParser(req.headers.cookie).user?.id || 1
     const {tags, categories} = await getInitialTagAndCategory(userId)
     return {
@@ -33,9 +40,9 @@ function EditBlog(props) {
     const submit = async (formData, form) => {
         try {
             const id = await modifyBlog(formData)
-            message.success(`修改成功！id:${id}`)
-        }catch (e) {
-            message.error(e)
+            showSuccessMessage(`修改成功！id:${id}`)
+        } catch (e) {
+            showfailMessage(e)
         }
     }
     return <>

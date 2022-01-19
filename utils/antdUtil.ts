@@ -1,3 +1,5 @@
+import {message} from "antd";
+
 export function formatFormData(data: Array<{ name: Array<string>, value: string }>) {
     const tmpData: any = {}
     data?.map?.(d => {
@@ -32,4 +34,12 @@ export function findItem(data:Array<any>, keyName:string, value:string):any {
         }
     }
     return null
+}
+
+export function showfailMessage(msg:string){
+    message.error(msg,8)
+}
+
+export function showSuccessMessage(msg:string){
+    message.success(msg,5)
 }

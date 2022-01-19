@@ -9,6 +9,7 @@ import {BlogEdit} from "../../../components/BlogEdit";
 import {message} from "antd";
 import {addBlog, modifyBlog} from "../../../request/modules/blogRequest";
 import useManagementFinished from "../../../hooks/useManagementPageFinished";
+import {showfailMessage, showSuccessMessage} from "../../../utils/antdUtil";
 
 AddBlog.layout = getManagementLayout
 
@@ -36,14 +37,14 @@ function AddBlog(props) {
         try {
             if(!formData.blogId){
                 const id = await addBlog(formData)
-                message.success('添加成功！')
+                showSuccessMessage('添加成功！')
                 form.setFieldsValue({blogId: id})
             }else {
                 const id = await modifyBlog(formData)
-                message.success('修改成功！')
+                showSuccessMessage('修改成功！')
             }
         }catch (e) {
-            message.error(e)
+            showfailMessage(e)
         }
         // setFormDefaultData({...formDefaultData, blogId: id})
     }

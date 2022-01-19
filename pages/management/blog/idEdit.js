@@ -7,6 +7,7 @@ import {getManagementLayout} from "/components/layouts/managementLayout";
 import {getInitialTagAndCategory} from "/request/modules/selectOptions";
 import {modifyBlog} from "../../../request/modules/blogRequest";
 import {message} from "antd";
+import {showfailMessage, showSuccessMessage} from "../../../utils/antdUtil";
 
 IdEdit.layout = getManagementLayout
 
@@ -26,9 +27,9 @@ function IdEdit(props) {
     const submit = async (formData, form) => {
         try {
             const id = await modifyBlog(formData)
-            message.success(`修改成功！id:${id}`)
+            showSuccessMessage(`修改成功！id:${id}`)
         }catch (e) {
-            message.error(e)
+            showfailMessage(e)
         }
     }
     return <>
