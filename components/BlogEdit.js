@@ -13,6 +13,7 @@ import PropTypes from 'prop-types'
 import {getBlogTags} from "../request/modules/selectOptions";
 import useManagementFinished from "../hooks/useManagementPageFinished";
 import {getBlogById} from "../request/modules/blogRequest";
+import {formatSwitchValue} from "../utils/antdUtil";
 
 BlogEdit.propTypes = {
     tags: PropTypes.array,
@@ -56,6 +57,7 @@ export function BlogEdit(props) {
                 blog.tags = []
             }
             preview.current.innerHTML = blog.htmlText
+            formatSwitchValue(blog,'isPublish','isTop','isDelete')
             form.setFieldsValue(blog)
         } catch (e) {
             showfailMessage(e.toString())
@@ -229,13 +231,13 @@ export function BlogEdit(props) {
                 />
             </Form.Item>
             <Space size={30}>
-                <Form.Item name='isPublish' label='是否发布'>
+                <Form.Item name='isPublish' valuePropName='checked' label='是否发布'>
                     <Switch defaultChecked/>
                 </Form.Item>
-                <Form.Item name='isTop' label='是否置顶'>
+                <Form.Item name='isTop' valuePropName='checked' label='是否置顶'>
                     <Switch/>
                 </Form.Item>
-                <Form.Item name='isDelete' label='是否删除'>
+                <Form.Item name='isDelete' valuePropName='checked' label='是否删除'>
                     <Switch/>
                 </Form.Item>
             </Space>
@@ -282,6 +284,7 @@ async function searchTag(name) {
 
 function formatTags(tags) {
     return tags?.map?.(tag => ({
+        key:tag.tagId,
         id: tag.tagId,
         label: tag.tagName,
         value: tag.tagId,

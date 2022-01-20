@@ -1,0 +1,34 @@
+@media screen and (max-width: 800px) {
+  body .xl-blog-card{
+    width: 100%;
+  }
+}
+.xl-blog-card{
+  //border: 1px solid black;
+  width: 50%;
+  word-break: break-all;
+  border-bottom: 1px solid #f1ebeb;
+  padding: 10px 10px;
+  .xl-blog-card-title{
+    font-size: 2rem;
+    margin: 0;
+    color: black;
+  }
+  .xl-blog-card-content{
+    height: 55px;
+    font-size: 1.2rem;
+    text-overflow:ellipsis;
+    overflow: hidden;
+    white-space:pre-wrap;
+    word-break: break-all;
+    text-indent: 2rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  .xl-blog-card-footer{
+    .xl-iconfont{
+      margin-right: 10px;
+    }
+  }
+}

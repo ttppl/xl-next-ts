@@ -36,8 +36,15 @@ export function findItem(data:Array<any>, keyName:string, value:string):any {
     return null
 }
 
+export function formatSwitchValue(data:any,...columns:Array<string>){
+    columns.forEach(column=>{
+        data[column] = (data[column]==='Y'||data[column]==='y')
+    })
+    return data
+}
+
 export function showfailMessage(msg:string){
-    message.error(msg,8)
+    message.error(msg?.toString(),8)
 }
 
 export function showSuccessMessage(msg:string){

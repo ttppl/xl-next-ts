@@ -24,11 +24,11 @@ function MyLayout({theme, children}) {
         setShowMenu(!showMenu)
     }
     const transitions = {
-            init:{transform: 'translateY(-100vh)'},
+            init:{transform: 'translateY(-200vh)'},
             entering: {transform: 'translateY(0)'},
             entered:  { transform: 'translateY(0)' },
-            exiting:  { transform: 'translateY(-100vh)' },
-            exited:  { transform: 'translateY(-100vh)' },
+            exiting:  { transform: 'translateY(-200vh)' },
+            exited:  { transform: 'translateY(-200vh)' },
     }
     const defaultStyle = {
         transition: 'all 300ms ease-in-out',

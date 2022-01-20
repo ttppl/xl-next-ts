@@ -1,5 +1,6 @@
 import {isServer} from "../utils/check";
 import {message} from 'antd'
+import {showfailMessage} from "../utils/antdUtil";
 
 const baseUrl = process.env.XL_APP_BASE_URL
 const headers = {

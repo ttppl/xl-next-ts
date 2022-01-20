@@ -1,6 +1,6 @@
 import useManagementFinished from "../../hooks/useManagementPageFinished";
 import {Button, Form, Popconfirm, Space, Table} from "antd";
-import React, {useRef, useState} from "react";
+import React, {useMemo, useRef, useState} from "react";
 import {findItem, showfailMessage} from "../../utils/antdUtil";
 import lodash from "lodash";
 import AntdEditableCell from "./AntdEditableCell";
@@ -19,21 +19,21 @@ function findParent(data, key) {
     return null
 }
 
-EditableTable.propTypes={
-    onAddDefault:PropTypes.oneOfType([PropTypes.func,PropTypes.object]),//fun||obj
-    onDeleteItem:PropTypes.func,//fun(record)=>isSuccess:boolean
-    onGetMore:PropTypes.func,//fun(page,pageSize)=>newData:array
-    onSave:PropTypes.func,//fun(editItem,formData)=>isSuccess:boolean|additionData:object
-    onEdit:PropTypes.func,//fun(record)
-    pageSize:PropTypes.number,
-    columns:PropTypes.array,
-    data:PropTypes.array,
-    total:PropTypes.number,
+EditableTable.propTypes = {
+    onAddDefault: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),//fun||obj
+    onDeleteItem: PropTypes.func,//fun(record)=>isSuccess:boolean
+    onGetMore: PropTypes.func,//fun(page,pageSize)=>newData:array
+    onSave: PropTypes.func,//fun(editItem,formData)=>isSuccess:boolean|additionData:object
+    onEdit: PropTypes.func,//fun(record)
+    pageSize: PropTypes.number,
+    columns: PropTypes.array,
+    data: PropTypes.array,
+    total: PropTypes.number,
 }
 
-EditableTable.defaultProps={
-    columns:[],
-    pageSize:10
+EditableTable.defaultProps = {
+    columns: [],
+    pageSize: 10
 }
 
 
@@ -49,20 +49,26 @@ function EditableTable(props) {
     const [totalCount, setTotalCount] = useState(props.total)
     const [loading, setLoading] = useState(false)
 
-    const columns = [
-        ...props.columns,
-        {
+    const columns = useMemo(() => {
+        const cols = [...props.columns]
+        const operation = cols.find(column => column.title === 'operation')
+        if(operation) {
+            cols.splice(cols.findIndex(column => column.title === 'operation'),1)
+        }
+        const baseOperation = {
             title: 'operation',
-            dataIndex: 'operation',
-            fixed: 'right',
+            // dataIndex: 'operation',
+            fixed: operation?.fixed || 'right',
+            width: operation?.width || '11rem',
             render: (_, record) => {
                 const editable = isEditing(record);
                 return editable ? (
                     <Space>
                         <Button onClick={() => save(record.key)}>保存</Button>
-                        <Button onClick={()=>cancel(record)}>取消</Button>
+                        <Button onClick={() => cancel(record)}>取消</Button>
                     </Space>
                 ) : (
+                    operation?.operation?operation?.operation?.():
                     <Space>
                         <Button disabled={editingKey !== ''} onClick={() => edit(record)}>编辑</Button>
                         <Popconfirm title="确认删除?"
@@ -71,24 +77,29 @@ function EditableTable(props) {
                                     onCancel={cancel}>
                             <Button danger disabled={editingKey !== ''}>删除</Button>
                         </Popconfirm>
+                        {operation?.operationAppend?.(_,record,editingKey !== '')}
                     </Space>
                 );
             },
-        },
-    ];
-    const mergedColumns = columns.map((col) => {
-        if (!col.editable) {
-            return col;
         }
+        cols.push(baseOperation)
+        return cols
+    })
+    const mergedColumns = columns.map((col) => {
+        // if (!col.editable) {
+        //     return col;
+        // }
 
         return {
             ...col,
             onCell: (record) => ({
                 record,
-                inputType: col.inputType|| 'text',
+                inputType: col.inputType || 'text',
                 dataIndex: col.dataIndex,
                 title: col.title,
+                editable:col.editable,
                 editing: isEditing(record),
+                ellipsis:col.ellipsis
             }),
         };
     });
@@ -99,33 +110,34 @@ function EditableTable(props) {
         try {
             // const res = await getCategoryTreeList(userId, page)
             // setData(assignKey(res.data,'categoryId'))
-            const newData = isFunction(props.onGetMore)?(await props.onGetMore(page,props.pageSize)):[]
-            setData(newData||[])
+            const newData = isFunction(props.onGetMore) ? (await props.onGetMore(page, props.pageSize)) : []
+            setData(newData || [])
         } catch (e) {
             showfailMessage(e.toString())
         }
         setLoading(false)
     }
     const cancel = (record) => {
-        if(editingType.current==='add'){
+        if (editingType.current === 'add') {
             const newData = [...data]
-            newData.splice(newData.findIndex(d=>d.key===record.key),1)
+            newData.splice(newData.findIndex(d => d.key === record.key), 1)
             setData(newData)
         }
         setEditingKey('');
     };
     const edit = async (record) => {
 
-        if(isFunction(props.onEdit)) {
+        if (isFunction(props.onEdit)) {
             setLoading(true)
-            await props.onEdit(record)
+            record = await props.onEdit(record)
             setLoading(false)
         }
+        // console.log(record)
         form.setFieldsValue({
             ...record,
         });
         setEditingKey(record.key);
-        editingType.current='edit'
+        editingType.current = 'edit'
     };
 
     const save = async (key) => {
@@ -133,12 +145,12 @@ function EditableTable(props) {
         try {
             const formData = await form.validateFields();//输入的数据
             const newData = [...data];
-            const item = findItem(newData, 'key',key)
+            const item = findItem(newData, 'key', key)
             if (item) {
-                if(isFunction(props.onSave)){
-                    const additionData = await props.onSave(item,formData)
-                    if(additionData!==false){
-                        Object.assign(item, formData,isObject(additionData)?additionData:{})
+                if (isFunction(props.onSave)) {
+                    const additionData = await props.onSave(item, formData)
+                    if (additionData !== false) {
+                        Object.assign(item, formData, isObject(additionData) ? additionData : {})
                     }
                 }
                 setData(newData)
@@ -150,14 +162,14 @@ function EditableTable(props) {
             showfailMessage(errInfo.toString())
         }
         setEditingKey('');
-        editingType.current=''
+        editingType.current = ''
         setLoading(false)
     }
     const deleteItem = async (record) => {
         setLoading(true)
         try {
             // const res = await deleteCategory(record.categoryId)
-            const isSuccess = isFunction(props.onDeleteItem)?(await props.onDeleteItem(record)):true
+            const isSuccess = isFunction(props.onDeleteItem) ? (await props.onDeleteItem(record)) : true
             if (isSuccess) {
                 // showSuccessMessage(`删除成功！ID:${res.data.deleteId},共计${res.data.affectedRows}条数据`)
                 const newData = lodash.cloneDeep(data)
@@ -175,15 +187,15 @@ function EditableTable(props) {
     const addIndex = useRef(0)
     const addItem = async () => {
         setLoading(true)
-        const addDefault = isFunction(props.onAddDefault)?(await props.onAddDefault()):props.onAddDefault;
-        const newData = {...addDefault,key:`new${addIndex.current}`}
+        const addDefault = isFunction(props.onAddDefault) ? (await props.onAddDefault()) : props.onAddDefault;
+        const newData = {...addDefault, key: `new${addIndex.current}`}
         form.setFieldsValue({
             ...newData,
         });
         setTotalCount(totalCount + 1)
         setData([newData, ...data])
         setEditingKey(`new${addIndex.current}`)
-        editingType.current='add'
+        editingType.current = 'add'
         addIndex.current++
         setLoading(false)
     }
@@ -215,7 +227,7 @@ function EditableTable(props) {
                 columns={mergedColumns}
                 rowClassName="editable-row"
                 rowSelection={{checkStrictly: false}}
-                scroll={{y: '60vh', x: 'max-content', scrollToFirstRowOnChange: true}}
+                scroll={{x:'100%', scrollToFirstRowOnChange: true}}
                 pagination={{
                     current: currentPage,
                     pageSize: props.pageSize,

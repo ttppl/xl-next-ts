@@ -19,12 +19,13 @@ function Management() {
             <meta name="description" content="管理-主页"/>
             <link rel="icon" href="/my_favicon.ico"/>
         </Head>
+
         <Button onClick={() => {
             router.push('/api/auth/logoutUser?' + Math.random())
         }}>out</Button>
         <Button onClick={() => {
-            router.push('/management/blog/add?' + Math.random())
-        }}>add</Button>
+            router.push('/')
+        }}>INDEX</Button>
     </>
 }
 

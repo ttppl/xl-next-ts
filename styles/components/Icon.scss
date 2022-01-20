@@ -7,9 +7,9 @@
 
 @font-face {
   font-family: 'iconfont';  /* Project id 3018983 */
-  src: url('//at.alicdn.com/t/font_3018983_421pa6eduq4.woff2?t=1642485887120') format('woff2'),
-  url('//at.alicdn.com/t/font_3018983_421pa6eduq4.woff?t=1642485887120') format('woff'),
-  url('//at.alicdn.com/t/font_3018983_421pa6eduq4.ttf?t=1642485887120') format('truetype');
+  src: url('//at.alicdn.com/t/font_3018983_1kfpxo2b4t.woff2?t=1642668617034') format('woff2'),
+  url('//at.alicdn.com/t/font_3018983_1kfpxo2b4t.woff?t=1642668617034') format('woff'),
+  url('//at.alicdn.com/t/font_3018983_1kfpxo2b4t.ttf?t=1642668617034') format('truetype');
 }
 
 .xl-iconfont {
@@ -46,4 +46,12 @@
 
 .xl-icon-more:before {
   content: "\ec47";
+}
+
+.xl-icon-heart:before {
+  content: "\e669";
+}
+
+.xl-icon-comment:before {
+  content: "\e7e0";
 }

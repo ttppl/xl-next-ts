@@ -8,7 +8,7 @@ import {BlogEdit} from "../../../../components/BlogEdit";
 import {getBlogById, modifyBlog} from "../../../../request/modules/blogRequest";
 import useManagementFinished from "../../../../hooks/useManagementPageFinished";
 import {message} from "antd";
-import {showfailMessage, showSuccessMessage} from "../../../../utils/antdUtil";
+import {formatSwitchValue, showfailMessage, showSuccessMessage} from "../../../../utils/antdUtil";
 
 EditBlog.layout = getManagementLayout
 
@@ -26,6 +26,7 @@ export async function getServerSideProps({req, res, params}) {
     }))) : []
     const userId = getCookieParser(req.headers.cookie).user?.id || 1
     const {tags, categories} = await getInitialTagAndCategory(userId)
+    formatSwitchValue(blog,'isPublish','isTop','isDelete')
     return {
         props: {
             categories,
@@ -39,8 +40,8 @@ function EditBlog(props) {
     useManagementFinished()
     const submit = async (formData, form) => {
         try {
-            const id = await modifyBlog(formData)
-            showSuccessMessage(`修改成功！id:${id}`)
+            const res = await modifyBlog(formData)
+            showSuccessMessage(`修改成功！id:${res.data.blogId}`)
         } catch (e) {
             showfailMessage(e)
         }

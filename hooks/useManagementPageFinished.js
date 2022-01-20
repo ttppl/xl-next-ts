@@ -4,8 +4,9 @@ import {ManagementLayoutContext} from "../components/layouts/managementLayout";
 
 const useManagementFinished = () => {
     const layoutContext = useContext(ManagementLayoutContext)
-    return useEffect(() => {
-        layoutContext.setLoading(false)
+    useEffect(() => {
+        layoutContext?.setLoading?.(false)
     }, [])
+    return layoutContext
 }
 export default useManagementFinished

@@ -1,22 +1,31 @@
-import {Form, Input, InputNumber} from "antd";
+import {Form, Input, InputNumber, Switch} from "antd";
 import React from "react";
 
+const InputNodes = {
+    text: <Input/>,
+    number: <InputNumber/>,
+    switch: <Switch/>
+}
+
 const AntdEditableCell = ({
-                          editing,
-                          dataIndex,
-                          title,
-                          inputType,
-                          record,
-                          index,
-                          children,
-                          ...restProps
-                      }) => {
-    const inputNode = inputType === 'number' ? <InputNumber/> : <Input/>;
+                              editing,
+                              editable,
+                              dataIndex,
+                              title,
+                              inputType,
+                              record,
+                              index,
+                              children,
+                              ellipsis,
+                              ...restProps
+                          }) => {
+    const inputNode = InputNodes[inputType || 'text'] || <Input/>;
     return (
-        <td {...restProps}>
-            {editing ? (
+        <td {...restProps} title={ellipsis ? record[dataIndex] : null}>
+            {editable&&editing ? (
                 <Form.Item
                     name={dataIndex}
+                    valuePropName={inputType==='switch'?'checked':'value'}
                     style={{
                         margin: 0,
                     }}

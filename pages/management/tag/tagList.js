@@ -36,44 +36,44 @@ function TagList({tags, total, userId}) {
         {
             title: 'tagId',
             dataIndex: 'key',
-            width: '8%',
+            width: '5rem',
             editable: false,
         },
         {
             title: 'tagName',
             dataIndex: 'tagName',
-            width: '20%',
+            width: '15rem',
             editable: true,
         },
         {
             title: 'tagLevel',
             dataIndex: 'tagLevel',
-            width: '8%',
+            width: '5rem',
             editable: true,
             inputType: 'number'
         },
         {
             title: 'userId',
             dataIndex: 'userId',
-            width: '8%',
+            width: '5rem',
             editable: false,
         },
         {
             title: 'color',
             dataIndex: 'color',
-            width: '15%',
+            width: '8rem',
             editable: true,
         },
         {
             title: 'type',
             dataIndex: 'type',
-            width: '10%',
+            width: '8rem',
             editable: true,
         },
         {
             title: 'addTime',
             dataIndex: 'addTime',
-            width: '20%',
+            width: '10rem',
             editable: false,
         }
     ]
@@ -144,6 +144,7 @@ function TagList({tags, total, userId}) {
         <Head>
             <title>管理</title>
             <meta name="description" content="管理-添加博客"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
             <link rel="icon" href="/my_favicon.ico"/>
         </Head>
         <EditableTable onGetMore={getTag}

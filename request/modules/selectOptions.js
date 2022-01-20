@@ -30,7 +30,7 @@ export async function getBlogTags(name, userId) {
     return res.data
 }
 
-export async function getTags(userId, page, pageSize=10,
+export async function getTags(userId, page, pageSize = 10,
                               options = {
                                   name: null, level: null,
                                   type: null, color: null
@@ -44,20 +44,21 @@ export async function addBlogTags(name, userId) {
 }
 
 export async function addTag(tag = {
-    userId:null, name:null,
-    type:null, level:null,
-    color:null, addTime:null
+    userId: null, name: null,
+    type: null, level: null,
+    color: null, addTime: null
 }) {
     return await post('/tag/addTag', tag)
 }
 
-export async function modifyTag(tag={
-    id:null,userId:null, name:null,
-    type:null, level:null,
-    color:null, addTime:null
+export async function modifyTag(tag = {
+    id: null, userId: null, name: null,
+    type: null, level: null,
+    color: null, addTime: null
 }) {
     return post('/tag/modifyTag', tag)
 }
+
 export async function deleteTag(id) {
     return get(`/tag/deleteTag/id/${id}`)
 }
@@ -70,6 +71,14 @@ export async function getBlogCategory(userId) {
 
 export async function getCategoryTreeList(userId, page = 1, pageSize = 10, name, type, parent) {
     return get('/category/getCategoryTreeList', {userId, page, pageSize, name, type, parent})
+}
+
+export async function getCategoryList(userId, page = 1, pageSize = 10,
+                                      options = {
+                                          name: null, type: null,
+                                          parent: null, level: null
+                                      }) {
+    return get('/category/getCategory', {userId, page, pageSize, ...options})
 }
 
 export async function addCategory(category) {

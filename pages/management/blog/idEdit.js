@@ -26,8 +26,8 @@ export async function getServerSideProps({req, res,params}) {
 function IdEdit(props) {
     const submit = async (formData, form) => {
         try {
-            const id = await modifyBlog(formData)
-            showSuccessMessage(`修改成功！id:${id}`)
+            const res = await modifyBlog(formData)
+            showSuccessMessage(`修改成功！id:${res.data.blogId}`)
         }catch (e) {
             showfailMessage(e)
         }
