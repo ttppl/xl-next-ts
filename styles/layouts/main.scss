@@ -16,6 +16,17 @@
 //  height: 100%;
 //}
 
+
+#particles-js{
+  display: flex;align-items: center;justify-content: center;
+  position: fixed;
+  z-index: -1;
+  //pointer-events: none;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
 $color: gray;
 $width: 5px;
 $long: 40px;
@@ -33,10 +44,10 @@ $height: $width*3+$gap*2;
   pointer-events: none;
 }
 
-.xl-menu-icon {
+.xl-main-layout-menu-icon {
   height: $height;
   width: $long;
-  position: absolute;
+  position: fixed;
   right: 2rem;
   top: 2rem;
   cursor: pointer;
@@ -87,11 +98,7 @@ $height: $width*3+$gap*2;
 
 .xl-main-layout-menu {
   position: fixed;
+  z-index: 1000;
   top: 90px;
   right: 20px;
-  min-width: 200px;
-  min-height: 300px;
-  background-color: white;
-  text-align: center;
-
 }

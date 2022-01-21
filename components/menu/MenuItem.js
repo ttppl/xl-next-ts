@@ -7,51 +7,50 @@ import {MenuContext} from "./menu";
 import useLoading from "../../hooks/useLoading";
 
 MenuItem.propTypes = {
-    key: PropTypes.string,
+    menuKey: PropTypes.string,
     label: PropTypes.string,
-    path: PropTypes.string
+    path: PropTypes.string,
+    loading:PropTypes.bool
 }
 
 MenuItem.defaultProps = {
     label: '',
-    to: '/'
+    to: '/',
+    loading:true
 }
 
 function MenuItem(props) {
 
-    const menuContext = useContext(MenuContext)
-    const key = props.key || props.label
-    const itemIndex = menuContext.menuItems.findIndex(i => i.key === key)
-    const index = itemIndex > -1 ? itemIndex : menuContext.menuItems.push({
-        key,
-        label: props.label,
-        path: props.path
-    }) - 1
+    const {activeKey,setActiveKey,clickCallback} = useContext(MenuContext)
+
+    const isActive = useMemo(()=>{
+        return props.menuKey===activeKey
+    },[props.menuKey,activeKey])
 
     const [loading, setLoading] = useLoading(false, null, {
         containerCssText:'position:fixed;width:100%;height:100%',
         mask: true,
-        size: '100',
+        size: '5em',
         maskClose:true,
+        labelSize:'1.5em',
         label:'努力加载中...'
     })
-    const cls = useMemo(() => {
-        //console.log(menuContext.activeItem, index)
-        const isActive = menuContext.activeItem === index && 'active'
-        return getClasses(['xl-menu-item', isActive])
-    }, [menuContext.activeItem])
     const navigation = (event) => {
-        setLoading(true)
-        menuContext.setActiveItem(index)
+        if(props.loading&&!isActive) {
+            setLoading(true)
+        }
+        if(props.menuKey){
+            setActiveKey(props.menuKey)
+        }
         props.onClick?.(event)
-        menuContext.clickCallback?.(index, props.label)
+        clickCallback?.(index, props.label)
     }
 
     return <Link href={{
         pathname: props.to,
         // query: {name: 'test'},
     }} passHref>
-        <a className={cls} onClick={navigation}>
+        <a className={`xl-menu-item ${isActive?'active':''}`} onClick={navigation}>
             {props.children || props.label}
         </a>
     </Link>

@@ -31,7 +31,7 @@ export function deleteSource(dom: HTMLElement, callback: Callback) {
 }
 
 const callback = (e: Event) => {
-    // console.log('execute callbacks')
+    console.log('execute callbacks')
     listeners.forEach((callbacks, dom) => {
         if(!dom.contains(e.target as any)){
             callbacks?.forEach(fun => {
@@ -55,6 +55,8 @@ function stop() {
     isListening = false
 }
 
-export default {
+const ClickOutside = {
     addSource, deleteSource
 }
+
+export default ClickOutside

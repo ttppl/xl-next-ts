@@ -3,10 +3,11 @@ import '/styles/Home.css'
 import {getDefaultLayout} from "../components/layouts/main";
 import {NextPageWithLayout} from "./_app";
 import {Blog, getBlogsByType} from "../request/modules/blogRequest";
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 // const  BlogCard =require('/components/BlogCard')
 import BlogCard from "../components/BlogCard";
-
+import {addListener} from "../utils/libs/EventManager";
+import lodash from 'lodash'
 export async function getServerSideProps(context: any) {
     const res = await getBlogsByType()
     return {
@@ -16,8 +17,22 @@ export async function getServerSideProps(context: any) {
     }
 }
 
-const Home: NextPageWithLayout = ({blogs}: any) => {
-    const page = useState(1)
+const Home: NextPageWithLayout = (props: any) => {
+    const [blogs,setBlogs] = useState(props.blogs)
+    const page = useRef(1)
+    useEffect(()=>{
+        const getMore = addListener(document as unknown as HTMLElement,'scroll',lodash.debounce(async (e)=>{
+            const scrollHeight = document.body.scrollHeight
+            const  scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
+            const clientHeight = document.body.clientHeight
+            console.log(document.body.scrollHeight-scrollTop,document.body.clientHeight)
+            if(scrollHeight-scrollTop==clientHeight){
+                const res = await getBlogsByType('newest',page.current++)
+                console.log(res)
+                setBlogs([...blogs,...res.data])
+            }
+        },100))
+    },[])
     return (
         <div className='container'>
             <Head>

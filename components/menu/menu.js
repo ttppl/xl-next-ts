@@ -1,45 +1,34 @@
 import {createContext, useMemo, useState} from "react";
 import PropTypes from 'prop-types'
 import '/styles/components/Menu.scss'
-import {useRouter} from "next/router";
-import MenuItem from "./MenuItem";
-import {getClasses} from "../../utils/dom";
 
 Menu.propsTypes = {
-    type: PropTypes.string,
     title: PropTypes.string,
-    activeItem: PropTypes.string,
-    items: PropTypes.array,
-    afterClick:PropTypes.func
+    activeKey: PropTypes.string,
+    afterClick:PropTypes.func,
+    theme:PropTypes.string
 }
 
 Menu.defaultProps = {
-    type: '',
     title: '',
     activeItem: '',
+    theme:'light'
     // items: []
 }
 
 export const MenuContext = createContext(null)
 
 function Menu(props) {
-    const className = useMemo(() => {
-        const type = props.type && `xl-menu-${props.type}`
-        return getClasses(['xl-menu',type,props.className])
-    }, [props.type, props.className])
-    const router = useRouter()
-    const [menuItems] = useState(props.items||[])
-    const active = props.activeItem ||menuItems.find(i=>i.path===router.pathname)
-    const [activeItem, setActiveItem] = useState(active>-1?active:0)
-    return (
-        <div className={className}>
-            {props.title && (<div className='xl-menu-title'>{props.title}</div>)}
-            <MenuContext.Provider value={{activeItem,setActiveItem,menuItems,clickCallback:props.afterClick}}>
-                {
-                    props.children ? props.children :
-                        props.items?.map((item, index) => <MenuItem key={`menuItem${index}`} label={item.label}/>)
+    const [activeKey,setActiveKey] = useState(props.activeKey)
 
-                }
+    const menuProvider = useMemo(()=>{
+        return {activeKey,setActiveKey,clickCallback:props.afterClick}
+    },[activeKey,props.afterClick])
+    return (
+        <div className={`xl-menu ${props.theme}`}>
+            {props.title && (<div className='xl-menu-title'>{props.title}</div>)}
+            <MenuContext.Provider value={menuProvider}>
+                {props.children}
             </MenuContext.Provider>
         </div>
     )

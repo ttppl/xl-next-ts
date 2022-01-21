@@ -24,7 +24,7 @@ function Loading(props) {
         <svg style={loadingStyle} viewBox="25 25 50 50" className="xl-loading-circle-svg">
             <circle style={pathStyle} cx="50" cy="50" r="20" fill="none" className="path"></circle>
         </svg>
-        <p className='xl-loading-label'>{props.label}</p>
+        <p className='xl-loading-label' style={{fontSize:props.labelSize}}>{props.label}</p>
     </>
 }
 

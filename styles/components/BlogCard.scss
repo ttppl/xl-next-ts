@@ -1,3 +1,4 @@
+@import "../variable";
 @media screen and (max-width: 800px) {
   body .xl-blog-card{
     width: 100%;
@@ -7,15 +8,16 @@
   //border: 1px solid black;
   width: 50%;
   word-break: break-all;
-  border-bottom: 1px solid #f1ebeb;
-  padding: 10px 10px;
+  border-bottom: 1px solid map_get($colors,light);
+  padding: 15px 10px;
+  margin-bottom: 20px;
   .xl-blog-card-title{
     font-size: 2rem;
     margin: 0;
-    color: black;
+    color: inherit;
   }
   .xl-blog-card-content{
-    height: 55px;
+    color: inherit;
     font-size: 1.2rem;
     text-overflow:ellipsis;
     overflow: hidden;
@@ -29,6 +31,9 @@
   .xl-blog-card-footer{
     .xl-iconfont{
       margin-right: 10px;
+    }
+    .xl-blog-card-publish-date,.xl-blog-card-category{
+      white-space: nowrap;
     }
   }
 }

@@ -1,5 +1,5 @@
 import {Blog} from "../request/modules/blogRequest";
-import '/styles/components/BlogCard.scss'
+import '../styles/components/BlogCard.scss'
 // const Icon =require("/components/Icon")
 import Icon from '../components/Icon'
 import {Space} from "antd";
@@ -22,12 +22,12 @@ function BlogCard({blog}: { blog: Blog }) {
         {/*<p className='xl-blog-card-content'><Link href='#'>{blog.plainText?.replace(/[\r\n]/g, "")}</Link></p>*/}
         <p className='xl-blog-card-content'>{blog.plainText?.replace(/[\r\n]/g, "")}</p>
         <footer className='xl-blog-card-footer'>
-            <Space size={40} align='center'>
-                <span>{new Date(blog.publishTime).toLocaleDateString()}</span>
+            <Space size={40} align='center' wrap={true}>
+                <span className='xl-blog-card-publish-date'>{new Date(blog.publishTime).toLocaleDateString()}</span>
                 <span><Icon className='view'/>{blog.viewCount}</span>
                 <span><Icon className='heart'/>{blog.likeCount}</span>
                 <span><Icon className='comment'/>{blog.commentCount}</span>
-                {blog.category&&<span>分类：{blog.category}</span>}
+                {blog.category&&<span className='xl-blog-card-category'>分类：{blog.category}</span>}
                 <span>{tags}</span>
             </Space>
         </footer>
