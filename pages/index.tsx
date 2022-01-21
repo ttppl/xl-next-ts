@@ -4,7 +4,8 @@ import {getDefaultLayout} from "../components/layouts/main";
 import {NextPageWithLayout} from "./_app";
 import {Blog, getBlogsByType} from "../request/modules/blogRequest";
 import {useState} from "react";
-const  BlogCard =require('/components/BlogCard')
+// const  BlogCard =require('/components/BlogCard')
+import BlogCard from "../components/BlogCard";
 
 export async function getServerSideProps(context: any) {
     const res = await getBlogsByType()

@@ -1,7 +1,7 @@
 import {Blog} from "../request/modules/blogRequest";
 import '/styles/components/BlogCard.scss'
-const Icon =require("/components/Icon")
-
+// const Icon =require("/components/Icon")
+import Icon from '../components/Icon'
 import {Space} from "antd";
 import Link from "next/link";
 import React, {useMemo} from "react";
