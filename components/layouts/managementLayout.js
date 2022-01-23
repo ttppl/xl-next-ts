@@ -68,7 +68,7 @@ function MyLayout(props) {
                                 <Menu.Item key="categoryTree"><Link href='/management/category/categoryTree'>目录树</Link></Menu.Item>
                             </Menu.ItemGroup>
                             <Menu.ItemGroup title="列表">
-                                <Menu.Item key="tagList"><Link href='/management/category/categoryList'>目录列表</Link></Menu.Item>
+                                <Menu.Item key="categoryList"><Link href='/management/category/categoryList'>目录列表</Link></Menu.Item>
                                 <Menu.Item key="tagList"><Link href='/management/tag/tagList'>标签列表</Link></Menu.Item>
                             </Menu.ItemGroup>
                         </Menu.SubMenu>

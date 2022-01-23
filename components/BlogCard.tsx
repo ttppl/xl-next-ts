@@ -19,6 +19,7 @@ function BlogCard({blog}: { blog: Blog }) {
         <h1 className='xl-blog-card-title'>
             <Link href='/'>{blog.title}</Link>
         </h1>
+        {blog.blogId}
         {/*<p className='xl-blog-card-content'><Link href='#'>{blog.plainText?.replace(/[\r\n]/g, "")}</Link></p>*/}
         <p className='xl-blog-card-content'>{blog.plainText?.replace(/[\r\n]/g, "")}</p>
         <footer className='xl-blog-card-footer'>

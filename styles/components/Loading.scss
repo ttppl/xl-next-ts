@@ -29,6 +29,13 @@ $color : map_get($colors,loading);
     stroke-linecap: round;
   }
 }
+.xl-loading-children{
+  color: $color;
+  font-size: 30px;
+  transform: translateY(-15px);
+  margin-left: 20px;
+  display: inline-block;
+}
 .xl-loading-label{
   line-height: 80px;
   font-size: 16px;
