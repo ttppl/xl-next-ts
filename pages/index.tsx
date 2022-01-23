@@ -3,11 +3,13 @@ import '/styles/Home.css'
 import {getDefaultLayout} from "../components/layouts/main";
 import {NextPageWithLayout} from "./_app";
 import {Blog, getBlogsByType} from "../request/modules/blogRequest";
-import {useEffect, useRef, useState} from "react";
-// const  BlogCard =require('/components/BlogCard')
+import React, {useEffect, useRef, useState} from "react";
+import Loading from '../components/Loading'
 import BlogCard from "../components/BlogCard";
-import {addListener} from "../utils/libs/EventManager";
+import {addListener, removeListenerRS} from "../utils/libs/EventManager";
 import lodash from 'lodash'
+import {sleep} from "../utils";
+
 export async function getServerSideProps(context: any) {
     const res = await getBlogsByType()
     return {
@@ -18,21 +20,36 @@ export async function getServerSideProps(context: any) {
 }
 
 const Home: NextPageWithLayout = (props: any) => {
-    const [blogs,setBlogs] = useState(props.blogs)
+    const [blogs, setBlogs] = useState(props.blogs)
     const page = useRef(1)
-    useEffect(()=>{
-        const getMore = addListener(document as unknown as HTMLElement,'scroll',lodash.debounce(async (e)=>{
+    const [loadingMore, setLoadingMore] = useState(true)
+    const [noMore, setNoMore] = useState(false)
+    useEffect(() => {
+        const getMore = lodash.debounce(async () => {
             const scrollHeight = document.body.scrollHeight
-            const  scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
+            const scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop
             const clientHeight = document.body.clientHeight
-            console.log(document.body.scrollHeight-scrollTop,document.body.clientHeight)
-            if(scrollHeight-scrollTop==clientHeight){
-                const res = await getBlogsByType('newest',page.current++)
-                console.log(res)
-                setBlogs([...blogs,...res.data])
+            if (scrollHeight - scrollTop < (clientHeight + 1)) {
+                console.log('loading more blogs')
+                removeListenerRS(scrollEvent)
+                setLoadingMore(true)
+                page.current++
+                setLoadingMore(true)
+                const res = await getBlogsByType('newest', page.current)
+                if (res.data.length < 1) {
+                    setNoMore(true)
+                    removeListenerRS(scrollEvent)
+                } else {
+                    setBlogs([...blogs, ...res.data])
+                }
+                setLoadingMore(false)
             }
-        },100))
-    },[])
+        }, 500)
+        const scrollEvent = addListener(document as unknown as HTMLElement, 'scroll', getMore)
+        return () => {
+            removeListenerRS(scrollEvent)
+        }
+    }, [blogs])
     return (
         <div className='container'>
             <Head>
@@ -41,11 +58,12 @@ const Home: NextPageWithLayout = (props: any) => {
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <link rel="icon" href="/my_favicon.ico"/>
             </Head>
-
             <main className='main'>
-                {blogs.map((blog:Blog)=>{
+                {blogs.map((blog: Blog) => {
                     return <BlogCard key={blog.blogId} blog={blog}/>
                 })}
+                {loadingMore && <Loading>玩命加载中...</Loading>}
+                {noMore && <p>木有了呢...</p>}
             </main>
             {/*<footer className={styles.footer}>*/}
             {/*  <a*/}

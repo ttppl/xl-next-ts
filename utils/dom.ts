@@ -14,7 +14,8 @@ export function isShiftKey(e:any) {
 
 export const KEY_CODE = {
     enter: 13,
-    P: 80
+    P: 80,
+    F:70
 }
 
 export function insertTextAtCursor(el:HTMLInputElement, text:string, newLine = false) {
