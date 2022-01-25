@@ -1,7 +1,13 @@
 import '/styles/components/Loading.scss'
-import {Children, useMemo} from "react";
+import { useMemo} from "react";
 import {isNumber} from "../utils/check";
-
+import PropTypes from 'prop-types'
+Loading.propTypes={
+    size:PropTypes.oneOfType([PropTypes.string,PropTypes.number]),
+    strokeWidth:PropTypes.number,
+    labelSize:PropTypes.string,
+    label:PropTypes.string
+}
 function Loading(props) {
     const loadingStyle = useMemo(()=>{
         const style = {}

@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import '/styles/Home.css'
+import '/styles/pages/Home.css'
 import {getDefaultLayout} from "../components/layouts/main";
 import {NextPageWithLayout} from "./_app";
 import {Blog, getBlogsByType} from "../request/modules/blogRequest";
@@ -9,7 +9,8 @@ import BlogCard from "../components/BlogCard";
 import {addListener, removeListenerRS} from "../utils/libs/EventManager";
 import lodash from 'lodash'
 import {sleep} from "../utils";
-
+import {useRouter} from "next/router";
+import useGlobalLoading from "../hooks/useGlobalLoading";
 export async function getServerSideProps(context: any) {
     const res = await getBlogsByType()
     return {
@@ -20,6 +21,7 @@ export async function getServerSideProps(context: any) {
 }
 
 const Home: NextPageWithLayout = (props: any) => {
+    useGlobalLoading(false)
     const [blogs, setBlogs] = useState(props.blogs)
     const page = useRef(1)
     const [loadingMore, setLoadingMore] = useState(true)
@@ -37,6 +39,9 @@ const Home: NextPageWithLayout = (props: any) => {
                 setLoadingMore(true)
                 const res = await getBlogsByType('newest', page.current)
                 if (res.data.length < 1) {
+                    // window.sessionStorage.setItem('indexBlogs',
+                    //     JSON.stringify([...JSON.parse(window.sessionStorage.get('indexBlogs')),...res.data]))
+                    // window.sessionStorage.setItem('indexBlogsPage',page.current.toString())
                     setNoMore(true)
                     removeListenerRS(scrollEvent)
                 } else {
@@ -50,6 +55,18 @@ const Home: NextPageWithLayout = (props: any) => {
             removeListenerRS(scrollEvent)
         }
     }, [blogs])
+    // const router = useRouter()
+    // useEffect(()=>{
+    //     router.beforePopState(({ url, as, options }) => {
+    //         // I only want to allow these two routes!
+    //         console.log(url,as,options)
+    //         options.scroll=false
+    //         options.shallow=true
+    //         // setBlogs([...blogs, ...JSON.parse(window.sessionStorage.getItem('indexBlogs')||'[]')])
+    //         // page.current = parseFloat(window.sessionStorage.getItem('indexBlogsPage')||'1')
+    //         return true
+    //     })
+    // }, [])
     return (
         <div className='container'>
             <Head>

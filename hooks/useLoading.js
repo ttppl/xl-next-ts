@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import {getClasses} from "../utils/dom";
 import {addListener, removeListenerRS} from "../utils/libs/EventManager";
 
-const useLoading = (show, target,props) => {
+const useLoading = (show, target,props={}) => {
 
     let div = useRef(null)
     const [showLoading, setShowLoading] = useState(show)

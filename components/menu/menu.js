@@ -1,15 +1,19 @@
-import {createContext, useMemo, useState} from "react";
+import {createContext, forwardRef, useMemo, useState} from "react";
 import PropTypes from 'prop-types'
 import '/styles/components/Menu.scss'
 
-Menu.propsTypes = {
+const Menu = forwardRef(MenuFunc)
+Menu.displayName = 'Select'
+
+MenuFunc.propsTypes = {
     title: PropTypes.string,
     activeKey: PropTypes.string,
     afterClick:PropTypes.func,
-    theme:PropTypes.string
+    theme:PropTypes.string,
+    style:PropTypes.object
 }
 
-Menu.defaultProps = {
+MenuFunc.defaultProps = {
     title: '',
     activeItem: '',
     theme:'light'
@@ -18,14 +22,14 @@ Menu.defaultProps = {
 
 export const MenuContext = createContext(null)
 
-function Menu(props) {
+function MenuFunc(props,ref) {
     const [activeKey,setActiveKey] = useState(props.activeKey)
 
     const menuProvider = useMemo(()=>{
         return {activeKey,setActiveKey,clickCallback:props.afterClick}
     },[activeKey,props.afterClick])
     return (
-        <div className={`xl-menu ${props.theme}`}>
+        <div ref={ref} style={props.style} className={`xl-menu ${props.theme}`}>
             {props.title && (<div className='xl-menu-title'>{props.title}</div>)}
             <MenuContext.Provider value={menuProvider}>
                 {props.children}

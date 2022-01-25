@@ -8,6 +8,25 @@
   }
 }
 
+.xl-blog-edit-code-editor{
+  position: absolute;
+  top: 2px;
+  width: 90%;
+  //height: 200px;
+  //border: 1px solid gray;
+  box-shadow: $box-shadow;
+  left: 5%;
+  background-color: white;
+  &[class*='max']{
+    position: fixed;
+    z-index: 100;
+    left: 5%;
+    top:80px;
+    //height: 600px;
+    //height: 80vh;
+  }
+}
+
 .xl-md-input-row {
   overflow: auto;
   //border-radius: 5px;
@@ -15,14 +34,6 @@
   margin-bottom: 20px;
   border-radius: 2px;
   position: relative;
-  //&[class*='full-screen']{
-  //  position: fixed;
-  //  left: 0;
-  //  top: 0;
-  //  width: 100%;
-  //  height: 100%;
-  //  background-color: white;
-  //}
 }
 
 .xl-md-input-row:focus-within {

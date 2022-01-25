@@ -7,6 +7,7 @@ import Icon from "../Icon";
 import {createContext, useEffect, useMemo, useState} from "react";
 import Link from "next/link";
 import {parseCookie} from "../../utils/libs/cookieParser";
+import useGlobalLoading from "../../hooks/useGlobalLoading";
 
 MyLayout.propTypes = {}
 MyLayout.defaultProps = {}
@@ -14,7 +15,7 @@ MyLayout.defaultProps = {}
 export const ManagementLayoutContext = createContext(null)
 
 function MyLayout(props) {
-
+    useGlobalLoading(false)
     const [activeMenu, setActiveMenu] = useState(['blog'])
     const [position, setPosition] = useState([{name: '主页'}])
     const [loading, setLoading] = useState(false)

@@ -4,9 +4,7 @@ import '/styles/layouts/main.scss'
 import Transition from "react-transition-group/cjs/Transition";
 import MenuItem from "../menu/MenuItem";
 import Menu from "../menu/menu";
-import Head from "next/head";
 import Script from "next/script";
-import clickOutside from "../../utils/libs/clickOutside";
 import ClickOutside from "../../utils/libs/clickOutside";
 
 MyLayout.propTypes = {
@@ -24,20 +22,26 @@ function MyLayout({theme, children}) {
     }
 
     const [showMenu, setShowMenu] = useState(false)
-    const toggleMenu = () => {
-        setShowMenu(!showMenu)
+    const afterMenuItemClicked = (key) => {
+        if(key) {
+            setShowMenu(!showMenu)
+        }
+        if(key==='management'){
+            ClickOutside.deleteSource(menu.current)
+        }
     }
-    // const menuIcon = useRef(null)
-    // useEffect(()=>{
-    //     ClickOutside.addSource(document.getElementById('xl-menu'),(e)=>{
-    //         if(!menuIcon.current.contains(e.target)){
-    //             setShowMenu(false)
-    //         }
-    //     })
-    //     return ()=>{
-    //         ClickOutside.deleteSource(document.getElementById('xl-menu'))
-    //     }
-    // },[])
+    const menuIcon = useRef(null)
+    const menu = useRef(null)
+    useEffect(()=>{
+        ClickOutside.addSource(menu.current,(e)=>{
+            if(!menuIcon.current.contains(e.target)){
+                setShowMenu(false)
+            }
+        })
+        return ()=>{
+            ClickOutside.deleteSource(menu.current)
+        }
+    },[])
     const transitions = {
         init: {transform: 'translateY(-200vh)'},
         entering: {transform: 'translateY(0)'},
@@ -62,7 +66,8 @@ function MyLayout({theme, children}) {
                 }
             `}</style>
             <div className='xl-main-layout-menu-icon' data-active={showMenu}
-                 onClick={toggleMenu}>
+                 ref={menuIcon}
+                 onClick={()=>{setShowMenu(!showMenu)}}>
                 <div className='xl-menu-icon-middle-line'/>
             </div>
             <div className='xl-main-layout-menu'>
@@ -72,12 +77,13 @@ function MyLayout({theme, children}) {
                             ...defaultStyle,
                             ...transitions[state]
                         }}>
-                            <Menu id='xl-menu' activeKey='index' theme={appTheme} title={'导航'}
-                                // afterClick={toggleMenu}
+                            <Menu style={{position: 'absolute',right: 0,top: 0}} ref={menu} activeKey='index' theme={appTheme} title={'导航'}
+                                afterClick={afterMenuItemClicked}
                             >
                                 <MenuItem menuKey='index' label='首页'/>
                                 <MenuItem menuKey='article' label='文章'/>
                                 <MenuItem menuKey='essay' label='随笔'/>
+                                <MenuItem menuKey='jsEditor' to='/editor' label='JS测试'/>
                                 <MenuItem menuKey='search' label='搜索'/>
                                 <MenuItem menuKey='management' label='管理' to='/management'/>
                                 <MenuItem loading={false}

@@ -17,7 +17,7 @@ function BlogCard({blog}: { blog: Blog }) {
     },[blog.tags])
     return <article className='xl-blog-card' key={`index-blog-${blog.blogId}`}>
         <h1 className='xl-blog-card-title'>
-            <Link href='/'>{blog.title}</Link>
+            <a rel="noreferrer"  href={`/blog/detail/${blog.blogId}`} target='_blank' >{blog.title}</a>
         </h1>
         {blog.blogId}
         {/*<p className='xl-blog-card-content'><Link href='#'>{blog.plainText?.replace(/[\r\n]/g, "")}</Link></p>*/}

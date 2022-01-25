@@ -7,9 +7,9 @@
 
 @font-face {
   font-family: 'iconfont';  /* Project id 3018983 */
-  src: url('//at.alicdn.com/t/font_3018983_jkps0h2bfde.woff2?t=1642861323071') format('woff2'),
-  url('//at.alicdn.com/t/font_3018983_jkps0h2bfde.woff?t=1642861323071') format('woff'),
-  url('//at.alicdn.com/t/font_3018983_jkps0h2bfde.ttf?t=1642861323071') format('truetype');
+  src: url('//at.alicdn.com/t/font_3018983_simie3hcq3.woff2?t=1643100826507') format('woff2'),
+  url('//at.alicdn.com/t/font_3018983_simie3hcq3.woff?t=1643100826507') format('woff'),
+  url('//at.alicdn.com/t/font_3018983_simie3hcq3.ttf?t=1643100826507') format('truetype');
 }
 
 .xl-iconfont {
@@ -22,6 +22,24 @@
 
 .xl-icon-unknown:before {
   content: "\e605";
+}
+.xl-icon-close:before {
+  content: "\e6e9";
+}
+
+.xl-icon-code-editor:before {
+  content: "\e6bb";
+}
+.xl-icon-back:before {
+  content: "\e7e1";
+}
+
+.xl-icon-code:before {
+  content: "\e747";
+}
+
+.xl-icon-codes:before {
+  content: "\e645";
 }
 
 .xl-icon-menu-dot:before {
@@ -61,4 +79,7 @@
 }
 .xl-icon-full:before {
   content: "\e8fa";
+}
+.xl-icon-runnable:before {
+  content: "\e6a9";
 }
