@@ -4,7 +4,7 @@ import {useContext, useMemo} from "react";
 import {getClasses} from "../../utils/dom";
 import Link from 'next/link'
 import {MenuContext} from "./menu";
-import useLoading from "../../hooks/useLoading";
+import setGlobalLoading from "../../utils/libs/setGlobalLoading";
 
 MenuItem.propTypes = {
     menuKey: PropTypes.string,
@@ -27,23 +27,25 @@ function MenuItem(props) {
         return props.menuKey===activeKey
     },[props.menuKey,activeKey])
 
-    const [loading, setLoading] = useLoading(false, null, {
-        containerCssText:'position:fixed;width:100%;height:100%',
-        mask: true,
-        size: '5em',
-        maskClose:true,
-        labelSize:'1.5em',
-        label:'努力加载中...'
-    })
+    // const [loading, setLoading] = useLoading(false, null, {
+    //     containerCssText:'position:fixed;width:100%;height:100%',
+    //     mask: true,
+    //     size: '5em',
+    //     maskClose:true,
+    //     labelSize:'1.5em',
+    //     label:'努力加载中...'
+    // })
     const navigation = (event) => {
+        // event.preventDefault()
         if(props.loading&&!isActive) {
-            setLoading(true)
+            // setLoading(true)
+            setGlobalLoading(true,{label:`loading '${props.label}' ...`})
         }
         if(props.menuKey){
             setActiveKey(props.menuKey)
         }
         props.onClick?.(event)
-        clickCallback?.(index, props.label)
+        clickCallback?.(props.menuKey, props.label)
     }
 
     return <Link href={{

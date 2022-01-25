@@ -1,4 +1,4 @@
-import {Button, Cascader, Col, Form, Input, message, Row, Select, Space, Spin, Switch, Tag} from "antd";
+import {Button, Cascader, Col, Form, Input, Row, Select, Space, Spin, Switch, Tag} from "antd";
 import React, {useEffect, useMemo, useRef, useState} from "react";
 import {marked} from "marked";
 import hljs from "highlight.js";
@@ -9,13 +9,15 @@ import {parseCookie} from "../utils/libs/cookieParser";
 import '/styles/components/BlogEdit.scss'
 import Icon from "./Icon";
 import debounce from "lodash/debounce";
-import PropTypes, {func} from 'prop-types'
+import PropTypes from 'prop-types'
 import {getBlogTags} from "../request/modules/selectOptions";
 import useManagementFinished from "../hooks/useManagementPageFinished";
 import {getBlogById} from "../request/modules/blogRequest";
 import {formatSwitchValue, showfailMessage} from "../utils/antdUtil";
-import Head from "next/head";
-import Script from "next/script";
+import useRunnableScript from "../hooks/useRunnableScript";
+import Editor from "./Editor";
+import {message} from 'antd'
+import {runScripts} from "../request/modules/utilRequest";
 
 BlogEdit.propTypes = {
     tags: PropTypes.array,
@@ -24,6 +26,50 @@ BlogEdit.propTypes = {
     formData: PropTypes.object,
     type: PropTypes.oneOf(['add', 'edit', 'editSearch'])
 }
+
+//marked.js配置，其他自定义参考：https://marked.js.org/using_pro#tokenizer
+marked.setOptions({
+    "baseUrl": null,
+    "breaks": false,
+    "extensions": null,
+    "gfm": true,
+    "headerIds": true,
+    "headerPrefix": "",
+    "langPrefix": "language-",
+    "mangle": true,
+    "pedantic": false,
+    "sanitize": false,
+    "sanitizer": null,
+    "silent": false,
+    "smartLists": false,
+    "smartypants": false,
+    "tokenizer": null,
+    "walkTokens": null,
+    "xhtml": false
+})
+const codeRenderer = {
+    code(code, lang, escaped) {
+        let highlightCodes = code
+        try {
+            highlightCodes = hljs.highlight(lang.replace('-run', ''), code).value;
+        } catch (e) {
+            console.log(e.toString())
+        }
+        if (lang === 'js-run') {
+            const runScript = `<button class="xl-run-script-button" type="button" onclick="runXlScript(event)">
+                                        Run
+                                        <textarea hidden>${code}</textarea>
+                                    </button>
+                                    <button type="button" class="xl-run-script-clear-button" onclick="clearXlScriptOutput(event)">clear</button>
+                                    <div class="xl-runnable-output"></div>`
+            return `<pre><code>${highlightCodes}</code></pre>${runScript}`
+        } else {
+            return `<pre><code>${highlightCodes}</code></pre>`
+        }
+    }
+};
+marked.use({renderer: codeRenderer})
+
 
 export function BlogEdit(props) {
     useManagementFinished()
@@ -38,7 +84,9 @@ export function BlogEdit(props) {
     const [loading, setLoading] = useState(false)
     const [fixTextarea, setFixTextarea] = useState(true)
     const [fullScreen, setFullScreen] = useState(false)
-
+    const [showCodeEditor, setShowCodeEditor] = useState(false)
+    const [maxCodeEditor, setMaxCodeEditor] = useState(false)
+    const inputSelectedPos = useRef([0, 0])
     const searchBlog = async (e) => {
         e.stopPropagation()
         e.preventDefault()
@@ -80,56 +128,17 @@ export function BlogEdit(props) {
 
     }
 
-    //marked.js配置，其他自定义参考：https://marked.js.org/using_pro#tokenizer
-    marked.setOptions({
-        "baseUrl": null,
-        "breaks": false,
-        "extensions": null,
-        "gfm": true,
-        "headerIds": true,
-        "headerPrefix": "",
-        "langPrefix": "language-",
-        "mangle": true,
-        "pedantic": false,
-        "sanitize": false,
-        "sanitizer": null,
-        "silent": false,
-        "smartLists": false,
-        "smartypants": false,
-        "tokenizer": null,
-        "walkTokens": null,
-        "xhtml": false,
-        // highlight: function (code, lang, callback) {
-        //     console.log(code)
-        //     if(lang.includes('-run')) lang = lang.slice(0,-4)
-        //     try {
-        //         return hljs.highlight(lang, code).value;
-        //     }catch (e) {
-        //         return code
-        //     }
-        // }
-    })
-    const codeRenderer = {
-        code(code, lang, escaped) {
-            console.log(code)
-            let highlightCodes = code
+
+    //转换markdown
+    const parseMd = (e) => {
+        if (showPreview) {
             try {
-                highlightCodes = hljs.highlight(lang.replace('-run', ''), code).value;
+                preview.current.innerHTML = marked.parse(e.target?.value || e, {breaks: true})
             } catch (e) {
-                console.log(e.toString())
-            }
-            if (lang.includes('-run')) {
-                const runScript = `<button class="xl-run-script-button" type="button" onclick="runXlScript(event)">Run<textarea hidden>${code}</textarea></button>
-<button type="button" class="xl-run-script-clear-button" onclick="clearXlScriptOutput(event)">clear</button>
-<div></div>`
-                lang = lang.slice(0, -4)
-                return `<pre><code>${highlightCodes}</code></pre>${runScript}`
-            } else {
-                return `<pre><code>${highlightCodes}</code></pre>`
+                console.log(e)
             }
         }
-    };
-    marked.use({renderer:codeRenderer})
+    }
     //添加换行符
     const addBr = () => {
         const inputDom = document.getElementById('md-input')
@@ -137,17 +146,51 @@ export function BlogEdit(props) {
         insertTextAtCursor(inputDom, br, true)
         parseMd(inputDom.value)
     }
-    //转换markdown
-    const parseMd = (e) => {
-        if (showPreview) {
-            preview.current.innerHTML = marked.parse(e.target?.value || e, {breaks: true})
+    const addRunnable = () => {
+        const inputDom = document.getElementById('md-input')
+        const fragment = '```js-run\n\n```'
+        insertTextAtCursor(inputDom, fragment, true, -4)
+        parseMd(inputDom.value)
+    }
+    const addCodeFragment = () => {
+        const inputDom = document.getElementById('md-input')
+        const fragment = '``'
+        insertTextAtCursor(inputDom, fragment, false, -1)
+        parseMd(inputDom.value)
+    }
+    const addCodesFragment = () => {
+        const inputDom = document.getElementById('md-input')
+        const fragment = '```\n```'
+        insertTextAtCursor(inputDom, fragment, true, -4)
+        parseMd(inputDom.value)
+    }
+    const openCodeEditor = () => {
+        // const inputDom = document.getElementById('md-input')
+        // const startPos = inputDom.selectionStart;
+        // const endPos = inputDom.selectionEnd;
+        // inputSelectedPos.current = [startPos, endPos]
+        setShowCodeEditor(!showCodeEditor)
+    }
+    const runCode = async (code)=>{
+        try {
+            const res = await runScripts(code)
+            if(res.success) message.success(JSON.stringify(res.data))
+            else message.error(res.msg)
+        }catch (e) {
+            message.error(e.toString())
         }
     }
-    // useEffect(()=>{
-    //     window.runScript = function (e) {
-    //         console.log(e.target.getElementsByTagName('input')[0].value)
-    //     }
-    // },[])
+    const insertCode=()=>{
+        const code = window.monacoEditorModel.getValue()
+        const inputDom = document.getElementById('md-input')
+        const fragment = `\`\`\` js-run\n${code}\n\`\`\`\n`
+        insertTextAtCursor(inputDom, fragment, true, 0)
+        form.setFieldsValue({mdText:inputDom.value})
+        parseMd(inputDom.value)
+        setShowCodeEditor(false)
+    }
+
+    useRunnableScript()
     //快捷键
     useEffect(() => {
         const inputDom = document.getElementById('md-input')
@@ -215,186 +258,207 @@ export function BlogEdit(props) {
 
 
     return <Spin spinning={loading}>
-        <Script src='/libs/global.js' strategy='beforeInteractive'/>
-    <Form initialValues={formDefaultData}
-          labelCol={{style: {width: '80px', textAlign: 'left'}}}
-          size='large'
-          form={form}
-          onFinish={submit}
-    >
-        <Form.Item label='ID' name='blogId'>
-            <Input placeholder='唯一标识ID'
-                   onPressEnter={searchBlog}
-                   disabled={props.type === 'add'}/>
-        </Form.Item>
-        <Form.Item label='标题' name='title'>
-            <Input/>
-        </Form.Item>
-
-        <div className='xl-md-editor-menu-bar'>
-            <Icon className='br' title='换行：ctrl+enter' onClick={addBr}/>
-            <Icon className={showPreview ? 'view-off' : 'view'}
-                  title='预览：ctrl+P'
-                  color={showPreview ? '#1890ff' : 'inherit'}
-                  onClick={toggleShowPreview}/>
-            <Icon className='thumbtack' title='固定输入框'
-                  color={fixTextarea ? '#1890ff' : 'inherit'}
-                  onClick={() => setFixTextarea(!fixTextarea)}/>
-            <Icon className='full' title='全屏：ctrl+shift+f'
-                  color={fullScreen ? '#1890ff' : 'inherit'}
-                  onClick={() => setFullScreen(!fullScreen)}/>
-        </div>
-        <Row justify={'space-between'}
-             style={{height: fixTextarea ? '300px' : 'auto'}}
-             className={`xl-md-input-row ${fullScreen && 'full'}`}>
-            <Col flex={'1 0'} className={`xl-md-input-col ${showPreview ? 'in-view' : 'hidden'}`}>
-                <Form.Item label={''} name='mdText'>
-                    <Input.TextArea id='md-input'
-                        // autoSize={{minRows: 5,maxRows:fixTextarea?5:null}}
-                                    bordered={false}
-                                    autoSize={{minRows: 5}}
-                                    onChange={parseMd}
-                    />
-                </Form.Item>
-            </Col>
-            <Col flex={1} span={12} className={`xl-md-preview-col ${fullScreen && 'full'}`}
-                 style={{display: showPreview ? 'block' : 'none'}}>
-                <div className='xl-md-preview' ref={preview}/>
-            </Col>
-        </Row>
-
-        <Form.Item label='类型' name="type" style={inlineFormItemStyle}>
-            <Select style={{width: '120px'}} placeholder='类型'>
-                <Select.Option value="article">文章</Select.Option>
-                <Select.Option value="essay">随笔</Select.Option>
-                <Select.Option value="movement">动态</Select.Option>
-            </Select>
-        </Form.Item>
-        <Form.Item label='目录' name="category" style={inlineFormItemStyle}>
-            <Cascader options={props.categories} style={{width: '200px'}} changeOnSelect/>
-        </Form.Item>
-        <Form.Item label='标签' name="tags">
-            <TagSelect
-                mode="multiple"
-                placeholder="选择标签"
-                fetchOptions={searchTag}
-                tagRender={tagRender}
-                showSearch
-                options={props.tags}
-            />
-        </Form.Item>
-        <Space size={30}>
-            <Form.Item name='isPublish' valuePropName='checked' label='是否发布'>
-                <Switch defaultChecked/>
+        {/*<Script src='/libs/global.js' strategy='beforeInteractive'/>*/}
+        <Form initialValues={formDefaultData}
+              labelCol={{style: {width: '80px', textAlign: 'left'}}}
+              size='large'
+              form={form}
+              onFinish={submit}
+        >
+            <Form.Item label='ID' name='blogId'>
+                <Input placeholder='唯一标识ID'
+                       onPressEnter={searchBlog}
+                       disabled={props.type === 'add'}/>
             </Form.Item>
-            <Form.Item name='isTop' valuePropName='checked' label='是否置顶'>
-                <Switch/>
+            <Form.Item label='标题' name='title'>
+                <Input/>
             </Form.Item>
-            <Form.Item name='isDelete' valuePropName='checked' label='是否删除'>
-                <Switch/>
-            </Form.Item>
-        </Space>
 
-        <Form.Item>
-            <Row justify='center'>
-                <Space>
-                    <Button type="primary" htmlType="submit">submit</Button>
-                    <Button onClick={() => {
-                        form.resetFields();
-                    }}>reset</Button>
-                </Space>
+            <div className='xl-md-editor-menu-bar'>
+                <Icon className='br' title='换行：ctrl+enter' onClick={addBr}/>
+                <Icon className={showPreview ? 'view-off' : 'view'}
+                      title='预览：ctrl+P'
+                      color={showPreview ? '#1890ff' : 'inherit'}
+                      onClick={toggleShowPreview}/>
+                <Icon className='thumbtack' title='固定输入框'
+                      color={fixTextarea ? '#1890ff' : 'inherit'}
+                      onClick={() => setFixTextarea(!fixTextarea)}/>
+                <Icon className='full' title='全屏：ctrl+shift+f'
+                      color={fullScreen ? '#1890ff' : 'inherit'}
+                      onClick={() => setFullScreen(!fullScreen)}/>
+                <Icon className='code' title='添加行内代码段'
+                      onClick={addCodeFragment}/>
+                <Icon className='codes' title='添加代码段'
+                      onClick={addCodesFragment}/>
+                <Icon className='runsnable' title='添加可执行代码段'
+                      onClick={addRunnable}/>
+                <Icon className='code-editor' title='js代码编辑器'
+                      color={showCodeEditor ? '#1890ff' : 'inherit'}
+                      onClick={openCodeEditor}/>
+            </div>
+            <Row justify={'space-between'}
+                 style={{height: fixTextarea ? '300px' : 'auto'}}
+                 className={`xl-md-input-row ${fullScreen && 'full'}`}>
+                <Col flex={'1 0'} className={`xl-md-input-col ${showPreview ? 'in-view' : 'hidden'}`}>
+                    <Form.Item label={''} name='mdText'>
+                        <Input.TextArea id='md-input'
+                            // autoSize={{minRows: 5,maxRows:fixTextarea?5:null}}
+                                        bordered={false}
+                                        autoSize={{minRows: 5}}
+                                        onChange={parseMd}
+                        />
+                    </Form.Item>
+                </Col>
+                <Col flex={1} span={12} className={`xl-md-preview-col ${fullScreen && 'full'}`}
+                     style={{display: showPreview ? 'block' : 'none'}}>
+                    <div className='xl-md-preview' ref={preview}/>
+                </Col>
+                <div className={`xl-blog-edit-code-editor ${maxCodeEditor && 'max'}`}
+                     style={{display: showCodeEditor ? 'block' : 'none'}}>
+                    <Editor theme='vs-dark'
+                            enableMinimap={false}
+                            submitLabel='Run'
+                            onSubmit={runCode}
+                            style={{height: maxCodeEditor ? '70vh' : '200px'}}>
+                        <button type='button' onClick={insertCode}>insert</button>
+                        <button type='button' onClick={() => setMaxCodeEditor(!maxCodeEditor)}>max</button>
+                        <button type='button' onClick={() => setShowCodeEditor(false)}>close</button>
+                    </Editor>
+                </div>
             </Row>
-        </Form.Item>
 
-    </Form>
-</Spin>
+            <Form.Item label='类型' name="type" style={inlineFormItemStyle}>
+                <Select style={{width: '120px'}} placeholder='类型'>
+                    <Select.Option value="article">文章</Select.Option>
+                    <Select.Option value="essay">随笔</Select.Option>
+                    <Select.Option value="movement">动态</Select.Option>
+                </Select>
+            </Form.Item>
+            <Form.Item label='目录' name="category" style={inlineFormItemStyle}>
+                <Cascader options={props.categories} style={{width: '200px'}} changeOnSelect/>
+            </Form.Item>
+            <Form.Item label='标签' name="tags">
+                <TagSelect
+                    mode="multiple"
+                    placeholder="选择标签"
+                    fetchOptions={searchTag}
+                    tagRender={tagRender}
+                    showSearch
+                    options={props.tags}
+                />
+            </Form.Item>
+            <Space size={30}>
+                <Form.Item name='isPublish' valuePropName='checked' label='是否发布'>
+                    <Switch defaultChecked/>
+                </Form.Item>
+                <Form.Item name='isTop' valuePropName='checked' label='是否置顶'>
+                    <Switch/>
+                </Form.Item>
+                <Form.Item name='isDelete' valuePropName='checked' label='是否删除'>
+                    <Switch/>
+                </Form.Item>
+            </Space>
+
+            <Form.Item>
+                <Row justify='center'>
+                    <Space>
+                        <Button type="primary" htmlType="submit">submit</Button>
+                        <Button onClick={() => {
+                            form.resetFields();
+                        }}>reset</Button>
+                    </Space>
+                </Row>
+            </Form.Item>
+
+        </Form>
+    </Spin>
 }
 
 
 function tagRender(props) {
-const {label, value, closable, onClose} = props;
-const onPreventMouseDown = event => {
-event.preventDefault();
-event.stopPropagation();
-};
-return (
-<Tag
-// color={value}
-onMouseDown={onPreventMouseDown}
-closable={closable}
-onClose={onClose}
-style={{marginRight: 3}}
->
-{label}
-</Tag>
-);
+    const {label, value, closable, onClose} = props;
+    const onPreventMouseDown = event => {
+        event.preventDefault();
+        event.stopPropagation();
+    };
+    return (
+        <Tag
+            // color={value}
+            onMouseDown={onPreventMouseDown}
+            closable={closable}
+            onClose={onClose}
+            style={{marginRight: 3}}
+        >
+            {label}
+        </Tag>
+    );
 }
 
 async function searchTag(name) {
-const tags = await getBlogTags(name)
-return formatTags(tags)
+    const tags = await getBlogTags(name)
+    return formatTags(tags)
 }
 
 function formatTags(tags) {
-return tags?.map?.(tag => ({
-key: tag.tagId,
-id: tag.tagId,
-label: tag.tagName,
-value: tag.tagId,
-color: tag.color
-})) || []
+    return tags?.map?.(tag => ({
+        key: tag.tagId,
+        id: tag.tagId,
+        label: tag.tagName,
+        value: tag.tagId,
+        color: tag.color
+    })) || []
 }
 
 function TagSelect({fetchOptions, debounceTimeout = 800, ...props}) {
-const [fetching, setFetching] = useState(false);
-const [options, setOptions] = useState(props.options);
-const realOptions = useRef(props.options)
-const fetchRef = useRef(0);
-const debounceFetcher = useMemo(() => {
-const loadOptions = (value) => {
-if (!value) {
-setOptions(realOptions.current)
-return
-}
-const inputTag = {
-label: value,
-value
-}
-fetchRef.current += 1;
-const fetchId = fetchRef.current;
-setOptions([]);
-setFetching(true);
-fetchOptions(value).then((newOptions = []) => {
-if (fetchId !== fetchRef.current) {
+    const [fetching, setFetching] = useState(false);
+    const [options, setOptions] = useState(props.options);
+    const realOptions = useRef(props.options)
+    const fetchRef = useRef(0);
+    const debounceFetcher = useMemo(() => {
+        const loadOptions = (value) => {
+            if (!value) {
+                setOptions(realOptions.current)
+                return
+            }
+            const inputTag = {
+                label: value,
+                value
+            }
+            fetchRef.current += 1;
+            const fetchId = fetchRef.current;
+            setOptions([]);
+            setFetching(true);
+            fetchOptions(value).then((newOptions = []) => {
+                if (fetchId !== fetchRef.current) {
 // 响应超时则丢弃
-return;
-}
-newOptions = newOptions.map(o => ({label: o.label, value: o.value}))
-setOptions([inputTag, ...newOptions])
-setFetching(false);
-})
+                    return;
+                }
+                newOptions = newOptions.map(o => ({label: o.label, value: o.value}))
+                setOptions([inputTag, ...newOptions])
+                setFetching(false);
+            })
 
-}
+        }
 
-return debounce(loadOptions, debounceTimeout);
-}, [fetchOptions, debounceTimeout]);
-const select = (option) => {
-if (!realOptions.current.find(o => o.value === option.value)) {
-realOptions.current.push(option)
-setOptions(realOptions.current)
-}
+        return debounce(loadOptions, debounceTimeout);
+    }, [fetchOptions, debounceTimeout]);
+    const select = (option) => {
+        if (!realOptions.current.find(o => o.value === option.value)) {
+            realOptions.current.push(option)
+            setOptions(realOptions.current)
+        }
 
-}
-return (<Select
-labelInValue
-filterOption={false}
-onSearch={debounceFetcher}
-notFoundContent={fetching ? <Spin size="small"/> : null}
-{...props}
-onSelect={select}
-onFocus={(e) => {
-setOptions(realOptions.current)
-}}
-options={options}
-/>)
+    }
+    return (<Select
+        labelInValue
+        filterOption={false}
+        onSearch={debounceFetcher}
+        notFoundContent={fetching ? <Spin size="small"/> : null}
+        {...props}
+        onSelect={select}
+        onFocus={(e) => {
+            setOptions(realOptions.current)
+        }}
+        options={options}
+    />)
 }

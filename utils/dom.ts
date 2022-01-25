@@ -18,7 +18,7 @@ export const KEY_CODE = {
     F:70
 }
 
-export function insertTextAtCursor(el:HTMLInputElement, text:string, newLine = false) {
+export function insertTextAtCursor(el:HTMLInputElement, text:string, newLine = false,cursorOffset=0) {
 //IE support
     if ((document as any).selection) {
         el.focus();
@@ -42,8 +42,8 @@ export function insertTextAtCursor(el:HTMLInputElement, text:string, newLine = f
             el.scrollTop = restoreTop;
         }
         el.focus();
-        el.selectionStart = startPos + text.length + newLineString.length;
-        el.selectionEnd = startPos + text.length + newLineString.length;
+        el.selectionStart = startPos + text.length + newLineString.length+cursorOffset;
+        el.selectionEnd = startPos + text.length + newLineString.length+cursorOffset;
     } else {
         el.value += text;
         el.focus();
