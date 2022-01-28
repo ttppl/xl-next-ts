@@ -5,7 +5,7 @@ import setGlobalLoading from "../utils/libs/setGlobalLoading";
 const useGlobalLoading = (show, options) => {
     useEffect(() => {
         setGlobalLoading(show, options)
-    }, [])
+    }, [show,options])
 }
 export default useGlobalLoading
 //

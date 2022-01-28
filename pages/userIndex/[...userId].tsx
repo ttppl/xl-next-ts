@@ -1,17 +1,18 @@
 import Head from 'next/head'
 import '/styles/pages/Home.css'
-import {getDefaultLayout} from "../components/layouts/main";
-import {NextPageWithLayout} from "./_app";
-import {Blog, getBlogsByType} from "../request/modules/blogRequest";
-import React, {useEffect, useRef, useState} from "react";
+import {getDefaultLayout} from "../../components/layouts/main";
+import {NextPageWithLayout} from "../_app";
+import {Blog, getBlogsByType} from "../../request/modules/blogRequest";
+import React, { useEffect, useRef, useState} from "react";
 // @ts-ignore
-import Loading from '../components/Loading'
-import BlogCard from "../components/BlogCard";
-import {addListener, removeListenerRS} from "../utils/libs/EventManager";
+import ReactDOM from 'react-dom'
+import Loading from '../../components/Loading'
+import BlogCard from "../../components/BlogCard";
+import {addListener, removeListenerRS} from "../../utils/libs/EventManager";
 import lodash from 'lodash'
+import {sleep} from "../../utils";
 import {useRouter} from "next/router";
-import useGlobalLoading from "../hooks/useGlobalLoading";
-
+import useGlobalLoading from "../../hooks/useGlobalLoading";
 export async function getServerSideProps(context: any) {
     const res = await getBlogsByType()
     return {
@@ -57,7 +58,7 @@ const Home: NextPageWithLayout = (props: any) => {
             removeListenerRS(scrollEvent)
         }
     }, [blogs])
-    // const router = useRouter()
+    const router = useRouter()
     // useEffect(()=>{
     //     router.beforePopState(({ url, as, options }) => {
     //         // I only want to allow these two routes!

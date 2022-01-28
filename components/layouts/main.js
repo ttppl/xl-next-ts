@@ -67,7 +67,7 @@ function MyLayout({theme, children}) {
             `}</style>
             <div className='xl-main-layout-menu-icon' data-active={showMenu}
                  ref={menuIcon}
-                 onClick={()=>{setShowMenu(!showMenu)}}>
+                 onClick={(e)=>{setShowMenu(!showMenu)}}>
                 <div className='xl-menu-icon-middle-line'/>
             </div>
             <div className='xl-main-layout-menu'>
@@ -80,12 +80,12 @@ function MyLayout({theme, children}) {
                             <Menu style={{position: 'absolute',right: 0,top: 0}} ref={menu} activeKey='index' theme={appTheme} title={'导航'}
                                 afterClick={afterMenuItemClicked}
                             >
-                                <MenuItem menuKey='index' label='首页'/>
-                                <MenuItem menuKey='article' label='文章'/>
-                                <MenuItem menuKey='essay' label='随笔'/>
+                                <MenuItem menuKey='index' to='/' label='首页'/>
+                                <MenuItem menuKey='types' to='/blog/types/init' label='分类'/>
+                                {/*<MenuItem menuKey='essay' label='随笔'/>*/}
+                                <MenuItem menuKey='search' to='/blog/search/key' label='搜索'/>
                                 <MenuItem menuKey='jsEditor' to='/editor' label='JS测试'/>
-                                <MenuItem menuKey='search' label='搜索'/>
-                                <MenuItem menuKey='management' label='管理' to='/management'/>
+                                <MenuItem menuKey='management' loading={false} openBlank={true} label='管理' to='/management'/>
                                 <MenuItem loading={false}
                                           label={`${appTheme === 'light' ? 'dark' : 'light'}主题`}
                                           onClick={changeTheme}/>

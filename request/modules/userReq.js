@@ -8,9 +8,6 @@ const {doGet, doPost, doRestGet} = request(module)
 // }
 
 export async function login(userName, password) {
-    const res = await doPost(`/login`, {userName, password})
-    if(res.success){
-        return res.data
-    }else return false
+    return await doPost(`/login`, {userName, password})
 
 }

@@ -56,13 +56,13 @@ const codeRenderer = {
             console.log(e.toString())
         }
         if (lang === 'js-run') {
-            const runScript = `<button class="xl-run-script-button" type="button" onclick="runXlScript(event)">
+            const runScript = `<button title="运行" class="xl-run-script-button" type="button" onclick="runXlScript(event)">
                                         Run
                                         <textarea hidden>${code}</textarea>
                                     </button>
-                                    <button type="button" class="xl-run-script-clear-button" onclick="clearXlScriptOutput(event)">clear</button>
+                                    <button title="清空" type="button" class="xl-run-script-clear-button" onclick="clearXlScriptOutput(event)">clear</button>
                                     <div class="xl-runnable-output"></div>`
-            return `<pre><code>${highlightCodes}</code></pre>${runScript}`
+            return `<pre><code>${highlightCodes}</code></pre><div class="xl-runnable-script-operation">${runScript}</div>`
         } else {
             return `<pre><code>${highlightCodes}</code></pre>`
         }

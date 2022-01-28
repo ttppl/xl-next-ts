@@ -7,7 +7,7 @@ const useRunnableScript = (dependencies=[]) => {
         global.runXlScript = function (e: Event) {
             try {
                 const code = (e.target as HTMLElement)?.getElementsByTagName('textarea')[0].value
-                const container = ((e.target as HTMLElement)?.parentNode as HTMLElement)?.getElementsByClassName('xl-runnable-output')[0]
+                const container:any = ((e.target as HTMLElement)?.parentNode as HTMLElement)?.getElementsByClassName('xl-runnable-output')[0]
                 runScripts(code).then((res) => {
                     if (res.success) {
                         let output = ''
@@ -21,14 +21,16 @@ const useRunnableScript = (dependencies=[]) => {
                 }).catch(e => {
                     container.innerHTML = e.toString()
                 })
+                container.style.display='block'
             } catch (e) {
                 console.log(e)
             }
         }
 
         global.clearXlScriptOutput = function (e:Event) {
-            const container = ((e.target as HTMLElement)?.parentNode as HTMLElement)?.getElementsByClassName('xl-runnable-output')[0]
+            const container:any = ((e.target as HTMLElement)?.parentNode as HTMLElement)?.getElementsByClassName('xl-runnable-output')[0]
             container.innerHTML = ''
+            container.style.display='none'
         }
     }, [...dependencies])
 }

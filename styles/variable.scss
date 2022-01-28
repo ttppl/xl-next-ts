@@ -1,15 +1,20 @@
 $namespace:'xl';
 $state-prefix:'is-';
 $flex-total-divide:100;
+$lightColor:#FFFFFF;
+$darkColor:#000000;
+$primaryColor:#67C23A;
 $colors:(
         primary:#67C23A,
         light:#FFFFFF,
         dark:#000000,
         mask:#00000080,
         loading:#3cee3c,
-        //normal:#909399,
+        plain:#909399,
         //error:#F56C6C,
         //warn:#E6A23C,
         //success:#409EFF,
 );
 $box-shadow:0px 3px 21px 0px rgba(0, 0, 0, 0.17);
+
+$border:1px solid map_get($colors,plain);

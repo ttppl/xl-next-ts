@@ -15,7 +15,7 @@ import EditableTable from "../../../components/tables/EditableTable";
 import {deleteBlog, getBlogs, modifyBlog} from "../../../request/modules/blogRequest";
 import {useRouter} from "next/router";
 import {Button, Popconfirm, Space, Table} from "antd";
-import React from "react";
+import React, {useCallback} from "react";
 
 
 export async function getServerSideProps({req, res, params}) {
@@ -192,7 +192,14 @@ function BlogList({blogs, total, userId}) {
             return false
         }
     }
-
+    const getBlog = useCallback(async (page, pageSize) => {
+        try {
+            const res = await getBlogs(userId, {page, pageSize})
+            return assignKey(res.data, 'blogId')
+        } catch (e) {
+            showfailMessage(e.toString())
+        }
+    },[])
     return <>
         <Head>
             <title>管理</title>
@@ -213,15 +220,6 @@ function BlogList({blogs, total, userId}) {
     </>
 }
 
-
-const getBlog = async (page, pageSize) => {
-    try {
-        const res = await getBlogs(userId, {page, pageSize})
-        return assignKey(res.data, 'blogId')
-    } catch (e) {
-        showfailMessage(e.toString())
-    }
-}
 const deleteBlogItem = async (record) => {
     try {
         const res = await deleteBlog(record.blogId)

@@ -35,7 +35,7 @@ export function get(url, params = {}) {
         }
     })
     const encodedParam = encodedParams.length > 0 ? `?${encodedParams.join('&')}` : ''
-    const reqUrl = `${baseURL}${url}${encodedParam}`
+    const reqUrl = encodeURI(`${baseURL}${url}${encodedParam}`)
     return new Promise((resolve, reject) => {
         fetch(reqUrl, {method: 'GET'})
             .then((response) => {
@@ -61,7 +61,7 @@ export function get(url, params = {}) {
 export function post(url, params = {}) {
     const baseURL = isServer ? baseUrl : appBaseUrl
     return new Promise((resolve, reject) => {
-        fetch(`${baseURL}${url}`, {
+        fetch(encodeURI(`${baseURL}${url}`), {
             method: 'POST', headers,
             body: JSON.stringify(params)
         }).then((response) => {

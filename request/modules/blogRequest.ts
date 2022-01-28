@@ -1,4 +1,5 @@
 import {get, post} from "../config";
+import {isBoolean} from "../../utils/check";
 export interface Blog {
     blogId:number,
     userId:number,
@@ -35,7 +36,17 @@ export async function getBlogs(userId:number,options?:{key:string,page:number,pa
     return await get(`/blog/getBlogs/userId/${userId}`,options)
 }
 
+export async function queryBlogs(key:string,options?:{userId?:number,
+    isPublish?:boolean,isDelete?:boolean,
+    page?:number,pageSize?:number,orderBy?:string}) {
+    return await get(`/blog/getBlogs/key/${key}`,options)
+}
+
 
 export async function getBlogsByType(type='newest',page=1,pageSize=10) {
     return await get(`/blog/getBlogs/type/${type}`,{page,pageSize})
+}
+
+export async function getBlogsByCategory(categoryId:number|string,containsChildren:boolean,page=1,pageSize=10) {
+    return await get(`/blog/getBlogs/category/${categoryId}`,{children:containsChildren,page,pageSize})
 }

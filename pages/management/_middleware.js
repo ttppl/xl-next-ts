@@ -9,7 +9,6 @@ export default async function middleware(req, ev) {
         return decoded
     });
     if (!decoded) {
-        console.log('重定向到登录')
         return NextResponse.redirect(`/user/login`)
     } else {
         return NextResponse.next()

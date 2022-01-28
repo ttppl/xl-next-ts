@@ -1,0 +1,45 @@
+@import "../../variable";
+.xl-blog-search-page{
+  padding: 20px;
+  //display: ;
+  text-align: center;
+  .xl-search-input{
+    margin-top: 60px;
+    display: inline-block;
+    width: 50%;
+    position: relative;
+    >input{
+      background-color: transparent;
+      border: $border;
+      border-radius: 4px;
+      outline: none;
+      height: 60px;
+      font-size: 20px;
+      padding: 0 15px;
+      width: 100%;
+    }
+    .xl-search-button{
+      cursor: pointer;
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: transparent;
+      outline: none;
+      border: none;
+    }
+  }
+  .xl-blog-type-blog-list{
+    margin-top: 40px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  body{
+    .xl-blog-search-page{
+      .xl-search-input{
+        width: 80%;
+      }
+    }
+  }
+}
