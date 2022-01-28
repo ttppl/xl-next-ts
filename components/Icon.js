@@ -19,7 +19,8 @@ Icon.defaultProps = {
 
 function Icon(props) {
     const className = useMemo(() => {
-        return getClasses(['xl-iconfont', `xl-icon-${props.className}`])
+        const classNames = props.className.split(' ')
+        return getClasses(['xl-iconfont', `xl-icon-${classNames[0]}`,...classNames.slice(1,classNames.length)])
     }, [props.className])
     const style = useMemo(() => {
         const stl = {...props.style}

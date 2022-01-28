@@ -64,9 +64,8 @@ export async function deleteTag(id) {
 }
 
 
-export async function getBlogCategory(userId) {
-    const categories = (await get(`/category/getUserCategory/user/${userId}/type/blog`)).data
-    return formatCategory(categories)
+export async function getBlogCategory(userId=1) {
+    return (await get(`/category/getUserCategory/user/${userId}/type/blog`)).data
 }
 
 export async function getCategoryTreeList(userId, page = 1, pageSize = 10, name, type, parent) {
@@ -98,7 +97,7 @@ export async function getInitialTagAndCategory(userId) {
     const categories = await getBlogCategory(userId)
     const tags = await getBlogTags(null, userId)
     return {
-        categories,
+        categories:formatCategory(categories),
         tags: formatTags(tags)
     }
 }

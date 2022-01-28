@@ -15,7 +15,7 @@ MenuItem.propTypes = {
 
 MenuItem.defaultProps = {
     label: '',
-    to: '/',
+    to: '',
     loading:true
 }
 
@@ -48,14 +48,16 @@ function MenuItem(props) {
         clickCallback?.(props.menuKey, props.label)
     }
 
-    return <Link href={{
+    return props.to?<Link href={{
         pathname: props.to,
         // query: {name: 'test'},
     }} passHref>
-        <a className={`xl-menu-item ${isActive?'active':''}`} onClick={navigation}>
+        <a className={`xl-menu-item ${isActive?'active':''}`} target={props.openBlank?'_blank':'_self'} onClick={navigation}>
             {props.children || props.label}
         </a>
-    </Link>
+    </Link>:<span className={`xl-menu-item ${isActive?'active':''}`} onClick={navigation}>
+        {props.children || props.label}
+    </span>
 
 }
 

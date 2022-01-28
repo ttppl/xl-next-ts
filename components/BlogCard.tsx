@@ -6,8 +6,7 @@ import {Space} from "antd";
 import Link from "next/link";
 import React, {useMemo} from "react";
 import Tag from "./Tag";
-import {isArray} from "../utils/check";
-function BlogCard({blog}: { blog: Blog }) {
+function BlogCard({blog,openBlank,style}: { blog: Blog,openBlank:boolean,style?:object }) {
     const tags = useMemo(()=>{
         const blogTags = Array.isArray(blog.tags)?blog.tags:(blog.tags as string).split(',')
         return blogTags.map((tag:any)=>{
@@ -15,11 +14,13 @@ function BlogCard({blog}: { blog: Blog }) {
                 return <Tag name={tag}/>
         })
     },[blog.tags])
-    return <article className='xl-blog-card' key={`index-blog-${blog.blogId}`}>
+    return <article className='xl-blog-card' style={style} key={`index-blog-${blog.blogId}`}>
         <h1 className='xl-blog-card-title'>
-            <a rel="noreferrer"  href={`/blog/detail/${blog.blogId}`} target='_blank' >{blog.title}</a>
+            {/*<a rel="noreferrer"  href={`/blog/detail/${blog.blogId}`} target='_blank' >{blog.title}</a>*/}
+            {openBlank?
+                <a rel="noreferrer"  href={`/blog/detail/${blog.blogId}`} target='_blank' >{blog.title}</a>
+            :<Link href={`/blog/detail/${blog.blogId}`}>{blog.title}</Link>}
         </h1>
-        {blog.blogId}
         {/*<p className='xl-blog-card-content'><Link href='#'>{blog.plainText?.replace(/[\r\n]/g, "")}</Link></p>*/}
         <p className='xl-blog-card-content'>{blog.plainText?.replace(/[\r\n]/g, "")}</p>
         <footer className='xl-blog-card-footer'>

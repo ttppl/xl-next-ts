@@ -5,14 +5,17 @@ import {Form, Input, Button, Checkbox, Spin, message} from 'antd';
 import 'antd/es/button/style/index.css'
 import {postOrig} from "../../request/config";
 import useGlobalLoading from "../../hooks/useGlobalLoading";
+import {showfailMessage} from "../../utils/antdUtil";
 function Login() {
     useGlobalLoading(false)
     const [loading,setLoading] = useState(false)
     const submit = (formData)=>{
         setLoading(true)
         postOrig('/api/auth/login',formData).then(res=>{
-            // console.log(res)
             setLoading(false)
+            if(res.msg){
+                showfailMessage(res.msg)
+            }
         })
         // document.getElementById('loginForm').submit()
     }

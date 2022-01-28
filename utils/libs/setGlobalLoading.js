@@ -11,6 +11,7 @@ export default function setGlobalLoading(show, options = {}) {
     if (!GlobalLoading.container) {
         GlobalLoading.container = document.createElement('div')
         GlobalLoading.container.className = 'xl-loading-container mask'
+        GlobalLoading.container.style.position='fixed'
     }
     if (!GlobalLoading.target) {
         GlobalLoading.target = document.body

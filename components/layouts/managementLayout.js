@@ -16,7 +16,7 @@ export const ManagementLayoutContext = createContext(null)
 
 function MyLayout(props) {
     useGlobalLoading(false)
-    const [activeMenu, setActiveMenu] = useState(['blog'])
+    const [activeMenu, setActiveMenu] = useState(['index'])
     const [position, setPosition] = useState([{name: '主页'}])
     const [loading, setLoading] = useState(false)
     const provider = useMemo(() => {

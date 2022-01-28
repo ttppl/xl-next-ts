@@ -48,7 +48,7 @@ function JsEditor() {
                 defaultCode={`function add(a,b){
     return a+b
 }
-console.log('this is test',add(1,2))`}
+console.log('this is a test',add(1,2))`}
                 onSubmit={runScript}/>
         <div ref={outputRef} className='xl-js-editor-output' dangerouslySetInnerHTML={{__html:output}}/>
         </>

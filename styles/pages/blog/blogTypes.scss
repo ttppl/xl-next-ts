@@ -1,0 +1,110 @@
+@import "../../variable";
+//.xl-blog-types-categories-menu,.xl-blog-types-categories-menu-sub-item,.xl-blog-types-categories-menu-item{
+//  padding:0;
+//  margin:0;
+//  list-style:none
+//}
+@media screen and (max-width: 900px) {
+  body{
+    .xl-blog-type-main{
+      .xl-show-category-icon{
+        display: inline-block;
+        transform: rotate(-90deg);
+        &[class*='showed']{
+          transform: rotate(90deg);
+        }
+      }
+      .expand-icon-label{
+        display: inline;
+      }
+      .xl-blog-type-category-tree{
+        position: relative;
+        display: block;
+        height: 50px;
+        overflow: auto;
+        border-bottom: $border;
+        &[class*='show']{
+          height: 250px;
+          height: 50vh;
+        }
+      }
+      .xl-blog-type-blog-list{
+        margin-left: 0;
+      }
+    }
+  }
+}
+.xl-blog-type-main{
+  min-height: 95vh;
+  //display: flex;
+  //justify-content: space-between;
+  padding: 20px 0 0 20px;
+  .xl-show-category-icon,.expand-icon-label{
+    display: none;
+  }
+  .xl-blog-type-category-tree{
+    //flex-grow: 1;
+    position: fixed;
+    min-width: 200px;
+    transition: all 300ms ease-in-out;
+    >.title{
+      text-align: left;
+      font-size: 30px;
+      font-weight: bold;
+    }
+    >.xl-blog-types-categories-menu{
+      display: inline-block;
+    }
+    ul,li{
+      list-style:none;
+    }
+    li{
+      min-height: 3rem;
+      //line-height: 1rem;
+      font-size: 23px;
+      cursor: pointer;
+      &:hover{
+        color: fade_in($primaryColor,0.5);
+      }
+      &[class*='active']{
+        color: $primaryColor;
+      }
+    }
+    .xl-blog-types-categories-menu{
+      .xl-blog-types-categories-menu-item{
+        overflow: hidden;
+        word-break: break-all;
+        white-space: pre-wrap;
+      }
+      .xl-blog-types-categories-menu-sub-item{
+        position: relative;
+        .xl-icon-back{
+          position: absolute;
+          left: -30px;
+          display: inline-block;
+          transform: rotate(-90deg);
+          transition: all 300ms ease-in-out;
+          &[class*='active']{
+            transform: rotate(90deg);
+          }
+        }
+      }
+    }
+  }
+
+  .xl-blog-type-blog-list{
+    //flex-grow: 1;
+    //display: flex
+     margin-left: 200px;
+    //flex-direction: column;
+    //justify-content: center;
+    //align-items: center;
+    padding: 0 2rem;
+    //border-left: $border;
+    .xl-page-item{
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
