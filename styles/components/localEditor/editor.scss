@@ -1,0 +1,9 @@
+.xl-monaco-editor-container{
+  min-height: 200px;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+  .xl-monaco-editor{
+    height: 100%;
+  }
+}
