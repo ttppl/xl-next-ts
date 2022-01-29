@@ -82,9 +82,9 @@ function MyLayout({theme, children}) {
                             >
                                 <MenuItem menuKey='index' to='/' label='首页'/>
                                 <MenuItem menuKey='types' to='/blog/types/init' label='分类'/>
-                                {/*<MenuItem menuKey='essay' label='随笔'/>*/}
                                 <MenuItem menuKey='search' to='/blog/search/key' label='搜索'/>
-                                <MenuItem menuKey='jsEditor' to='/editor' label='JS测试'/>
+                                <MenuItem menuKey='jsEditor' to='/editor' label='JS在线测试'/>
+                                <MenuItem menuKey='localEditor' to='/editor/localEditor' label='本地测试'/>
                                 <MenuItem menuKey='management' loading={false} openBlank={true} label='管理' to='/management'/>
                                 <MenuItem loading={false}
                                           label={`${appTheme === 'light' ? 'dark' : 'light'}主题`}
