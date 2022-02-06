@@ -39,7 +39,7 @@ function LocalEditorPage(props) {
     return <div className={`xl-local-run-editor ${full&&'full-screen'}`}>
         <Icon className={`${full?'close':'full'} full-icon`} color='white' size={40} onClick={()=>{setFull(!full)}}/>
         <iframe ref={editor} onLoad={finished} width='100%' height='100%'
-                src='http://localhost:8080/local-code-editor/#/'/>
+                src='https://ttppl.gitee.io/local-code-editor/#/'/>
     </div>
 }
 
