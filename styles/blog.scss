@@ -25,7 +25,15 @@ pre {
     margin: 10px 10px 10px 0;
     background-color: #f8f6f6;
     border-radius: 4px;
+    border: none;
+    outline: none;
     padding: 10px;
     display: none;
   }
+}
+
+.xl-local-run-preview{
+  border: $border;
+  outline: none;
+  border-radius: 4px;
 }

@@ -64,6 +64,10 @@ function MyLayout(props) {
                                 <Menu.Item key="blogList"><Link href='/management/blog/blogList'>博客列表</Link></Menu.Item>
                             </Menu.ItemGroup>
                         </Menu.SubMenu>
+                        <Menu.SubMenu key="codeRun" icon={<Icon className='debug'/>} title="本地测试">
+                                <Menu.Item key="addCodeRun"><Link href='/management/codeRun/add'>新建</Link></Menu.Item>
+                                <Menu.Item key="codeRunList"><Link href='/management/codeRun/list'>列表</Link></Menu.Item>
+                        </Menu.SubMenu>
                         <Menu.SubMenu key="args" icon={<Icon className='blog'/>} title="参数">
                             <Menu.ItemGroup title="树">
                                 <Menu.Item key="categoryTree"><Link href='/management/category/categoryTree'>目录树</Link></Menu.Item>
