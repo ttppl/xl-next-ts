@@ -12,9 +12,10 @@ const useRunnableScript = (dependencies=[]) => {
                     if (res.success) {
                         let output = ''
                         res.data.map((column: any) => {
-                            output += (column+ '<br>')
+                            output += (column+ '\n')
                         })
-                        container.innerHTML = output
+                        output = output.replace(/\\/g,'\\').replace(/\</g, '&lt').replace(/\>/g,'&gt')
+                        container.innerHTML = `<pre><code>${output}</code></pre>`
                     } else {
                         container.innerHTML = JSON.stringify(res.msg)
                     }

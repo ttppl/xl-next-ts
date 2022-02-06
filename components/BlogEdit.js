@@ -4,7 +4,7 @@ import {marked} from "marked";
 import hljs from "highlight.js";
 import {getKeyCode, insertTextAtCursor, isCtrlKey, isShiftKey, KEY_CODE} from "../utils/dom";
 import {addListener, removeListenerRS} from "../utils/libs/EventManager";
-import {isNumber} from "../utils/check";
+import {isNumber, isString} from "../utils/check";
 import {parseCookie} from "../utils/libs/cookieParser";
 import '/styles/components/BlogEdit.scss'
 import Icon from "./Icon";
@@ -18,6 +18,7 @@ import useRunnableScript from "../hooks/useRunnableScript";
 import Editor from "./Editor";
 import {message} from 'antd'
 import {runScripts} from "../request/modules/utilRequest";
+import setGlobalLoading from "../utils/libs/setGlobalLoading";
 
 BlogEdit.propTypes = {
     tags: PropTypes.array,
@@ -86,7 +87,6 @@ export function BlogEdit(props) {
     const [fullScreen, setFullScreen] = useState(false)
     const [showCodeEditor, setShowCodeEditor] = useState(false)
     const [maxCodeEditor, setMaxCodeEditor] = useState(false)
-    const inputSelectedPos = useRef([0, 0])
     const searchBlog = async (e) => {
         e.stopPropagation()
         e.preventDefault()
@@ -131,9 +131,10 @@ export function BlogEdit(props) {
 
     //转换markdown
     const parseMd = (e) => {
+        form.setFieldsValue({mdText:isString(e)?e:e.target?.value})
         if (showPreview) {
             try {
-                preview.current.innerHTML = marked.parse(e.target?.value || e, {breaks: true})
+                preview.current.innerHTML = marked.parse(isString(e)?e:e.target?.value, {breaks: true})
             } catch (e) {
                 console.log(e)
             }
@@ -185,9 +186,16 @@ export function BlogEdit(props) {
         const inputDom = document.getElementById('md-input')
         const fragment = `\`\`\` js-run\n${code}\n\`\`\`\n`
         insertTextAtCursor(inputDom, fragment, true, 0)
-        form.setFieldsValue({mdText:inputDom.value})
         parseMd(inputDom.value)
         setShowCodeEditor(false)
+    }
+    const addIFrame =()=>{
+        const id = prompt("请输入id")
+        const fragment = `<iframe width='auto' height='auto' class="xl-local-run-preview"
+                   src='${appBaseUrl}/codeRun/getCodeRunPreview/id/${id}'/>`
+        const inputDom = document.getElementById('md-input')
+        insertTextAtCursor(inputDom, fragment, true, 0)
+        parseMd(inputDom.value)
     }
 
     useRunnableScript()
@@ -258,7 +266,6 @@ export function BlogEdit(props) {
 
 
     return <Spin spinning={loading}>
-        {/*<Script src='/libs/global.js' strategy='beforeInteractive'/>*/}
         <Form initialValues={formDefaultData}
               labelCol={{style: {width: '80px', textAlign: 'left'}}}
               size='large'
@@ -290,11 +297,13 @@ export function BlogEdit(props) {
                       onClick={addCodeFragment}/>
                 <Icon className='codes' title='添加代码段'
                       onClick={addCodesFragment}/>
-                <Icon className='runsnable' title='添加可执行代码段'
+                <Icon className='runnable' title='添加可执行代码段'
                       onClick={addRunnable}/>
                 <Icon className='code-editor' title='js代码编辑器'
                       color={showCodeEditor ? '#1890ff' : 'inherit'}
                       onClick={openCodeEditor}/>
+                <Icon className='debug' title='添加本地运行测试代码段'
+                      onClick={addIFrame}/>
             </div>
             <Row justify={'space-between'}
                  style={{height: fixTextarea ? '300px' : 'auto'}}
