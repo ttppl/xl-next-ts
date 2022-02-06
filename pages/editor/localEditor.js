@@ -31,10 +31,10 @@ function LocalEditorPage(props) {
             // console.log(e)
         })
     },[])
-    // return <iframe onLoad={finished} width='100%' height='100%'
-    // src='https://ttppl.gitee.io/local-code-editor'/>
-    return <iframe ref={editor} onLoad={finished} width='100%' height='100%'
-                   src='http://localhost:8080/local-code-editor/#/'/>
+    return <iframe onLoad={finished} width='100%' height='100%'
+    src='https://ttppl.gitee.io/local-code-editor'/>
+    // return <iframe ref={editor} onLoad={finished} width='100%' height='100%'
+    //                src='http://localhost:8080/local-code-editor/#/'/>
     // return <LocalEditor/>
 }
 
