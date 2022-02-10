@@ -3,6 +3,7 @@ import {message} from 'antd'
 import {showfailMessage} from "../utils/antdUtil";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_REQUEST_URL
+const baseClientUrl = process.env.NEXT_PUBLIC_BASE_CLIENT_REQUEST_URL
 const headers = {
     'Content-Type': 'application/json'
     // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -26,6 +27,14 @@ export default function request(moduleUrl) {
     }
 }
 
+// const https = require("https");
+
+const options = {
+    // agent: new https.Agent({
+    //     rejectUnauthorized: false
+    // })
+};
+
 export function get(url, params = {}) {
     const encodedParams = []
     Object.keys(params || {})?.forEach(k => {
@@ -34,9 +43,9 @@ export function get(url, params = {}) {
         }
     })
     const encodedParam = encodedParams.length > 0 ? `?${encodedParams.join('&')}` : ''
-    const reqUrl = encodeURI(`${baseUrl}${url}${encodedParam}`)
+    const reqUrl = encodeURI(`${isServer?baseUrl:baseClientUrl}${url}${encodedParam}`)
     return new Promise((resolve, reject) => {
-        fetch(reqUrl, {method: 'GET'})
+        fetch(reqUrl, {method: 'GET',...options})
             .then((response) => {
                 // console.log(response,response.status)
                 return response.json()
@@ -59,9 +68,10 @@ export function get(url, params = {}) {
 
 export function post(url, params = {}) {
     return new Promise((resolve, reject) => {
-        fetch(encodeURI(`${baseUrl}${url}`), {
+        fetch(encodeURI(`${isServer?baseUrl:baseClientUrl}${url}`), {
             method: 'POST', headers,
-            body: JSON.stringify(params)
+            body: JSON.stringify(params),
+            ...options
         }).then((response) => {
             return response.json()
         }).then(data => {

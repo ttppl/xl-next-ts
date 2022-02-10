@@ -9,7 +9,6 @@ import Loading from '../components/Loading'
 import BlogCard from "../components/BlogCard";
 import {addListener, removeListenerRS} from "../utils/libs/EventManager";
 import lodash from 'lodash'
-import {useRouter} from "next/router";
 import useGlobalLoading from "../hooks/useGlobalLoading";
 
 export async function getServerSideProps(context: any) {
