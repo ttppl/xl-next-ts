@@ -79,7 +79,7 @@ const Home: NextPageWithLayout = (props: any) => {
             </Head>
             <main className='main' ref={main} id="main">
                 {blogs.map((blog: Blog) => {
-                    return <BlogCard key={blog.blogId} openBlank={true} blog={blog}/>
+                    return <BlogCard key={blog.blogId} openBlank={false} blog={blog}/>
                 })}
                 {loadingMore && <Loading>玩命加载中...</Loading>}
                 {noMore && <p>木有了呢...</p>}
