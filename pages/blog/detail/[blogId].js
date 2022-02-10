@@ -1,7 +1,6 @@
 import Head from 'next/head'
-import React, {useEffect} from "react";
+import React from "react";
 import {getBlogById} from "../../../request/modules/blogRequest";
-import useManagementFinished from "../../../hooks/useManagementPageFinished";
 import {getDefaultLayout} from "../../../components/layouts/main";
 import '../../../styles/pages/blog/blogDetail.scss'
 import 'highlight.js/styles/xcode.css';
@@ -23,7 +22,6 @@ export async function getServerSideProps({req, res, params}) {
 }
 
 function BlogDetail({blog}) {
-    useManagementFinished()
     useRunnableScript()
     // useEffect(()=>{
     //     window.addEventListener("popstate", function(e) {
@@ -31,7 +29,7 @@ function BlogDetail({blog}) {
     //     }, false);
     // })
     const router = useRouter()
-    const back = ()=>{
+    const back = () => {
         // window.history.go(-1)
         router.back()
     }
