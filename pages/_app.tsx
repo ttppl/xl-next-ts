@@ -1,6 +1,6 @@
 import '../styles/globals.css'
 import '../styles/transition.scss'
-import '../styles/blog.scss'
+// import '../styles/blog.scss'
 import 'antd/dist/antd.css'
 import '/styles/antdCustom.scss'
 import type { AppProps } from 'next/app'
@@ -20,7 +20,4 @@ function MyApp({ Component, pageProps }:AppPropsWithLayout) {
   const layout = Component.layout || ((page:ReactElement,props:any) => page)
   return layout(<Component {...pageProps} />,pageProps?.layoutProps)
 }
-
-// (global as any).appBaseUrl = 'http://localhost:5000'
-(global as any).appBaseUrl = 'http://www.ttppl.xyz:5000'
 export default MyApp

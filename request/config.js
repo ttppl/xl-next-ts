@@ -2,7 +2,7 @@ import {isServer} from "../utils/check";
 import {message} from 'antd'
 import {showfailMessage} from "../utils/antdUtil";
 
-const baseUrl = process.env.XL_APP_BASE_URL
+const baseUrl = process.env.NEXT_PUBLIC_BASE_REQUEST_URL
 const headers = {
     'Content-Type': 'application/json'
     // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -27,7 +27,6 @@ export default function request(moduleUrl) {
 }
 
 export function get(url, params = {}) {
-    const baseURL = isServer ? baseUrl : appBaseUrl
     const encodedParams = []
     Object.keys(params || {})?.forEach(k => {
         if (params[k]) {
@@ -35,7 +34,7 @@ export function get(url, params = {}) {
         }
     })
     const encodedParam = encodedParams.length > 0 ? `?${encodedParams.join('&')}` : ''
-    const reqUrl = encodeURI(`${baseURL}${url}${encodedParam}`)
+    const reqUrl = encodeURI(`${baseUrl}${url}${encodedParam}`)
     return new Promise((resolve, reject) => {
         fetch(reqUrl, {method: 'GET'})
             .then((response) => {
@@ -59,9 +58,8 @@ export function get(url, params = {}) {
 }
 
 export function post(url, params = {}) {
-    const baseURL = isServer ? baseUrl : appBaseUrl
     return new Promise((resolve, reject) => {
-        fetch(encodeURI(`${baseURL}${url}`), {
+        fetch(encodeURI(`${baseUrl}${url}`), {
             method: 'POST', headers,
             body: JSON.stringify(params)
         }).then((response) => {

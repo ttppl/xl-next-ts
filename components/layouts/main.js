@@ -85,7 +85,7 @@ function MyLayout({theme, children}) {
                                 <MenuItem menuKey='search' to='/blog/search/key' label='搜索'/>
                                 <MenuItem menuKey='jsEditor' to='/editor' label='JS在线测试'/>
                                 <MenuItem menuKey='localEditor' to='/editor/localEditor' label='本地测试'/>
-                                <MenuItem menuKey='management' loading={false} openBlank={true} label='管理' to='/management'/>
+                                {/*<MenuItem menuKey='management' loading={false} openBlank={true} label='管理' to='/management'/>*/}
                                 <MenuItem loading={false}
                                           label={`${appTheme === 'light' ? 'dark' : 'light'}主题`}
                                           onClick={changeTheme}/>
