@@ -1,7 +1,7 @@
 import useGlobalLoading from "../../../hooks/useGlobalLoading";
 import {getDefaultLayout} from "../../../components/layouts/main";
 import '/styles/pages/blog/blogSearch.scss'
-import React, {useState} from "react";
+import React, {FormEventHandler, useState} from "react";
 import Icon from "../../../components/Icon";
 import setGlobalLoading from "../../../utils/libs/setGlobalLoading";
 import {queryBlogs} from "../../../request/modules/blogRequest";
@@ -45,7 +45,7 @@ function Search(props: SearchProps) {
     })
     const [key, setKey] = useState(props.keyWord)
     const router = useRouter()
-    const search = (e:Event)=>{
+    const search = (e:any)=>{
         e.preventDefault()
         setGlobalLoading(true)
         router.push(`/blog/search/p1?key=${key}`)
