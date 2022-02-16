@@ -1,12 +1,10 @@
 import {isServer} from "../utils/check";
-import {message} from 'antd'
 import {showfailMessage} from "../utils/antdUtil";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_REQUEST_URL
 const baseClientUrl = process.env.NEXT_PUBLIC_BASE_CLIENT_REQUEST_URL
 const headers = {
     'Content-Type': 'application/json'
-    // 'Content-Type': 'application/x-www-form-urlencoded',
 }
 
 
@@ -27,12 +25,12 @@ export default function request(moduleUrl) {
     }
 }
 
-const https = require("https");
+// const https = require("https");
 
 const options = {
-     agent: new https.Agent({
-         rejectUnauthorized: false
-     })
+    // agent: new https.Agent({
+    //     rejectUnauthorized: false
+    // })
 };
 
 export function get(url, params = {}) {

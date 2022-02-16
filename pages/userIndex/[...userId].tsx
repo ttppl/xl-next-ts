@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import '/styles/pages/Home.css'
+import '/styles/pages/Home.scss'
 import {getDefaultLayout} from "../../components/layouts/main";
 import {NextPageWithLayout} from "../_app";
 import {Blog, getBlogsByType} from "../../request/modules/blogRequest";

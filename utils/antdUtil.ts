@@ -1,4 +1,5 @@
-import {message} from "antd";
+// @ts-ignore
+import message from "rc-message"
 
 export function formatFormData(data: Array<{ name: Array<string>, value: string }>) {
     const tmpData: any = {}

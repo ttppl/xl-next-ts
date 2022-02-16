@@ -7,6 +7,7 @@ import 'highlight.js/styles/xcode.css';
 import Icon from "../../../components/Icon";
 import useRunnableScript from "../../../hooks/useRunnableScript";
 import {useRouter} from "next/router";
+import useGlobalLoading from "../../../hooks/useGlobalLoading";
 
 BlogDetail.layout = getDefaultLayout
 
@@ -22,6 +23,7 @@ export async function getServerSideProps({req, res, params}) {
 }
 
 function BlogDetail({blog}) {
+    useGlobalLoading(false)
     useRunnableScript()
     // useEffect(()=>{
     //     window.addEventListener("popstate", function(e) {

@@ -15,6 +15,9 @@ module.exports = {
         // config.plugins.push(new MonacoWebpackPlugin());
         return config;
     },
+    experimental: {
+        scrollRestoration: true,
+    },
 }
 // const withCss = require('@zeit/next-css')
 //

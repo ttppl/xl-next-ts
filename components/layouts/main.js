@@ -59,7 +59,8 @@ function MyLayout({theme, children}) {
             <style global jsx>{`
                 body {
                     background:url(/imgs/${appTheme}-bg.jpg) no-repeat;
-                    //background-size: cover;//或者background-size: 100% 100%;
+                    background-color:${appTheme === 'light' ? 'white' : 'black'}
+                    //background-size: contain;//或者background-size: 100% 100%;
                     background-size:100% 100%;
                     background-attachment: fixed;
                     color:${appTheme === 'light' ? 'black' : 'white'}
@@ -95,7 +96,7 @@ function MyLayout({theme, children}) {
                 </Transition>
             </div>
 
-            <main>{children}</main>
+            <main className='xl-main-content'>{children}</main>
             <Script src="/libs/particleBg/particles.js" strategy='afterInteractive' onLoad={()=>{
                 const script = document.createElement('script')
                 script.src = '/libs/particleBg/app.js'

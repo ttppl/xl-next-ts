@@ -1,0 +1,45 @@
+.main {
+    position: absolute;
+    left: 50%;
+    top: 10px;
+    transform: translateX(-50%);
+    display: inline-block;
+    overflow: hidden;
+    @for $i from 0 through 10{
+        .xl-blog-card-bg-#{$i}{
+            @if $i%2==0{
+                transform: translateX(-100%);
+                animation: slide-in-left 1.5s;
+            }
+            @else {
+                transform: translateX(100%);
+                animation: slide-in-right 1.5s;
+            }
+            animation-delay: #{$i%4*0.2}s;
+            animation-fill-mode:forwards
+        }
+    }
+    .xl-pagination{
+        margin-bottom: 50px;
+    }
+}
+
+
+@keyframes slide-in-right
+{
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+@keyframes slide-in-left
+{
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}

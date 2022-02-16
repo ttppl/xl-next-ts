@@ -1,7 +1,7 @@
 import '../styles/globals.css'
 import '../styles/transition.scss'
-// import '../styles/blog.scss'
-import 'antd/dist/antd.css'
+import '../styles/blog.scss'
+// import 'antd/dist/antd.css'
 import '/styles/antdCustom.scss'
 import type { AppProps } from 'next/app'
 import React, {Component, ReactElement, ReactNode} from "react";

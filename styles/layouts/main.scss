@@ -20,7 +20,7 @@
 #particles-js{
   display: flex;align-items: center;justify-content: center;
   position: fixed;
-  z-index: -1;
+  //z-index: 5;
   //pointer-events: none;
   left: 0;
   top: 0;
@@ -101,15 +101,7 @@ $height: $width*3+$gap*2;
   }
 
 }
-
-
-//分页
-.ant-pagination-item{
-  border: none;
-  background-color: transparent;
+.xl-main-content{
+  position: relative;
 }
-.ant-pagination-item-active{
-  border: none;
-  background-color: transparent;
-  color: $primaryColor;
-}
+
