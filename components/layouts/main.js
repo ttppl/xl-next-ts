@@ -6,7 +6,6 @@ import MenuItem from "../menu/MenuItem";
 import Menu from "../menu/menu";
 import Script from "next/script";
 import ClickOutside from "../../utils/libs/clickOutside";
-
 MyLayout.propTypes = {
     theme: PropTypes.string.isRequired
 }
@@ -17,8 +16,14 @@ MyLayout.defaultProps = {
 function MyLayout({theme, children}) {
     const [appTheme, setAppTheme] = useState(theme)
     const changeTheme = () => {
-        setAppTheme(appTheme === 'light' ? 'dark' : 'light')
-        document.body.style.color = appTheme === 'light' ? 'white' : 'black'
+        const newTheme = appTheme === 'light' ? 'dark' : 'light'
+        document.body.style.color = newTheme === 'dark' ? 'white' : 'black'
+        // if(appTheme === 'light') {
+        //     import('highlight.js/styles/dark.css')
+        // }else {
+        //     import('highlight.js/styles/xcode.css')
+        // }
+        setAppTheme(newTheme)
     }
 
     const [showMenu, setShowMenu] = useState(false)
@@ -57,10 +62,15 @@ function MyLayout({theme, children}) {
     return (
         <>
             <style global jsx>{`
+                // :root {
+                //   --theme-color:${appTheme === 'light' ? 'white' : 'black'}
+                //   --menu-bar-color:${appTheme === 'light' ? 'gray' : 'white'}
+                // }
                 body {
                     background:url(/imgs/${appTheme}-bg.jpg) no-repeat;
                     background-color:${appTheme === 'light' ? 'white' : 'black'}
                     //background-size: contain;//或者background-size: 100% 100%;
+                    background-color:var(--theme-color)
                     background-size:100% 100%;
                     background-attachment: fixed;
                     color:${appTheme === 'light' ? 'black' : 'white'}

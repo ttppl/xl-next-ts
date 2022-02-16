@@ -39,6 +39,7 @@ $height: $width*3+$gap*2;
   height: $width;
   border-radius: 3px;
   background-color: $color;
+  //background-color: var(--theme-color);
   position: absolute;
   transition: all .5s ease;
   pointer-events: none;
