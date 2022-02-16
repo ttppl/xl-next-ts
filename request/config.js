@@ -25,12 +25,12 @@ export default function request(moduleUrl) {
     }
 }
 
-// const https = require("https");
+const https = require("https");
 
 const options = {
-    // agent: new https.Agent({
-    //     rejectUnauthorized: false
-    // })
+    agent: new https.Agent({
+        rejectUnauthorized: false
+    })
 };
 
 export function get(url, params = {}) {
