@@ -1,5 +1,6 @@
 import lodash from "lodash";
 import {isObject} from "./check";
+import {number} from "prop-types";
 
 export function getKeyCode(e:any) {
     return e.keyCode || e.which || e.charCode
@@ -157,4 +158,73 @@ export function getElementSize (el:HTMLElement, elPos = 'absolute'):{width:numbe
         size.height = el.getBoundingClientRect().height
     }
     return size
+}
+
+export const getOffsetTop = (el: HTMLElement) => {
+    let offset = 0
+    let parent = el
+
+    while (parent) {
+        offset += parent.offsetTop
+        parent = parent.offsetParent as HTMLElement
+    }
+
+    return offset
+}
+
+export const getOffsetTopDistance = (el:HTMLElement, containerEl:HTMLElement) => {
+    return Math.abs(getOffsetTop(el) - getOffsetTop(containerEl))
+}
+
+const cubic = (value:number) => Math.pow(value, 3)
+
+const easeInOutCubic = (value:number) => value < 0.5
+    ? cubic(value * 2) / 2
+    : 1 - cubic((1 - value) * 2) / 2
+
+export const scrollTo = (container = document.documentElement || document.body || window.pageYOffset, el, offset = 0) => {
+    const beginTime = Date.now()
+    const beginValue = container.scrollTop
+    const distance = getOffsetTopDistance(container, el) - beginValue + offset
+    const rAF = window.requestAnimationFrame || (func => setTimeout(func, 16))
+    const frameFunc = () => {
+        const progress = (Date.now() - beginTime) / 500
+        if (progress < 1) {
+            container.scrollTop = beginValue + distance * easeInOutCubic(progress)
+            rAF(frameFunc)
+        } else {
+            container.scrollTop = beginValue + distance
+        }
+    }
+    rAF(frameFunc)
+}
+
+
+export const getScrollTop=(el?:HTMLElement):number=>{
+    if(!el||el===(document as any)) {
+        return document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+    }else {
+        return el.scrollTop
+    }
+}
+
+interface IsInViewOffset {
+    offsetTop?:number,
+    offsetBottom?:number,
+    offsetLeft?:number,
+    offsetRight?:number
+}
+
+export const isInView = (el:HTMLElement,offset?:IsInViewOffset):boolean=>{
+    try {
+        const boundingRect = el.getBoundingClientRect()
+        // const windowWidth = window.innerWidth||document.documentElement.clientWidth
+        // console.log(boundingRect)
+        const windowHeight = window.innerHeight||document.documentElement.clientHeight
+        console.log(boundingRect.top,boundingRect.bottom,windowHeight,offset?.offsetTop,offset?.offsetBottom)
+        return boundingRect.top<(windowHeight-(offset?.offsetBottom||0))
+            &&boundingRect.bottom>(offset?.offsetTop||0)
+    }catch (e) {
+        return false
+    }
 }

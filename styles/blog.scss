@@ -9,6 +9,7 @@ pre {
   margin: 10px 10px 10px 0;
 }
 
+//可执行代码段
 .xl-runnable-script-operation {
   >button{
     background-color: mix(map_get($colors,plain),$lightColor,40%);
@@ -20,8 +21,16 @@ pre {
       filter: brightness(1.1);
     }
   }
+  .xl-run-script-button{
+    &:before{
+      content: "运行";
+    }
+  }
   .xl-run-script-clear-button {
     margin-left: 20px;
+    &:before{
+      content: "清空";
+    }
   }
   .xl-runnable-output{
     margin: 10px 10px 10px 0;
@@ -34,6 +43,7 @@ pre {
   }
 }
 
+//iframe
 .xl-local-run-preview{
   border: $border;
   outline: none;

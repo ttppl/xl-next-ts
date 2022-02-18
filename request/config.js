@@ -27,11 +27,11 @@ export default function request(moduleUrl) {
 
 const https = require("https");
 
-const options = {
+const options = process.env.NEXT_PUBLIC_IS_HTTPS==='TRUE'?{
     agent: new https.Agent({
         rejectUnauthorized: false
     })
-};
+}:{};
 
 export function get(url, params = {}) {
     const encodedParams = []

@@ -15,9 +15,9 @@ const showDetail = (id: number | string) => {
 function BlogCard({blog, openBlank, style, className}: { blog: Blog, openBlank: boolean, style?: object, className?: string }) {
     const tags = useMemo(() => {
         const blogTags = Array.isArray(blog.tags) ? blog.tags : (blog.tags as string).split(',')
-        return blogTags.map((tag: any) => {
+        return blogTags.map((tag: any,index:number) => {
             if (tag)
-                return <Tag name={tag}/>
+                return <Tag name={tag} key={`tag-${index}`}/>
         })
     }, [blog.tags])
     return <article className={`xl-blog-card ${className||''}`} style={style} key={`index-blog-${blog.blogId}`}>
