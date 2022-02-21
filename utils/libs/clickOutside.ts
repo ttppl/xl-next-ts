@@ -17,9 +17,10 @@ export function addSource(dom: HTMLElement, callback: Callback) {
     if (!isListening) {
         start()
     }
+    return dom
 }
 
-export function deleteSource(dom: HTMLElement, callback: Callback) {
+export function deleteSource(dom: HTMLElement, callback?: Callback) {
     if (isNull(callback)) {
         listeners.delete(dom)
     } else {

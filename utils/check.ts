@@ -44,4 +44,6 @@ const checkDevice = (): string => {
     }
 }
 
+// export const isMobile = checkDevice()==='mobile'
+
 export const isServer = typeof window === 'undefined'

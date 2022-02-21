@@ -8,10 +8,7 @@
   min-height: 300px;
   text-align: center;
   box-shadow: $box-shadow;
-  background-color: mix(map_get($colors,light),white,50%);
-  &[class*='dark']{
-    background-color: mix(map_get($colors,dark),white,60%);
-  }
+  background-color: var(--menu-bg);
   .xl-menu-title {
     font-family: font-rz,serif,sans-serif,cursive;
     font-size: 40px;

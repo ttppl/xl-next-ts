@@ -26,15 +26,6 @@ function MenuItem(props) {
     const isActive = useMemo(()=>{
         return props.menuKey===activeKey
     },[props.menuKey,activeKey])
-
-    // const [loading, setLoading] = useLoading(false, null, {
-    //     containerCssText:'position:fixed;width:100%;height:100%',
-    //     mask: true,
-    //     size: '5em',
-    //     maskClose:true,
-    //     labelSize:'1.5em',
-    //     label:'努力加载中...'
-    // })
     const navigation = (event) => {
         // event.preventDefault()
         if(props.loading&&!isActive) {

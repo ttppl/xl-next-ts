@@ -6,7 +6,7 @@
     display: inline-block;
     overflow: hidden;
     @for $i from 0 through 10{
-        .xl-blog-card-bg-#{$i}{
+        .index-blog-#{$i}{
             @if $i%2==0{
                 transform: translateX(-100%);
                 animation: slide-in-left 1.5s;

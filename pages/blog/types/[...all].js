@@ -73,7 +73,7 @@ function BlogTypes({categories, categoryId, blogs, total, page, pageSize}) {
                 const isActive = activeItem.includes(category.categoryId)
                 if (category.children) {
                     return <div key={category.categoryId}>
-                        <Link href={`/blog/types/${category.categoryId}`}>
+                        <Link href={`/blog/types/${category.categoryId}`} key={category.categoryId}>
                             <li className={`xl-blog-types-categories-menu-sub-item ${category.categoryId === categoryId && 'active'}`}
                                 onClick={loading}
                             >
@@ -91,8 +91,8 @@ function BlogTypes({categories, categoryId, blogs, total, page, pageSize}) {
                             {getCategoryRender(category.children)}
                         </Collapse>
                     </div>
-                } else return <Link href={`/blog/types/${category.categoryId}`}>
-                    <li key={category.categoryId}
+                } else return <Link href={`/blog/types/${category.categoryId}`} key={category.categoryId}>
+                    <li
                         onClick={loading}
                         className={`xl-blog-types-categories-menu-item ${category.categoryId === categoryId && 'active'}`}>
                         {category.categoryName}

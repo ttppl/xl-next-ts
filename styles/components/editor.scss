@@ -1,3 +1,4 @@
+@import "../variable";
 #xl-monaco{
   height: 100%;
 }
@@ -15,6 +16,15 @@
   align-items: center;
   justify-content: center;
   >button{
-    margin:0 20px
+    margin:0 20px;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 3px;
+    outline: none;
+    border: 1px solid map_get($colors,plain);
+    &:hover{
+      color: $primaryColor;
+      cursor: pointer;
+    }
   }
 }

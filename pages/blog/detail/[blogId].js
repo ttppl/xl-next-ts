@@ -11,6 +11,7 @@ import useGlobalLoading from "../../../hooks/useGlobalLoading";
 import {getClasses, getScrollTop, scrollTo} from "../../../utils/dom";
 import {addListener, removeListenerRS} from "../../../utils/libs/EventManager";
 import lodash from 'lodash'
+import ClickOutside from "../../../utils/libs/clickOutside";
 
 BlogDetail.layout = getDefaultLayout
 
@@ -37,6 +38,9 @@ function BlogDetail({blog}) {
     const [activeCategory, setActiveCategory] = useState('')
     const [categoryOffset, setCategoryOffset] = useState(0)
     const anchoring = useRef(false)
+    const [showCategory,setShowCategory] = useState(true)
+    const categoryRef = useRef(null)
+    const showCategoryIconRef = useRef(null)
     const getHead = (parent, level) => {
         const category = []
         Array.from(blogContentRef.current.children).forEach(node => {
@@ -91,10 +95,11 @@ function BlogDetail({blog}) {
                         </li>
                     }
                 })}
-        return <ul className='xl-blog-detail-category' style={{transform: `translateY(${categoryOffset}px)`}}>
+        return <ul className='xl-blog-detail-category' ref={categoryRef} style={{transform: `translateY(${categoryOffset}px)`,
+        display:showCategory?'block':'none'}}>
             {renderer(category)}
         </ul>
-    },[category,categoryOffset])
+    },[category,categoryOffset,showCategory])
 
     const anchorTo = (id) => { // 锚点跳转
         const anchorElement = document.getElementById(id)
@@ -108,6 +113,8 @@ function BlogDetail({blog}) {
         const category = getHead(blogContentRef.current, 2)
         setCategory(category)
         setActiveCategory(category[0]?.id)
+        const isMobile = window.innerWidth<900
+        isMobile&&(setShowCategory(false))
         const scrollListener = addListener(document, 'scroll', lodash.debounce((e) => {
             const scrollTop = getScrollTop()
             setCategoryOffset(Math.max(scrollTop - 80, 0))
@@ -122,8 +129,14 @@ function BlogDetail({blog}) {
                 }
             })
         }, 300))
+        const clickOutsideDom = ClickOutside.addSource(categoryRef.current,(e,dom)=>{
+            if(isMobile&&!showCategoryIconRef.current?.contains(e.target)){
+                setShowCategory(false)
+            }
+        })
         return () => {
             removeListenerRS(scrollListener)
+            ClickOutside.deleteSource(clickOutsideDom)
         }
     }, [])
     return <div className='xl-blog-detail'>
@@ -133,6 +146,7 @@ function BlogDetail({blog}) {
             <link rel="icon" href="/my_favicon.ico"/>
         </Head>
         <Icon className='back' onClick={back}/>
+        <Icon className='category' ref={showCategoryIconRef} onClick={()=>{setShowCategory(!showCategory)}}/>
         <h1 className='xl-blog-detail-title'>{blog.title}</h1>
         <div className='xl-blog-detail-main'>
             {categoryRender()}
