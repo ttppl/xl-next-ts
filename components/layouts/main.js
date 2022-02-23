@@ -7,6 +7,8 @@ import Script from "next/script";
 import ClickOutside from "../../utils/libs/clickOutside";
 import useTheme from "../../hooks/useTheme";
 import XlTransition from "../XlTransition";
+import Wave from "../svg/Wave";
+import Bingdundun from "../threejs/Bingdundun";
 
 MyLayout.propTypes = {
     theme: PropTypes.string.isRequired
@@ -61,6 +63,7 @@ function MyLayout({theme, children}) {
                  }}>
                 <div className='xl-menu-icon-middle-line'/>
             </div>
+            <Bingdundun className='xl-bing-dun-dun'/>
             <div className='xl-main-layout-menu'>
                 <XlTransition show={showMenu} duration={300} status={transitions}>
                     <Menu style={{position: 'absolute', right: 0, top: 0}} ref={menu} activeKey='index'
@@ -78,24 +81,7 @@ function MyLayout({theme, children}) {
                     </Menu>
                 </XlTransition>
             </div>
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                // xmlns:xlink="http://www.w3.org/1999/xlink"
-                width="300"
-                height="200">
-                <g fill="rgba(106,127,239,0.1)">
-                    <path d="M 0 70 Q 75 39, 150 70 T 300 70 T 450 70 T 600 70 T 750 70 V 100 H 0 V 0"></path>
-                    <animateTransform attributeName="transform" attributeType="XML" type="translate" from="0" to="-300" dur="1.5s" repeatCount="indefinite"></animateTransform>
-                </g>
-                <g fill="rgba(106,127,239,0.15)">
-                    <path d="M 0 70 Q 87.5 47, 175 70 T 350 70 T 525 70 T 700 70 T 875 70 T 1050 70 V 100 H 0 V 0"></path>
-                    <animateTransform attributeName="transform" attributeType="XML" type="translate" from="0" to="-350" dur="3s" repeatCount="indefinite"></animateTransform>
-                </g>
-                <g fill="rgba(106,127,239,0.18)" transform="translate(-903.868 0)">
-                    <path d="M 0 70 Q 135 36, 270 70 T 540 70 T 810 70 T 1080 70 V 100 H 0 V 0" transform="translate(-38.232284367796474, 0)"></path>
-                    <animateTransform attributeName="transform" attributeType="XML" type="translate" from="0" to="-540" dur="2s" repeatCount="indefinite"></animateTransform>
-                </g>
-            </svg>
+            <Wave className='xl-wave' height={40} color={appTheme === 'light'?'#92c3d3':'white'} waveCount={5}  radius={40} width={3000} />
             <main className='xl-main-content'>{children}</main>
             <Script src="/libs/particleBg/particles.js" strategy='afterInteractive' onLoad={() => {
                 const script = document.createElement('script')

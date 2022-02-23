@@ -182,7 +182,7 @@ const easeInOutCubic = (value:number) => value < 0.5
     ? cubic(value * 2) / 2
     : 1 - cubic((1 - value) * 2) / 2
 
-export const scrollTo = (container = document.documentElement || document.body || window.pageYOffset, el, offset = 0) => {
+export const scrollTo = (container = document.documentElement || document.body || window.pageYOffset, el:HTMLElement, offset = 0) => {
     const beginTime = Date.now()
     const beginValue = container.scrollTop
     const distance = getOffsetTopDistance(container, el) - beginValue + offset

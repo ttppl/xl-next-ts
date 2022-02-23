@@ -44,6 +44,18 @@ body{
   color:var(--base-color)
 }
 
+.xl-wave{
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+.xl-bing-dun-dun{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+}
+
 
 @mixin menu-line {
   width: $long;
