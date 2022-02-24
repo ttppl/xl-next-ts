@@ -1,11 +1,13 @@
 .xl-bing-dun-dun{
     position: fixed;
+    z-index: 2;
     left: 0;
     bottom: 0;
 }
 
 .main {
     position: absolute;
+    z-index: 3;
     left: 50%;
     top: 10px;
     transform: translateX(-50%);
