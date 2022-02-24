@@ -1,17 +1,14 @@
 import Head from 'next/head'
-import '/styles/pages/Home.scss'
+import '../styles/pages/Home.scss'
 import {getDefaultLayout} from "../components/layouts/main";
 import {NextPageWithLayout} from "./_app";
 import {Blog, getBlogsByType} from "../request/modules/blogRequest";
 import React, {useEffect} from "react";
 import BlogCard from "../components/BlogCard";
 import useGlobalLoading from "../hooks/useGlobalLoading";
-import Pagination from 'rc-pagination';
-import {useRouter} from "next/router";
-import setGlobalLoading from "../utils/libs/setGlobalLoading";
 import usePagination from "../hooks/usePagination";
 import XlPagination from "../components/XlPagination";
-
+import Bingdundun from '../components/threejs/Bingdundun'
 export async function getServerSideProps(context: any) {
     const pageSize = 10
     const res = await getBlogsByType('newest', 1, pageSize)
@@ -38,6 +35,7 @@ const Home: NextPageWithLayout = (props: any) => {
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <link rel="icon" href="/my_favicon.ico"/>
             </Head>
+            <Bingdundun className='xl-bing-dun-dun'/>
             <main className='main' id="main">
                 {props.blogs.map((blog: Blog, index: number) => {
                     return <BlogCard className={`index-blog-${index}`} key={blog.blogId} openBlank={false} blog={blog}/>

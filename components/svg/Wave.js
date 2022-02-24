@@ -11,7 +11,7 @@ function getCurves(start, gap, height, count) {
 function Wave({height, color, width, waveCount,className}) {
     const generatePath = useCallback((curvature, gap) => {
         const start = `M 0 ${height}`
-        const curve = `Q 100 ${curvature}, ${gap} ${height}`
+        const curve = `Q 100 ${curvature.toFixed(1)}, ${gap} ${height}`
         const curveCount = Math.ceil(width / gap)
         const curves = getCurves(gap * 2, gap, height, curveCount)
         const end = 'V 0 H 0'

@@ -13,7 +13,7 @@ const useLoading = (show, target,props={}) => {
         div.current = div.current || document.createElement('div')
         const mask = props?.mask&&'mask'
         props.containerCssText&&((div.current.style.cssText = props.containerCssText))
-        div.current.className=getClasses(['xl-loading-container',mask])
+        div.current.className=getClasses(['xl-loading-container',mask,props.className])
         const clickListener = addListener(div.current,'click',(e)=>{
             props.maskClose&&(setShowLoading(false))
         })

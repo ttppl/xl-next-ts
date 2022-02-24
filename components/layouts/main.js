@@ -8,7 +8,6 @@ import ClickOutside from "../../utils/libs/clickOutside";
 import useTheme from "../../hooks/useTheme";
 import XlTransition from "../XlTransition";
 import Wave from "../svg/Wave";
-import Bingdundun from "../threejs/Bingdundun";
 
 MyLayout.propTypes = {
     theme: PropTypes.string.isRequired
@@ -63,7 +62,6 @@ function MyLayout({theme, children}) {
                  }}>
                 <div className='xl-menu-icon-middle-line'/>
             </div>
-            <Bingdundun className='xl-bing-dun-dun'/>
             <div className='xl-main-layout-menu'>
                 <XlTransition show={showMenu} duration={300} status={transitions}>
                     <Menu style={{position: 'absolute', right: 0, top: 0}} ref={menu} activeKey='index'

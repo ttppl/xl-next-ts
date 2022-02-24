@@ -228,3 +228,17 @@ export const isInView = (el:HTMLElement,offset?:IsInViewOffset):boolean=>{
         return false
     }
 }
+
+
+export const addScript=(scr:string,dom?:HTMLElement)=>{
+    return new Promise((resolve,reject)=>{
+        const target = dom||document.getElementsByTagName('head')[0]
+        const script = document.createElement('script')
+        script.src = scr
+        target.appendChild(script);
+        script.onload=(e)=>{
+            resolve(e)
+        }
+    })
+
+}
