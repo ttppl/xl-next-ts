@@ -8,6 +8,7 @@ import ClickOutside from "../../utils/libs/clickOutside";
 import useTheme from "../../hooks/useTheme";
 import XlTransition from "../XlTransition";
 import Wave from "../svg/Wave";
+import {addScript} from "../../utils/dom";
 
 MyLayout.propTypes = {
     theme: PropTypes.string.isRequired
@@ -82,9 +83,7 @@ function MyLayout({theme, children}) {
             <Wave className='xl-wave' height={40} color={appTheme === 'light'?'#92c3d3':'white'} waveCount={5}  radius={40} width={3000} />
             <main className='xl-main-content'>{children}</main>
             <Script src="/libs/particleBg/particles.js" strategy='afterInteractive' onLoad={() => {
-                const script = document.createElement('script')
-                script.src = '/libs/particleBg/app.js'
-                document.getElementsByTagName('head')[0].appendChild(script);
+                addScript('/libs/particleBg/app.js')
             }}/>
             {/*<Script src='/libs/particleBg/app.js'></Script>*/}
             {/*<Script src="/libs/particleBg/app.js" strategy='afterInteractive'/>*/}

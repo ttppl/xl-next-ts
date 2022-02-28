@@ -1,21 +1,26 @@
 @font-face {
   font-family: 'font-rz';
+  font-display: swap;
   src: url("fonts/FZBaiZRZTJW.woff");
-//src: url("http://r490iwfp9.hn-bkt.clouddn.com/FZBaiZRZTJW.TTF");
-  /*src: url("https://ttppl.gitee.io/xl-ui-vue-doc/assets/font/FZBaiZRZTJW.TTF");*/
-  /*src: url("https://xlblog2.oss-cn-zhangjiakou.aliyuncs.com/FZBaiZRZTJW.TTF") format('ttf');*/
 }
 
 @font-face {
   font-family: 'font-xk';
+  font-display: swap;
   src: url("fonts/FZWangXZXKJW.woff");
 }
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: font-xk,font-rz, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif !important;
+  font-family: sans-serif,font-xk,font-rz, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue;
+}
+.font-display-supported>body{
+  font-family: font-xk,sans-serif;
+}
+.font-xk-loaded>body{
+  font-family: font-xk,sans-serif;
 }
 
 a {
