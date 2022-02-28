@@ -245,6 +245,8 @@ export const addScript=(src:string,dom?:HTMLElement,async=false)=>{
             script.onload = (e) => {
                 resolve(e)
             }
+        }else {
+            resolve('loaded')
         }
     })
 

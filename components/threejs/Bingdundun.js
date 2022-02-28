@@ -20,13 +20,17 @@ function initBingdundun(target,callback) {
     camera.position.set(0, 0.2, 0.6);
 
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
-
+    controls.enableZoom = false//禁止缩放
+    controls.enablePan = false; //禁止右键拖拽
+    // controls.enableRotate = false; //禁止旋转
     // 垂直旋转角度限制
     controls.minPolarAngle = 1.24;
     controls.maxPolarAngle = 1.24;
     // 水平旋转角度限制
     controls.minAzimuthAngle = -0.38;
     controls.maxAzimuthAngle = 0.92;
+    controls.addEventListener('change', ()=>{renderer.render(scene, camera);});
+
 
     const cubeGeometry = new THREE.BoxGeometry(0.001, 0.001, 0.001);
     const cubeMaterial = new THREE.MeshLambertMaterial({color: 0xdc161a});
@@ -53,7 +57,7 @@ function initBingdundun(target,callback) {
     const loader = new THREE.GLTFLoader();
 
     loader.load(
-        "https://www.ttppl.xyz/file/3dmodels/bingdundun.glb",
+        "/libs/threejs/bingdundun.glb",
         function (mesh) {
             mesh.scene.traverse(function (child) {
                 if (child.isMesh) {
@@ -74,6 +78,8 @@ function initBingdundun(target,callback) {
             mesh.scene.rotation.y = (Math.PI * 15) / 180;
             mesh.scene.position.set(0, -0.25, 0);
             scene.add(mesh.scene);
+            renderer.render(scene, camera);
+            callback?.()
         },
         undefined,
         function (error) {
@@ -86,11 +92,9 @@ function initBingdundun(target,callback) {
             requestAnimationFrame(animate);
         }
         // controls.update();
-        // console.log(111)
         renderer.render(scene, camera);
     };
-    animate()
-    callback?.()
+    // animate()
     return () => {
         stop = true
         // cancelAnimationFrame(animationId)
@@ -114,9 +118,9 @@ function Bingdundun({className}) {
             })
         })
         return () => {
-            removeScript('/libs/threejs/three.min.js')
-            removeScript('/libs/threejs/GLTFLoader.js')
-            removeScript('/libs/threejs/OrbitControls.js')
+            // removeScript('/libs/threejs/three.min.js')
+            // removeScript('/libs/threejs/GLTFLoader.js')
+            // removeScript('/libs/threejs/OrbitControls.js')
             stop?.()
         }
     }, [])
