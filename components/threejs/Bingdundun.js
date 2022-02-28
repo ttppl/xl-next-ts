@@ -1,5 +1,5 @@
 import {useEffect, useRef} from "react";
-import {addScript} from "../../utils/dom";
+import {addScript, removeScript} from "../../utils/dom";
 import useLoading from "../../hooks/useLoading";
 import '../../styles/components/threejs/Bingdundun.scss'
 
@@ -85,7 +85,7 @@ function initBingdundun(target,callback) {
             requestAnimationFrame(animate);
         }
         // controls.update();
-        console.log(111)
+        // console.log(111)
         renderer.render(scene, camera);
     };
     animate()
@@ -101,9 +101,9 @@ function Bingdundun({className}) {
     const [loading, setLoading] = useLoading(true, containerRef, {label: '冰墩墩正在路上...'})
     useEffect(() => {
         const init = async () => {
-            await addScript('/libs/threejs/three.min.js', containerRef.current)
-            await addScript('/libs/threejs/GLTFLoader.js', containerRef.current)
-            await addScript('/libs/threejs/OrbitControls.js', containerRef.current)
+            await addScript('/libs/threejs/three.min.js',document.body)
+            await addScript('/libs/threejs/GLTFLoader.js', document.body)
+            await addScript('/libs/threejs/OrbitControls.js', document.body)
             // await  addScript('/libs/threejs/initBingdundun.js',containerRef.current)
         }
         let stop = null
@@ -113,6 +113,9 @@ function Bingdundun({className}) {
             })
         })
         return () => {
+            removeScript('/libs/threejs/three.min.js',document.body)
+            removeScript('/libs/threejs/GLTFLoader.js', document.body)
+            removeScript('/libs/threejs/OrbitControls.js', document.body)
             stop?.()
         }
     }, [])

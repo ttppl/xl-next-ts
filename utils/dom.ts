@@ -229,16 +229,38 @@ export const isInView = (el:HTMLElement,offset?:IsInViewOffset):boolean=>{
     }
 }
 
+const DOM_SCRIPTS = new Map<string, { dom:HTMLElement,id:string }>()
 
-export const addScript=(scr:string,dom?:HTMLElement)=>{
+export const addScript=(src:string,dom?:HTMLElement)=>{
     return new Promise((resolve,reject)=>{
         const target = dom||document.getElementsByTagName('head')[0]
-        const script = document.createElement('script')
-        script.src = scr
-        target.appendChild(script);
-        script.onload=(e)=>{
-            resolve(e)
+        if(!DOM_SCRIPTS.get(src)) {
+            const script = document.createElement('script')
+            script.src = src
+            const id = `xl-script-${DOM_SCRIPTS.size}`
+            script.id = id
+            target.appendChild(script);
+            DOM_SCRIPTS.set(src, {dom:target, id})
+            script.onload = (e) => {
+                resolve(e)
+            }
         }
+    })
+
+}
+
+export const removeScript=(src:string)=>{
+    return new Promise((resolve,reject)=>{
+        const domScript = DOM_SCRIPTS.get(src)
+        if(domScript){
+            const target = domScript.dom
+            const script = document.getElementById(domScript.id)
+            if(script) {
+                target?.removeChild(script)
+                DOM_SCRIPTS.delete(src)
+            }
+        }
+
     })
 
 }
