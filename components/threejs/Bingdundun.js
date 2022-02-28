@@ -3,6 +3,7 @@ import {addScript, removeScript} from "../../utils/dom";
 import useLoading from "../../hooks/useLoading";
 import '../../styles/components/threejs/Bingdundun.scss'
 import {sleep} from "../../utils";
+import {checkDevice} from "../../utils/check";
 
 function initBingdundun(target,callback) {
     const scene = new THREE.Scene()
@@ -17,20 +18,25 @@ function initBingdundun(target,callback) {
     bddcontainer.appendChild(renderer.domElement);
 
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-    camera.position.set(0, 0.2, 0.6);
-
-    const controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.enableZoom = false//禁止缩放
-    controls.enablePan = false; //禁止右键拖拽
-    // controls.enableRotate = false; //禁止旋转
-    // 垂直旋转角度限制
-    controls.minPolarAngle = 1.24;
-    controls.maxPolarAngle = 1.24;
-    // 水平旋转角度限制
-    controls.minAzimuthAngle = -0.38;
-    controls.maxAzimuthAngle = 0.92;
-    controls.addEventListener('change', ()=>{renderer.render(scene, camera);});
-
+    if(checkDevice()!=='mobile') {
+        camera.position.set(0, 0.2, 0.6);
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableZoom = false//禁止缩放
+        controls.enablePan = false; //禁止右键拖拽
+        // controls.enableRotate = false; //禁止旋转
+        // 垂直旋转角度限制
+        controls.minPolarAngle = 1.24;
+        controls.maxPolarAngle = 1.24;
+        // 水平旋转角度限制
+        controls.minAzimuthAngle = -0.38;
+        controls.maxAzimuthAngle = 0.92;
+        controls.addEventListener('change', () => {
+            renderer.render(scene, camera);
+        });
+    }else {
+        camera.position.set(0, 0.5, 0.6);
+        camera.lookAt(0,0.3,0)
+    }
 
     const cubeGeometry = new THREE.BoxGeometry(0.001, 0.001, 0.001);
     const cubeMaterial = new THREE.MeshLambertMaterial({color: 0xdc161a});
@@ -76,7 +82,9 @@ function initBingdundun(target,callback) {
                 }
             });
             mesh.scene.rotation.y = (Math.PI * 15) / 180;
-            mesh.scene.position.set(0, -0.25, 0);
+            if(checkDevice()!=='mobile') {
+                mesh.scene.position.set(0, -0.25, 0);
+            }
             scene.add(mesh.scene);
             renderer.render(scene, camera);
             callback?.()

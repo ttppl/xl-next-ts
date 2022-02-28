@@ -27,7 +27,7 @@ export const isNull = function (obj: unknown): boolean {
 }
 
 
-const checkDevice = (): string => {
+export const checkDevice = (): string => {
     const sUserAgent = navigator.userAgent.toLowerCase();
     const bIsIpad = sUserAgent.match(/ipad/i)?.[0] === 'ipad';
     const bIsIphoneOs = sUserAgent.match(/iphone os/i)?.[0] === 'iphone os';
