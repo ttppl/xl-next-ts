@@ -231,7 +231,7 @@ export const isInView = (el:HTMLElement,offset?:IsInViewOffset):boolean=>{
 
 const DOM_SCRIPTS = new Map<string, { dom:HTMLElement,id:string }>()
 
-export const addScript=(src:string,dom?:HTMLElement)=>{
+export const addScript=(src:string,dom?:HTMLElement,async=false)=>{
     return new Promise((resolve,reject)=>{
         const target = dom||document.getElementsByTagName('head')[0]
         if(!DOM_SCRIPTS.get(src)) {
@@ -239,6 +239,7 @@ export const addScript=(src:string,dom?:HTMLElement)=>{
             script.src = src
             const id = `xl-script-${DOM_SCRIPTS.size}`
             script.id = id
+            async&&(script.async = async)
             target.appendChild(script);
             DOM_SCRIPTS.set(src, {dom:target, id})
             script.onload = (e) => {
