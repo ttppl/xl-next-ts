@@ -54,24 +54,32 @@ function BlogDetail({blog}) {
             }
         })
         const formatCategory = (categoryArray) => {
-            const newCategory = []
+            const newCategory = [];
             categoryArray.some((categoryItem, index) => {
-                const last = newCategory[newCategory.length - 1]
+                const last = newCategory[newCategory.length - 1];
                 if (newCategory.length > 0 && last.level < categoryItem.level) {
-                    const nextSibling = categoryArray.slice(index).findIndex(item => item.level <= last.level)+index
-                    if (nextSibling - index > 1) {
-                        last.children = formatCategory(categoryArray.slice(index, nextSibling))
-                        newCategory.push(...formatCategory(categoryArray.slice(nextSibling)))
-                        return true
-                    } else {
-                        last.children = [categoryItem]
+                    const restCategory = categoryArray.slice(index);
+                    let nextSiblingIndex =
+                        restCategory.findIndex((item) => item.level <= last.level) + index;
+                    if (nextSiblingIndex < index) {
+                        nextSiblingIndex = restCategory.length + index;
                     }
-
+                    if (nextSiblingIndex - index >= 1) {
+                        last.children = formatCategory(
+                            categoryArray.slice(index, nextSiblingIndex)
+                        );
+                        newCategory.push(
+                            ...formatCategory(categoryArray.slice(nextSiblingIndex))
+                        );
+                        return true;
+                    } else {
+                        last.children = [categoryItem];
+                    }
                 } else {
-                    newCategory.push(categoryItem)
+                    newCategory.push(categoryItem);
                 }
-            })
-            return newCategory
+            });
+            return newCategory;
         }
         return formatCategory(category)
     }
