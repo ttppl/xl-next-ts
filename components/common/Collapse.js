@@ -1,5 +1,5 @@
 import React, {useMemo, useRef} from "react";
-import {getElementSize} from "../utils/dom";
+import {getElementSize} from "../../utils/dom";
 import XlTransition from "./XlTransition";
 
 Collapse.defaultProps = {

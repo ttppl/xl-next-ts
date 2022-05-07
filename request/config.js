@@ -29,6 +29,7 @@ const https = require("https");
 
 const options = {
     headers:{
+        ...headers,
         'Authorization':'xl-blog-next-app'
     }
 }

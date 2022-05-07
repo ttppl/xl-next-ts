@@ -1,14 +1,13 @@
 import {useEffect, useRef} from "react";
-import {addScript, removeScript} from "../../utils/dom";
+import {addScript} from "../../utils/dom";
 import useLoading from "../../hooks/useLoading";
 import '../../styles/components/threejs/Bingdundun.scss'
-import {sleep} from "../../utils";
 import {checkDevice} from "../../utils/check";
 
 function initBingdundun(target,callback) {
     const scene = new THREE.Scene()
-    const width = 420
-    const height = 500
+    const width = 250
+    const height = 300
 
     const renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
     renderer.setPixelRatio(window.devicePixelRatio);

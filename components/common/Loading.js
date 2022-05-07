@@ -1,6 +1,6 @@
-import '/styles/components/Loading.scss'
+import '/styles/components/common/Loading.scss'
 import { useMemo} from "react";
-import {isNumber} from "../utils/check";
+import {isNumber} from "/utils/check";
 import PropTypes from 'prop-types'
 Loading.propTypes={
     size:PropTypes.oneOfType([PropTypes.string,PropTypes.number]),

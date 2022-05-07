@@ -1,40 +1,14 @@
-//.xl-app-bg {
-//  position: fixed;
-//  z-index: -1000;
-//  width: 100%;
-//  height: 100%;
-//  // filter: brightness(0.5);
-//  left: 0;
-//  top: 0;
-//  object-fit: cover;
-//}
-//
-//.container {
-//  position: fixed;
-//  z-index: -1;
-//  width: 100%;
-//  height: 100%;
-//}
-@import "../variable";
+@import "../global/variable";
 
 #particles-js{
-  //display: flex;align-items: center;justify-content: center;
   canvas{
     position: fixed;
-    //z-index: -1;
-    //z-index: 5;
-    //pointer-events: none;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
   }
 }
-$width: 5px;
-$long: 40px;
-$gap: 10px;
-
-$height: $width*3+$gap*2;
 
 body{
   background-repeat: no-repeat;
@@ -44,82 +18,12 @@ body{
   color:var(--base-color)
 }
 
-.xl-wave{
-  position: fixed;
-  left: 0;
-  top: 0;
-}
-
-
-@mixin menu-line {
-  width: $long;
-  height: $width;
-  border-radius: 3px;
-  background-color: var(--menu-icon);
-  //background-color: var(--theme-color);
-  position: absolute;
-  transition: all .5s ease;
-  pointer-events: none;
-}
-.xl-main-layout-menu {
-  position: fixed;
-  z-index: 1000;
-  top: 90px;
-  right: 20px;
-}
-.xl-main-layout-menu-icon {
-  height: $height;
-  width: $long;
-  position: fixed;
-  z-index: 1000;
-  right: 2rem;
-  top: 2rem;
-  cursor: pointer;
-  line-height: $height;
-  vertical-align: middle;
-
-  &::before {
-    content: '';
-    @include menu-line;
-    top: 0;
-  }
-
-  &[data-active="true"]::before {
-    content: '';
-    @include menu-line;
-    top: 50%;
-    transform: rotate(45deg);
-  }
-
-  &::after {
-    content: '';
-    @include menu-line;
-    bottom: 0;
-  }
-
-  &[data-active="true"]::after {
-    content: '';
-    @include menu-line;
-    top: 50%;
-    transform: rotate(-45deg);
-  }
-
-  &[data-active="true"] {
-    .xl-menu-icon-middle-line {
-      background-color: transparent;
-      transition: all .5s ease;
-    }
-
-  }
-
-  .xl-menu-icon-middle-line {
-    @include menu-line;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-}
 .xl-main-content{
   position: relative;
+}
+
+//分页器下方给一定空间
+.xl-pagination{
+  margin-bottom: 50px;
 }
 

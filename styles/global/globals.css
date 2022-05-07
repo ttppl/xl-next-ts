@@ -1,13 +1,13 @@
 @font-face {
   font-family: 'font-rz';
   font-display: swap;
-  src: url("fonts/FZBaiZRZTJW.woff");
+  src: url("../fonts/FZBaiZRZTJW.woff");
 }
 
 @font-face {
   font-family: 'font-xk';
   font-display: swap;
-  src: url("fonts/FZWangXZXKJW.woff");
+  src: url("../fonts/FZWangXZXKJW.woff");
 }
 html,
 body {

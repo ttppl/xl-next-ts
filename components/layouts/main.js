@@ -1,92 +1,47 @@
 import PropTypes from 'prop-types';
-import React, {useEffect, useRef, useState} from 'react'
+import React from 'react'
 import '/styles/layouts/main.scss'
 import MenuItem from "../menu/MenuItem";
-import Menu from "../menu/menu";
+import Menu, {useMenu} from "../menu/menu";
 import Script from "next/script";
-import ClickOutside from "../../utils/libs/clickOutside";
 import useTheme from "../../hooks/useTheme";
-import XlTransition from "../XlTransition";
-import Wave from "../svg/Wave";
+// import Wave from "../svg/Wave";
 import {addScript} from "../../utils/dom";
 
 MyLayout.propTypes = {
-    theme: PropTypes.string.isRequired
+    theme: PropTypes.string.isRequired//主题
 }
 MyLayout.defaultProps = {
     theme: 'light'
 }
 
-function useMenu() {
-    const [showMenu, setShowMenu] = useState(false)
-    const afterMenuItemClicked = (key) => {
-        if (key) {
-            setShowMenu(!showMenu)
-        }
-    }
-    const menuIcon = useRef(null)
-    const menu = useRef(null)
-    useEffect(() => {
-        const clickOutsideDom = ClickOutside.addSource(menu.current, (e) => {
-            if (!menuIcon.current.contains(e.target)) {
-                setShowMenu(false)
-            }
-        })
-        return () => {
-            ClickOutside.deleteSource(clickOutsideDom)
-        }
-    }, [])
-
-    return [showMenu, setShowMenu, afterMenuItemClicked, menuIcon, menu]
-}
-
+//带菜单的布局
 function MyLayout({theme, children}) {
+    // 主题
     const [appTheme, changeTheme] = useTheme(theme)
-    const [showMenu, setShowMenu, afterMenuItemClicked, menuIcon, menu] = useMenu()
+    // 菜单过度效果
 
-
-    const transitions = {
-        beforeEnter: {transform: 'translateY(-200vh)'},
-        entering: {transform: 'translateY(0)'},
-        entered: {transform: 'translateY(0)'},
-        beforeExit: {transform: 'translateY(0)'},
-        exiting: {transform: 'translateY(-200vh)'},
-        exited: {transform: 'translateY(-200vh)'},
-    }
 
     return (
         <>
-            <div className='xl-main-layout-menu-icon' data-active={showMenu}
-                 ref={menuIcon}
-                 onClick={(e) => {
-                     setShowMenu(!showMenu)
-                 }}>
-                <div className='xl-menu-icon-middle-line'/>
-            </div>
-            <div className='xl-main-layout-menu'>
-                <XlTransition show={showMenu} duration={300} status={transitions}>
-                    <Menu style={{position: 'absolute', right: 0, top: 0}} ref={menu} activeKey='index'
-                          theme={appTheme} title={'导航'}
-                          afterClick={afterMenuItemClicked}
-                    >
-                        <MenuItem menuKey='index' to='/' label='首页'/>
-                        <MenuItem menuKey='types' to='/blog/types/init' label='分类'/>
-                        <MenuItem menuKey='search' to='/blog/search/key' label='搜索'/>
-                        <MenuItem menuKey='jsEditor' to='/editor' label='JS在线测试'/>
-                        <MenuItem menuKey='localEditor' to='/editor/localEditor' label='本地测试'/>
-                        <MenuItem loading={false}
-                                  label={`${appTheme === 'light' ? 'dark' : 'light'}主题`}
-                                  onClick={changeTheme}/>
-                    </Menu>
-                </XlTransition>
-            </div>
-            <Wave className='xl-wave' height={40} color={appTheme === 'light'?'#92c3d3':'white'} waveCount={5}  radius={40} width={3000} />
+            <Menu style={{position: 'fixed', right: '20px', top: '20px'}} activeKey='index' title={'导航'}>
+                <MenuItem menuKey='index' to='/' label='首页'/>
+                <MenuItem menuKey='types' to='/blog/types/init' label='分类'/>
+                <MenuItem menuKey='search' to='/blog/search/key' label='搜索'/>
+                <MenuItem menuKey='jsEditor' to='/editor' label='JS在线测试'/>
+                {/*<MenuItem menuKey='localEditor' to='/editor/localEditor' label='本地测试'/>*/}
+                <MenuItem menuKey='changeTheme' label={`${appTheme === 'light' ? 'dark' : 'light'}主题`}
+                          onClick={changeTheme}/>
+            </Menu>
+
+            {/*波浪纹*/}
+            {/*<Wave className='xl-wave' height={40} color={appTheme === 'light'?'#92c3d3':'white'} waveCount={5}  radius={40} width={3000} />*/}
+            {/*菜单对应界面*/}
             <main className='xl-main-content'>{children}</main>
+            {/*粒子背景加载*/}
             <Script src="/libs/particleBg/particles.js" strategy='afterInteractive' onLoad={() => {
                 addScript('/libs/particleBg/app.js')
             }}/>
-            {/*<Script src='/libs/particleBg/app.js'></Script>*/}
-            {/*<Script src="/libs/particleBg/app.js" strategy='afterInteractive'/>*/}
         </>
     )
 }

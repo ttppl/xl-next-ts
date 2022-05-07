@@ -1,15 +1,19 @@
-import {Blog} from "../request/modules/blogRequest";
-import '../styles/components/BlogCard.scss'
-import Icon from '../components/Icon'
+import {Blog} from "../../request/modules/blogRequest";
+import '../../styles/components/common/BlogCard.scss'
+import Icon from './Icon'
 import Link from "next/link";
 import React, {useMemo} from "react";
-import Tag from "./Tag";
 import Router from "next/router"
-import setGlobalLoading from "../utils/libs/setGlobalLoading";
+// @ts-ignore
+import setGlobalLoading from "/utils/libs/setGlobalLoading";
 
 const showDetail = (id: number | string) => {
     setGlobalLoading(true)
     Router.push(`/blog/detail/${id}`)
+}
+
+function Tag({name,color}:any) {
+    return <div className='xl-blog-tag' style={color}>{name}</div>
 }
 
 function BlogCard({blog, openBlank, style, className}: { blog: Blog, openBlank: boolean, style?: object, className?: string }) {
@@ -21,7 +25,7 @@ function BlogCard({blog, openBlank, style, className}: { blog: Blog, openBlank: 
         })
     }, [blog.tags])
     return <article className={`xl-blog-card ${className||''}`} style={style} key={`index-blog-${blog.blogId}`}>
-        <div className='xl-blog-card-bg'/>
+        {/*<div className='xl-blog-card-bg'/>*/}
         <h1 className='xl-blog-card-title'>
             <Link href={`/blog/detail/${blog.blogId}`} passHref={true}>
                 <a rel="noreferrer" onClick={() => {

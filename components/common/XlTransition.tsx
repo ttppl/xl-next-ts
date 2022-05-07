@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, {ReactNode, useEffect, useMemo, useRef, useState} from "react";
-import {sleep} from "../utils";
-import {isFunction} from "../utils/check";
+import {sleep} from "../../utils";
+import {isFunction} from "../../utils/check";
 
 XlTransition.defaultProps = {
     show: false,

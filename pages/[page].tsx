@@ -1,4 +1,4 @@
-import '/styles/pages/Home.scss'
+import '/styles/pages/Index.scss'
 import {getBlogsByType} from "../request/modules/blogRequest";
 import React from "react";
 import Home from "./index";

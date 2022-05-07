@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState} from "react";
-import Loading from "/components/Loading";
+import Loading from "/components/common/Loading";
 import ReactDOM from 'react-dom'
 import {getClasses} from "../utils/dom";
 import {addListener, removeListenerRS} from "../utils/libs/EventManager";

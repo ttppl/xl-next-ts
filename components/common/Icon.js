@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
-import '/styles/components/Icon.scss'
+import '/styles/components/common/Icon.scss'
 import {forwardRef, useMemo} from "react";
-import {getClasses} from "../utils/dom";
+import {getClasses} from "/utils/dom";
 
 
 const IconFun=(props,ref)=> {
@@ -29,8 +29,8 @@ Icon.propTypes = {
     onClick:PropTypes.func
 }
 Icon.defaultProps = {
-    className: 'unknown',
+    className: '',
     size:20,
-    color:'inherit',
+    color:'',
 }
 export default Icon

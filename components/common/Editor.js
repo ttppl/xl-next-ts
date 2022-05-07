@@ -1,9 +1,9 @@
 import React, {useEffect, useRef, useState} from "react";
-import useLoading from "../hooks/useLoading";
+import useLoading from "../../hooks/useLoading";
 import Head from "next/head";
 import Script from "next/script";
-import {sleep} from "../utils";
-import '/styles/components/editor.scss'
+import {sleep} from "../../utils";
+import '/styles/components/common/editor.scss'
 
 
 Editor.defaultProps={

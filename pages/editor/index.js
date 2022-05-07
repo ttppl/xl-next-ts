@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
 import Head from "next/head";
 import {getDefaultLayout} from "../../components/layouts/main";
-import Editor from "../../components/Editor";
+import Editor from "../../components/common/Editor";
 import {runScripts} from "../../request/modules/utilRequest";
 import '/styles/pages/editor/JsEditor.scss'
 import useLoading from "../../hooks/useLoading";

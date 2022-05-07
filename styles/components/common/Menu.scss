@@ -1,0 +1,107 @@
+@import "/styles/global/variable";
+
+$iconLineHeight: 5px;//菜单icon杠的高度
+$iconLineWidth: 40px;//菜单icon杠的长度
+$gap: 10px;//菜单icon杠之间的距离
+$iconHeight: $iconLineHeight*3+$gap*2;//菜单icon的整体高度
+
+//菜单容器
+.xl-menu {
+  z-index: 1000;
+}
+
+@mixin menu-line {
+  width: $iconLineWidth;
+  height: $iconLineHeight;
+  border-radius: 3px;
+  background-color: var(--menu-icon);
+  position: absolute;
+  transition: all .5s ease;
+  pointer-events: none;
+}
+//菜单icon
+.xl-menu-icon {
+  height: $iconHeight;
+  width: $iconLineWidth;
+  //position: absolute;
+  //z-index: 1000;
+  //right: 2rem;
+  //top: 2rem;
+  cursor: pointer;
+  line-height: $iconHeight;
+  vertical-align: middle;
+//菜单icon中间杠
+  .xl-menu-icon-middle-line {
+    @include menu-line;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &::before {
+    content: '';
+    @include menu-line;
+    top: 0;
+  }
+
+  &[data-active="true"]::before {
+    content: '';
+    @include menu-line;
+    top: 50%;
+    transform: rotate(45deg);
+  }
+
+  &::after {
+    content: '';
+    @include menu-line;
+    bottom: 0;
+  }
+
+  &[data-active="true"]::after {
+    content: '';
+    @include menu-line;
+    top: 50%;
+    transform: rotate(-45deg);
+  }
+
+  //菜单激活时隐藏中间杠
+  &[data-active="true"] {
+    .xl-menu-icon-middle-line {
+      background-color: transparent;
+      transition: all .5s ease;
+    }
+  }
+
+}
+
+//菜单弹框
+.xl-menu-main {
+  position: absolute;
+  right: 0;
+  top: $iconHeight;
+  font-family: 'font-xk',serif,sans-serif,cursive;
+  font-size: 30px;
+  border-radius: 5px;
+  min-width: 200px;
+  min-height: 300px;
+  text-align: center;
+  box-shadow: $box-shadow;
+  background-color: var(--menu-bg);
+  .xl-menu-title {
+    font-family: font-rz,serif,sans-serif,cursive;
+    font-size: 40px;
+    padding: 20px;
+    color: var(--base-color);
+  }
+  .xl-menu-item {
+    display: block;
+    padding: 10px;
+    cursor: pointer;
+    color: var(--base-color);
+    &:hover {
+      color: map-get($colors, primary) !important;
+    }
+    &[class*=active] {
+      background-color: fade-out(map-get($colors, primary), 0.8);
+    }
+  }
+}

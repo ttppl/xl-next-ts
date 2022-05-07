@@ -4,7 +4,7 @@ import {getBlogById} from "../../../request/modules/blogRequest";
 import {getDefaultLayout} from "../../../components/layouts/main";
 import '../../../styles/pages/blog/blogDetail.scss'
 import 'highlight.js/styles/xcode.css';
-import Icon from "../../../components/Icon";
+import Icon from "../../../components/common/Icon";
 import useRunnableScript from "../../../hooks/useRunnableScript";
 import {useRouter} from "next/router";
 import useGlobalLoading from "../../../hooks/useGlobalLoading";

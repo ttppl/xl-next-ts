@@ -1,13 +1,13 @@
 import Head from 'next/head'
-import '/styles/pages/Home.scss'
+import '/styles/pages/Index.scss'
 import {getDefaultLayout} from "../../components/layouts/main";
 import {NextPageWithLayout} from "../_app";
 import {Blog, getBlogsByType} from "../../request/modules/blogRequest";
 import React, { useEffect, useRef, useState} from "react";
 // @ts-ignore
 import ReactDOM from 'react-dom'
-import Loading from '../../components/Loading'
-import BlogCard from "../../components/BlogCard";
+import Loading from '../../components/common/Loading'
+import BlogCard from "../../components/common/BlogCard";
 import {addListener, removeListenerRS} from "../../utils/libs/EventManager";
 import lodash from 'lodash'
 import {sleep} from "../../utils";

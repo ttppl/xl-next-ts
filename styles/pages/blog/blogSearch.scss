@@ -1,5 +1,6 @@
-@import "../../variable";
+@import "../../global/variable";
 .xl-blog-search-page{
+  color:var(--base-color);
   padding: 20px;
   //display: ;
   text-align: center;
@@ -32,9 +33,14 @@
       outline: none;
       border: none;
     }
+    .xl-iconfont{
+      color:var(--base-color);
+    }
   }
   .xl-blog-type-blog-list{
-    margin-top: 40px;
+    max-width: 100%;
+    padding: 40px 100px 0 100px;
+    overflow: hidden;
   }
 }
 

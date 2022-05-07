@@ -1,14 +1,12 @@
-import '../styles/globals.css'
-import '../styles/transition.scss'
-import '../styles/blog.scss'
-// import 'antd/dist/antd.css'
-import '/styles/antdCustom.scss'
+import '../styles/global/globals.css'
+import '../styles/global/transition.scss'
+import '../styles/global/blog.scss'
 import type {AppProps} from 'next/app'
-import React, {Component, ReactElement, ReactNode, useEffect} from "react";
+import React, {Component, JSXElementConstructor, ReactElement, ReactNode, useEffect} from "react";
 import {NextPage} from "next";
 
 export type NextPageWithLayout = NextPage & {
-    layout?: (page: ReactElement) => ReactNode
+    layout?: (page: ReactElement|JSXElementConstructor<any>) => ReactNode
 }
 
 type AppPropsWithLayout = AppProps & {

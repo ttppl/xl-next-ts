@@ -1,8 +1,9 @@
-@import "./variable";
+@import "/styles/global/variable";
 
+//分页器样式
 @media screen and (max-width: 800px) {
-  $pageItemSizeMobile:25px;
-  $gapMobile:3px;
+  $pageItemSizeMobile:25px;//分页器item大小
+  $gapMobile:3px;//分页器item间隔
   body .rc-pagination{
     >li{
       min-width: $pageItemSizeMobile;
@@ -11,16 +12,14 @@
     }
   }
 }
-
-$pageItemSize:35px;
-$gap:8px;
+$pageItemSize:35px;//分页器item大小
+$gap:8px;//分页器item间隔
 .rc-pagination{
   //display: inline-block;
   list-style-type: none;
   padding: 0;
   text-align: center;
   >li{
-    display: inline-block;
     cursor: pointer;
     min-width: $pageItemSize;
     height: $pageItemSize;
@@ -31,12 +30,6 @@ $gap:8px;
     align-items: center;
     position: relative;
     .xl-pagination-item{
-      //display: inline-block;
-      //width: 100%;
-      //height: 100%;
-      //display: flex;
-      //justify-content: center;
-      //align-items: center;
       pointer-events:none
     }
   }
@@ -52,13 +45,13 @@ $gap:8px;
   &-jump-prev,
   &-jump-next,&-prev,&-next
   {
-  button {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    color: #666;
+    button {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: #666;
+    }
   }
-}
   &-jump-prev,
   &-jump-next {
     outline: 0;

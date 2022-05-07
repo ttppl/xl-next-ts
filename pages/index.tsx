@@ -1,16 +1,16 @@
 import Head from 'next/head'
-import '../styles/pages/Home.scss'
+import '../styles/pages/Index.scss'
 import {getDefaultLayout} from "../components/layouts/main";
 import {NextPageWithLayout} from "./_app";
 import {Blog, getBlogsByType} from "../request/modules/blogRequest";
-import React, {useEffect} from "react";
-import BlogCard from "../components/BlogCard";
-import useGlobalLoading from "../hooks/useGlobalLoading";
-import usePagination from "../hooks/usePagination";
-import XlPagination from "../components/XlPagination";
-import Bingdundun from '../components/threejs/Bingdundun'
+import React from "react";
+import BlogCard from "../components/common/BlogCard";
+import XlPagination from "../components/common/XlPagination";
+import {NextPage} from "next";
+// import Bingdundun from '../components/threejs/Bingdundun'
 export async function getServerSideProps(context: any) {
     const pageSize = 10
+    // 获取最新博客
     const res = await getBlogsByType('newest', 1, pageSize)
     return {
         props: {
@@ -22,11 +22,15 @@ export async function getServerSideProps(context: any) {
     }
 }
 
-const Home: NextPageWithLayout = (props: any) => {
-    useGlobalLoading(false)
-    const [routerChange, IndexPaginationItem] = usePagination((page: number) => {
-        return `/p${page}`
-    })
+interface HomePageProps {
+    blogs: Array<any>
+    total: number,
+    page: number,
+    pageSize:number
+}
+
+// @ts-ignore
+const Index: NextPageWithLayout = (props:HomePageProps) => {
     return (
         <>
             <Head>
@@ -35,16 +39,18 @@ const Home: NextPageWithLayout = (props: any) => {
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <link rel="icon" href="/my_favicon.ico"/>
             </Head>
-            <Bingdundun className='xl-bing-dun-dun'/>
-            <main className='main' id="main">
+            {/*冰墩墩*/}
+            {/*<Bingdundun className='xl-bing-dun-dun'/>*/}
+            <main className='index-main'>
                 {props.blogs.map((blog: Blog, index: number) => {
-                    return <BlogCard className={`index-blog-${index}`} key={blog.blogId} openBlank={false} blog={blog}/>
+                    return <BlogCard className={`blog-card-index-${index}`} key={blog.blogId} openBlank={false} blog={blog}/>
                 })}
                 <XlPagination
                     defaultPageSize={props.pageSize}
                     defaultCurrent={props.page}
-                    onChange={routerChange}
-                    itemRender={IndexPaginationItem}
+                    pageUrl={(page: number) => {
+                        return `/p${page}`
+                    }}
                     total={props.total}
                 />
             </main>
@@ -64,6 +70,6 @@ const Home: NextPageWithLayout = (props: any) => {
     )
 }
 
-Home.layout = getDefaultLayout
+Index.layout = getDefaultLayout
 
-export default Home
+export default Index
