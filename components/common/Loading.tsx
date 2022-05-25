@@ -10,10 +10,10 @@ Loading.propTypes={
     label:PropTypes.string
 }
 interface Props {
-    size:number|string,
-    strokeWidth:number,
-    label:string,
-    labelSize:string,
+    size?:number|string,
+    strokeWidth?:number,
+    label?:string,
+    labelSize?:string,
     children?:any
 }
 function Loading(props:Props) {

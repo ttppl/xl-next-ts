@@ -17,7 +17,7 @@ const useTheme = (theme:string)=>{
                     themeVars[item]
                 );
             });
-            setGlobalLoading(false,{})
+            setGlobalLoading(false)
         }
     },[appTheme])
     const changeTheme = useCallback(async () => {

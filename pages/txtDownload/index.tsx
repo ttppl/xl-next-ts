@@ -29,7 +29,7 @@ interface Props {
     books: Array<BlogSearch>
 }
 
-function txtDownload(props: Props) {
+function TxtDownload(props: Props) {
     const [key, setKey] = useState(props.keyWord)
     const router = useRouter()
     const search = (e: any) => {
@@ -87,5 +87,5 @@ function BookSearchItem({book}: { book: BlogSearch }) {
 //     </div>
 // }
 
-txtDownload.layout = getDefaultLayout
-export default txtDownload
+TxtDownload.layout = getDefaultLayout
+export default TxtDownload
