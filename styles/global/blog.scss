@@ -14,7 +14,7 @@ pre {
     background-color: var(--code-bg);
     border-radius: 4px;
     padding: 5px 10px;
-    border: 1px solid map_get($colors,plain);
+    border: $border;
     cursor: pointer;
     &:hover,&:focus{
       filter: brightness(1.1);

@@ -10,9 +10,7 @@ import Loading from '../../components/common/Loading'
 import BlogCard from "../../components/common/BlogCard";
 import {addListener, removeListenerRS} from "../../utils/libs/EventManager";
 import lodash from 'lodash'
-import {sleep} from "../../utils";
 import {useRouter} from "next/router";
-import useGlobalLoading from "../../hooks/useGlobalLoading";
 export async function getServerSideProps(context: any) {
     const res = await getBlogsByType()
     return {
@@ -23,7 +21,6 @@ export async function getServerSideProps(context: any) {
 }
 
 const Home: NextPageWithLayout = (props: any) => {
-    useGlobalLoading(false)
     const [blogs, setBlogs] = useState(props.blogs)
     const page = useRef(1)
     const [loadingMore, setLoadingMore] = useState(true)

@@ -12,10 +12,10 @@ $size:60px;
   align-items: center;
   z-index: 100;
   &[class*='mask']{
-    background-color: map_get($colors,mask);
+    background-color: var(--mask);
   }
 }
-$color : map_get($colors,loading);
+$color : var(--loading);
 .xl-loading-circle-svg {
   height: $size;
   width: $size;

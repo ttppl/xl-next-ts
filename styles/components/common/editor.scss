@@ -21,7 +21,7 @@
     font-size: 20px;
     border-radius: 3px;
     outline: none;
-    border: 1px solid map_get($colors,plain);
+    border: $border;
     &:hover{
       color: $primaryColor;
       cursor: pointer;

@@ -1,8 +1,7 @@
 import {getDefaultLayout} from "../../../components/layouts/main";
-import '/styles/pages/blog/blogSearch.scss'
+import '../../../styles/pages/blog/blogSearch.scss'
 import React, {useState} from "react";
 import Icon from "../../../components/common/Icon";
-import setGlobalLoading from "../../../utils/libs/setGlobalLoading";
 import {queryBlogs} from "../../../request/modules/blogRequest";
 import BlogCard from "../../../components/common/BlogCard";
 import XlPagination from "../../../components/common/XlPagination";
@@ -41,15 +40,14 @@ function Search(props: SearchProps) {
     const router = useRouter()
     const search = (e:any)=>{
         e.preventDefault()
-        setGlobalLoading(true)
         router.push(`/blog/search/p1?key=${key}`)
     }
     return <div className='xl-blog-search-page'>
-        <form className='xl-search-input' method='get' onSubmit={search}
+        <form action='/blog/search' className='xl-search-input' method='get' onSubmit={search}
               // action={`/blog/search/p1`}
         >
             <input name='key' value={key} onChange={(e) => setKey(e.target.value)}/>
-            <button className='xl-search-button'><Icon className='search'/></button>
+            <button type='submit' className='xl-search-button'><Icon className='search'/></button>
         </form>
         <div className='xl-blog-type-blog-list'>
             {props.blogs.length > 0 ? props.blogs.map((blog,index) => {

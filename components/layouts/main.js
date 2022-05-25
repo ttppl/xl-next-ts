@@ -24,11 +24,13 @@ function MyLayout({theme, children}) {
 
     return (
         <>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
             <Menu style={{position: 'fixed', right: '20px', top: '20px'}} activeKey='index' title={'导航'}>
                 <MenuItem menuKey='index' to='/' label='首页'/>
                 <MenuItem menuKey='types' to='/blog/types/init' label='分类'/>
                 <MenuItem menuKey='search' to='/blog/search/key' label='搜索'/>
                 <MenuItem menuKey='jsEditor' to='/editor' label='JS在线测试'/>
+                <MenuItem menuKey='txtDownload' to='/txtDownload' label='网文爬取'/>
                 {/*<MenuItem menuKey='localEditor' to='/editor/localEditor' label='本地测试'/>*/}
                 <MenuItem menuKey='changeTheme' label={`${appTheme === 'light' ? 'dark' : 'light'}主题`}
                           onClick={changeTheme}/>

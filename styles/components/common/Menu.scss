@@ -98,10 +98,10 @@ $iconHeight: $iconLineHeight*3+$gap*2;//菜单icon的整体高度
     cursor: pointer;
     color: var(--base-color);
     &:hover {
-      color: map-get($colors, primary) !important;
+      color: $primaryColor !important;
     }
     &[class*=active] {
-      background-color: fade-out(map-get($colors, primary), 0.8);
+      background-color: fade-out($primaryColor, 0.8);
     }
   }
 }

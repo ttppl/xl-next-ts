@@ -7,7 +7,6 @@ import Icon from "../../../components/common/Icon";
 import {getBlogsByCategory} from "../../../request/modules/blogRequest";
 import BlogCard from "../../../components/common/BlogCard";
 import Link from "next/link";
-import setGlobalLoading from "../../../utils/libs/setGlobalLoading";
 import {useRouter} from "next/router";
 import XlPagination from "../../../components/common/XlPagination";
 import ClickOutside from "../../../utils/libs/clickOutside";
@@ -61,10 +60,6 @@ function BlogTypes({categories, categoryId, blogs, total, page, pageSize}) {
         }
 
     }
-    // 显示全局loading
-    const loading = () => {
-        setGlobalLoading(true)
-    }
     // mobile模式下显示目录
     const [showCategory, setShowCategory] = useState(true)
     const category = useRef(null)
@@ -87,9 +82,7 @@ function BlogTypes({categories, categoryId, blogs, total, page, pageSize}) {
                 if (category.children) {
                     return <div key={category.categoryId}>
                         <Link href={`/blog/types/${category.categoryId}`} key={category.categoryId}>
-                            <li className={`xl-blog-types-categories-menu-sub-item ${category.categoryId === categoryId && 'active'}`}
-                                onClick={loading}
-                            >
+                            <li className={`xl-blog-types-categories-menu-sub-item ${category.categoryId === categoryId && 'active'}`}>
                                 <Icon className={`back ${isActive && 'active'}`}
                                       title='展开'
                                       onClick={(e) => {
@@ -105,9 +98,7 @@ function BlogTypes({categories, categoryId, blogs, total, page, pageSize}) {
                         </Collapse>
                     </div>
                 } else return <Link href={`/blog/types/${category.categoryId}`} key={category.categoryId}>
-                    <li
-                        onClick={loading}
-                        className={`xl-blog-types-categories-menu-item ${category.categoryId === categoryId && 'active'}`}>
+                    <li className={`xl-blog-types-categories-menu-item ${category.categoryId === categoryId && 'active'}`}>
                         {category.categoryName}
                     </li>
                 </Link>

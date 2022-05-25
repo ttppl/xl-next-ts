@@ -1,4 +1,6 @@
 import {useCallback, useEffect, useState} from "react";
+import setGlobalLoading from "../utils/libs/setGlobalLoading";
+import {sleep} from "../utils";
 
 const useTheme = (theme:string)=>{
     const [appTheme, setAppTheme] = useState(theme)
@@ -15,11 +17,11 @@ const useTheme = (theme:string)=>{
                     themeVars[item]
                 );
             });
-            // document.body.style.color = themeVars['base-color']
+            setGlobalLoading(false,{})
         }
-        // document.body.style.background = `url(/imgs/${appTheme}-bg.jpg) no-repeat`
     },[appTheme])
-    const changeTheme = useCallback(() => {
+    const changeTheme = useCallback(async () => {
+        setGlobalLoading(true,{label:'主题切换中...'})
         const newTheme = appTheme === 'light' ? 'dark' : 'light'
         setAppTheme(newTheme)
     },[appTheme])

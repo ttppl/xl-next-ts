@@ -2,7 +2,6 @@ import React, {ReactNode, useEffect} from "react";
 import Link from "next/link";
 import Pagination from "rc-pagination";
 import {useRouter} from "next/router";
-import setGlobalLoading from "../../utils/libs/setGlobalLoading";
 import {isFunction} from "../../utils/check";
 import '/styles/components/common/XlPagination.scss'
 type urlGenerator = string|((page:number)=>string)//pageUrl
@@ -26,7 +25,7 @@ const XlPagination = ({defaultPageSize,defaultCurrent,pageUrl,onChange,total,ite
     const router = useRouter()
     const routerChange = (page:number,pageSize:number) => {
         // 路由跳转添加全局loading
-        setGlobalLoading(true)
+        // setGlobalLoading(true)
         const routerUrl = isFunction(pageUrl)?(pageUrl as Function)(page):pageUrl
         if(routerUrl) {
             router.push(routerUrl)
@@ -34,16 +33,16 @@ const XlPagination = ({defaultPageSize,defaultCurrent,pageUrl,onChange,total,ite
         // 触发change回调
         onChange?.(page)
     }
-    useEffect(() => {
-        const routerCompleteHandler = () => {
-            // 路由跳转完成关闭全局loading
-            setGlobalLoading(false)
-        }
-        router.events.on('routeChangeComplete', routerCompleteHandler)
-        return () => {
-            router.events.off('routeChangeComplete', routerCompleteHandler)
-        }
-    }, [])
+    // useEffect(() => {
+    //     const routerCompleteHandler = () => {
+    //         // 路由跳转完成关闭全局loading
+    //         setGlobalLoading(false)
+    //     }
+    //     router.events.on('routeChangeComplete', routerCompleteHandler)
+    //     return () => {
+    //         router.events.off('routeChangeComplete', routerCompleteHandler)
+    //     }
+    // }, [])
     const showPagination = total/defaultPageSize>1// 小于1页则不渲染分页器
     return showPagination?<Pagination
         className='xl-pagination'

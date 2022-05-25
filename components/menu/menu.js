@@ -2,7 +2,6 @@ import React, {createContext, forwardRef, useEffect, useMemo, useRef, useState} 
 import PropTypes from 'prop-types'
 import '/styles/components/common/Menu.scss'
 import {useRouter} from "next/router";
-import setGlobalLoading from "../../utils/libs/setGlobalLoading";
 import ClickOutside from "../../utils/libs/clickOutside";
 import XlTransition from "../common/XlTransition";
 
@@ -56,20 +55,20 @@ function MenuFunc(props, ref) {
     }, [activeKey])
     // 路由切换完毕后关闭全局loading
     const router = useRouter()
-    useEffect(() => {
-        const handleStop = () => {
-            setGlobalLoading(false)
-        }
-        // router.events.on('routeChangeStart', handleStart)
-        router.events.on('routeChangeComplete', handleStop)
-        router.events.on('routeChangeError', handleStop)
-
-        return () => {
-            // router.events.off('routeChangeStart', handleStart)
-            router.events.off('routeChangeComplete', handleStop)
-            router.events.off('routeChangeError', handleStop)
-        }
-    }, [])
+    // useEffect(() => {
+    //     const handleStop = () => {
+    //         setGlobalLoading(false)
+    //     }
+    //     // router.events.on('routeChangeStart', handleStart)
+    //     router.events.on('routeChangeComplete', handleStop)
+    //     router.events.on('routeChangeError', handleStop)
+    //
+    //     return () => {
+    //         // router.events.off('routeChangeStart', handleStart)
+    //         router.events.off('routeChangeComplete', handleStop)
+    //         router.events.off('routeChangeError', handleStop)
+    //     }
+    // }, [])
     return <div className="xl-menu" style={props.style}>
         {/*菜单icon*/}
         <div className='xl-menu-icon' data-active={showMenu} ref={menuIcon}

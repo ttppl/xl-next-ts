@@ -88,7 +88,7 @@
           position: absolute;
           right: 0;
           top: 0;
-          background-color: map_get($colors, plain);
+          background-color: var(--list-bar-bg);
           width: 3px;
           height: 100%;
           border-radius: 3px;

@@ -1,0 +1,95 @@
+@import "../../global/variable";
+
+@media screen and (max-width: 900px){
+  body{
+    .txt-download-main {
+      .xl-txt-download-search-form{
+        width: 80%;
+      }
+      .xl-book-list-table {
+        padding: 0 10px;
+      }
+    }
+  }
+}
+
+.txt-download-main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .xl-txt-download-search-form {
+    margin-top: 60px;
+    display: inline-block;
+    width: 50%;
+    position: relative;
+    > input {
+      background-color: transparent;
+      border: $border;
+      border-radius: 4px;
+      outline: none;
+      height: 60px;
+      font-size: 20px;
+      padding: 0 15px;
+      width: 100%;
+      color: inherit;
+    }
+    .xl-search-button {
+      cursor: pointer;
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: transparent;
+      outline: none;
+      border: none;
+    }
+    .xl-iconfont {
+      color: var(--base-color);
+    }
+  }
+  //.xl-book-list{
+  //  margin-top: 20px;
+  //  padding:20px;
+  //  overflow: hidden;
+  //  display: flex;
+  //  justify-content: center;
+  //  flex-wrap: wrap;
+  //}
+  .xl-bool-list{
+    width: 100vw;
+    overflow: auto;
+    padding-bottom: 40px;
+  }
+  .xl-book-list-table{
+    margin-top: 40px;
+    padding: 0 40px;
+    width: 100vw;
+    border:0;
+    cellspacing:0;
+    cellpadding:0;
+    //overflow: hidden;
+    .xl-table-title{
+      height: 40px;
+      font-size: 24px;
+      text-align: left;
+    }
+    th,td{
+      width: 10px;
+      padding: 14px 14px;
+      overflow: hidden;
+      white-space: nowrap;
+      border: none;
+    }
+    .xl-book-search-tr-item{
+      padding: 20px 0;
+      cursor: pointer;
+      overflow: hidden;
+      &:hover{
+        //background-color: $lightColor;
+        //transform: scale(1.05);
+        //font-size: 20px;
+        box-shadow: $box-shadow;
+      }
+    }
+  }
+}

@@ -7,7 +7,6 @@ import 'highlight.js/styles/xcode.css';
 import Icon from "../../../components/common/Icon";
 import useRunnableScript from "../../../hooks/useRunnableScript";
 import {useRouter} from "next/router";
-import useGlobalLoading from "../../../hooks/useGlobalLoading";
 import {getClasses, getScrollTop, scrollTo} from "../../../utils/dom";
 import {addListener, removeListenerRS} from "../../../utils/libs/EventManager";
 import lodash from 'lodash'
@@ -27,7 +26,6 @@ export async function getServerSideProps({req, res, params}) {
 }
 
 function BlogDetail({blog}) {
-    useGlobalLoading(false)
     useRunnableScript()
     const router = useRouter()
     const back = () => {

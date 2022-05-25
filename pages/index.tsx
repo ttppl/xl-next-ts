@@ -36,7 +36,6 @@ const Index: NextPageWithLayout = (props:HomePageProps) => {
             <Head>
                 <title>吞天泡泡龙的主页</title>
                 <meta name="description" content="吞天泡泡龙的主页"/>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <link rel="icon" href="/my_favicon.ico"/>
             </Head>
             {/*冰墩墩*/}

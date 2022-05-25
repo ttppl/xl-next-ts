@@ -1,0 +1,163 @@
+@import "../../global/variable";
+
+@media screen and (max-width: 900px){
+  body{
+    .xl-txt-info-main {
+      .xl-txt-info-header {
+        .cover-img{
+          width: 92px;
+          height: 116px;
+        }
+        .book-info{
+          .book-other-info{
+            display: block;
+          }
+          .book-abstract{
+            //white-space: pre-wrap;
+            //text-overflow: inherit;
+            //display: block;
+            display: none;
+          }
+        }
+      }
+      .xl-mobile-abstract{
+        width: 100%;
+        display: block;
+      }
+      #xl-ws-msg-panel{
+        width: 90vw;
+      }
+    }
+    .xl-txt-chapter-item{
+      width: 100%;
+    }
+
+  }
+}
+
+.xl-txt-info-main{
+  padding: 20px;
+  //display: flex;
+  //flex-direction: column;
+  //align-items: center;
+  .xl-txt-info-header{
+    //padding: 20px;
+    margin-top: 40px;
+    display: flex;
+    //封面
+    .cover-img{
+      box-shadow: $box-shadow;
+      width: 120px;
+      height: 150px;
+    }
+    //书籍信息
+    .book-info{
+      flex-grow: 1;
+      margin-left: 20px;
+      //书名
+      .book-name{
+        margin: 0;
+        font-size: 20px;
+        font-weight: bold;
+      }
+      //最新章节，上一更新时间
+      .book-other-info{
+        display: flex;
+        //justify-content: space-between;
+        >p{
+          margin-right: 40px;
+        }
+      }
+      //摘要
+      .book-abstract{
+        width: 70%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        //white-space: nowrap;
+        white-space: pre-wrap;
+        text-indent: 2rem;
+        display:-webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+    }
+  }
+  //手机端摘要
+  .xl-mobile-abstract{
+    margin-top: 10px;
+    text-indent: 2rem;
+    display: none;
+  }
+  //章节
+  .xl-txt-info-chapters{
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: $border;
+    &[class*=download-mode]{
+      //章节子项
+      .xl-txt-chapter-item{
+        border: $border;
+        //选中和hover样式
+        &[class*=active],&:hover{
+          background-color: fade_out($primaryColor,.5);
+        }
+      }
+    }
+    //上一章，目录，下一章
+    .xl-chapters-function-bar{
+      padding: 16px 0;
+      .xl-button{
+        margin-right: 16px;
+        display: inline-block;
+        padding: 10px;
+        border: 1px solid gray;
+        border-radius: 4px;
+        cursor: pointer;
+        &:hover{
+          //background-color: fade_out($primaryColor,.4);
+          box-shadow: $box-shadow;
+        }
+      }
+    }
+  }
+  //服务器信息展示框
+  #xl-ws-msg-panel{
+    background-color: var(--modal-bg);
+    box-shadow: $box-shadow;
+    border-radius: 4px;
+    overflow: auto;
+    width: 50vw;
+    height: 50vh;
+    z-index: 1000;
+    position: fixed;
+    margin:auto ;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding: 16px;
+    .close-icon{
+      position: absolute;
+      right: 10px;
+      top: 10px;
+    }
+  }
+}
+
+//章节子项
+.xl-txt-chapter-item{
+  float: left;
+  width: 30%;
+  border-radius: 4px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  a{
+    padding: 5px;
+    display: inline-block;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  >.reading-mode:hover{
+    background-color: fade_out($primaryColor,.5);
+  }
+}

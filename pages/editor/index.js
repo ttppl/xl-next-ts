@@ -5,12 +5,10 @@ import Editor from "../../components/common/Editor";
 import {runScripts} from "../../request/modules/utilRequest";
 import '/styles/pages/editor/JsEditor.scss'
 import useLoading from "../../hooks/useLoading";
-import useGlobalLoading from "../../hooks/useGlobalLoading";
 
 JsEditor.layout = getDefaultLayout
 
 function JsEditor() {
-    useGlobalLoading(false)
     const [output,setOutput] = useState('')
     const outputRef = useRef(null)
     const [loading,setLoading] = useLoading(false,outputRef,{

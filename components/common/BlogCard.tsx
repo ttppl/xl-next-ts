@@ -4,11 +4,8 @@ import Icon from './Icon'
 import Link from "next/link";
 import React, {useMemo} from "react";
 import Router from "next/router"
-// @ts-ignore
-import setGlobalLoading from "/utils/libs/setGlobalLoading";
 
 const showDetail = (id: number | string) => {
-    setGlobalLoading(true)
     Router.push(`/blog/detail/${id}`)
 }
 

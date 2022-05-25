@@ -1,6 +1,7 @@
 import lodash from "lodash";
 import {isObject} from "./check";
 import {number} from "prop-types";
+import {Buffer} from "buffer";
 
 export function getKeyCode(e:any) {
     return e.keyCode || e.which || e.charCode
@@ -266,4 +267,16 @@ export const removeScript=(src:string)=>{
 
     })
 
+}
+
+export const encryptUrl = (url:string)=>{
+    if(Buffer) {
+        return (new Buffer(encodeURI(url))).toString('base64')
+    }else return url
+}
+
+export const decryptUrl = (url:string)=>{
+    if(Buffer) {
+        return decodeURI((new Buffer(url, 'base64')).toString())
+    }else return url
 }
