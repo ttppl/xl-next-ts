@@ -4,6 +4,7 @@ export interface Blog {
     blogId:number,
     userId:number,
     title:string,
+    coverImg:string,
     plainText:string,
     type:string,
     tags:string|Array<object>,

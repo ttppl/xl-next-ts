@@ -10,6 +10,7 @@ const LIGHT_THEME = {
     'loading':'#3cee3c',//加载图标颜色
     'modal-bg':'#575656',//modal背景
     'modal-title':'#eaeaea',//modal标题
+    'index-blog-card-border':'1px solid #9a9090',//首页博客卡边框
 }
 
 export default LIGHT_THEME

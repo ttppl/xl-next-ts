@@ -2,11 +2,12 @@ import PropTypes from 'prop-types';
 import React from 'react'
 import '/styles/layouts/main.scss'
 import MenuItem from "../menu/MenuItem";
-import Menu, {useMenu} from "../menu/menu";
+import Menu from "../menu/menu";
 import Script from "next/script";
 import useTheme from "../../hooks/useTheme";
 // import Wave from "../svg/Wave";
 import {addScript} from "../../utils/dom";
+
 
 MyLayout.propTypes = {
     theme: PropTypes.string.isRequired//主题
@@ -50,6 +51,6 @@ function MyLayout({theme, children}) {
 
 export default MyLayout
 
-export function getDefaultLayout(page) {
-    return <MyLayout>{page}</MyLayout>
+export function getDefaultLayout(page, layoutProps) {
+    return <MyLayout {...layoutProps}>{page}</MyLayout>
 }

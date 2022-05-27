@@ -270,13 +270,13 @@ export const removeScript=(src:string)=>{
 }
 
 export const encryptUrl = (url:string)=>{
-    if(Buffer) {
+    if(Buffer&&url) {
         return (new Buffer(encodeURI(url))).toString('base64')
     }else return url
 }
 
 export const decryptUrl = (url:string)=>{
-    if(Buffer) {
+    if(Buffer&&url) {
         return decodeURI((new Buffer(url, 'base64')).toString())
     }else return url
 }

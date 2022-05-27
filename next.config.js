@@ -2,6 +2,9 @@
 const path = require('path');
 // const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 module.exports = {
+    images: {
+        domains: ['ttppl.xyz','localhost'],
+    },
     reactStrictMode: true,
     amp: {
         skipValidation: true

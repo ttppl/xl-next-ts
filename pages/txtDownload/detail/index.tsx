@@ -56,13 +56,13 @@ function TxtDetail({txtInfo}: Props) {
     // 下载模式
     const [downloadMode,setDownloadMode] = useState(false)
     // 选择的章节
-    const [selectedChapter,setSelectedChapter] = useState([0,0])
+    const [selectedChapter,setSelectedChapter] = useState<Array<number>>([])
     // 全选
     const selectAllToggle = ()=>{
         if(selectedChapter[0]!==1&&selectedChapter[1]!==chapters.length) {
             setSelectedChapter([1, chapters.length])
         }else {
-            setSelectedChapter([0,0])
+            setSelectedChapter([])
         }
     }
     // 选择需要下载的章节
@@ -201,8 +201,9 @@ function ChapterItem({chapter,active,disableRouter,...res}:{chapter:Chapter,acti
     const toChapter = (event:any)=>{
         if(disableRouter){
             event.preventDefault()
+        }else {
+            setGlobalLoading(true, {label: `章节【${chapter.name}】准备中...`})
         }
-        setGlobalLoading(true,{label:`章节【${chapter.name}】准备中...`})
     }
     return <div {...res} className={getClass(['xl-txt-chapter-item',{active}])}>
         <Link href={{pathname:'/txtDownload/chapter',query:{key:encryptUrl(chapter.url)}}} passHref>

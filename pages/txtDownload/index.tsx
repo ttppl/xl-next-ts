@@ -13,7 +13,7 @@ export async function getServerSideProps({query}: any) {
 
     return {
         props: {
-            books: [],
+            books: null,
             total: 0,
             page: 1,
             pageSize
@@ -34,7 +34,7 @@ function TxtDownload(props: Props) {
     const router = useRouter()
     const search = (e: any) => {
         e.preventDefault()
-        setGlobalLoading(true,{label:'努力搜索中...'})
+        setGlobalLoading(true, {label: '努力搜索中...'})
         router.push(`/txtDownload/p1?key=${encryptUrl(key)}`)
     }
     return <div className='txt-download-main'>
@@ -43,7 +43,8 @@ function TxtDownload(props: Props) {
             <button type='submit' className='xl-search-button'><Icon className='search'/></button>
         </form>
         <div className='xl-bool-list'>
-            <table className='xl-book-list-table'>
+            {props.books ? <table className='xl-book-list-table'>
+                <tbody>
                 <tr className='xl-table-title'>
                     <th>类型</th>
                     <th>书名</th>
@@ -53,7 +54,11 @@ function TxtDownload(props: Props) {
                     <th>更新时间</th>
                 </tr>
                 {props.books.map(((book, index) => <BookSearchItem book={book} key={index + book.href}/>))}
-            </table>
+                {props.books.length===0&&<tr><td colSpan={6}>抱歉，小爬虫已经努力了！</td></tr>}
+                </tbody>
+            </table>:<p>
+                推荐
+            </p>}
         </div>
 
     </div>
@@ -63,7 +68,7 @@ function BookSearchItem({book}: { book: BlogSearch }) {
     const unknown = '[未知]'
     const router = useRouter()
     const toDetail = () => {
-        setGlobalLoading(true,{label:'loading 书籍详情...'})
+        setGlobalLoading(true, {label: 'loading 书籍详情...'})
         router.push(`/txtDownload/detail?key=${encryptUrl(book.href)}`)
     }
     return <tr className='xl-book-search-tr-item' onClick={toDetail}>

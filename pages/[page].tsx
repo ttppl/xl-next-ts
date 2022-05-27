@@ -5,7 +5,7 @@ import Home from "./index";
 
 export async function getServerSideProps({query}: any) {
     const page = parseFloat(query.page.slice(1))
-    const pageSize = 10
+    const pageSize = 20
     const res = await getBlogsByType('newest', page, pageSize)
     return {
         props: {

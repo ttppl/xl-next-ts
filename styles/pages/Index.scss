@@ -1,11 +1,76 @@
-.index-main {
-    position: relative;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: inline-block;
-    overflow: hidden;
+@import "../global/variable";
+
+@media screen and (max-width: 900px){
+    body{
+        .xl-index-blog-card{
+            //width: 70%;
+        }
+        .index-main{
+            .xl-index-blogs{
+                flex-wrap: wrap;
+                .xl-index-blogs-column{
+                    width: 50vw;
+                }
+            }
+        }
+    }
 }
 
+.index-main {
+    //position: relative;
+    //top: 20px;
+    //left: 50%;
+    //transform: translateX(-50%);
+    //display: inline-block;
+    margin-top: 60px;
+    .xl-index-blogs{
+        display: flex;
+        .xl-index-blogs-column{
+            //padding: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            width: 16vw;
+            >*{
+                flex-grow: 1;
+            }
+            //align-content: stretch;
+        }
+        //justify-content: space-between;
+    }
+}
+
+.xl-index-blog-card{
+    border-radius: 4px;
+    //width: 20vw;
+    //display: inline-block;
+    //float: left;
+    margin: 10px;
+    box-shadow: $box-shadow;
+    padding: 10px;
+    .xl-blog-cover-img{
+        width: 100%;
+        object-fit: cover;
+        display: inline-block;
+        border-radius: 4px;
+    }
+    .xl-blog-info{
+        border-bottom: var(--index-blog-card-border);
+        //margin-top: 10px;
+        padding-bottom: 20px;
+        border-radius: 4px;
+        .xl-blog-abstract{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            //white-space: nowrap;
+            white-space: pre-wrap;
+            display:-webkit-box;
+            height: 100px;
+            //-webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+    }
+
+}
 
 
