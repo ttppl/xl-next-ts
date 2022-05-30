@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import '/styles/layouts/main.scss'
 import MenuItem from "../menu/MenuItem";
 import Menu from "../menu/menu";
@@ -7,6 +7,7 @@ import Script from "next/script";
 import useTheme from "../../hooks/useTheme";
 // import Wave from "../svg/Wave";
 import {addScript} from "../../utils/dom";
+import {getParaByKeys} from "../../request/modules/paraRequest";
 
 
 MyLayout.propTypes = {
@@ -17,15 +18,30 @@ MyLayout.defaultProps = {
 }
 
 //带菜单的布局
+
 function MyLayout({theme, children}) {
     // 主题
     const [appTheme, changeTheme] = useTheme(theme)
     // 菜单过度效果
-
+    const [para,setPara] = useState({})
+    useEffect(()=>{
+        getParaByKeys(['blog_head_title','blog_head_motto']).then((res)=>{
+            const newPara = {}
+            res.data.forEach(p=>{
+                newPara[p.paraKey] = p.paraValue
+            })
+            setPara(newPara)
+        })
+    },[])
 
     return (
         <>
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+           <header className='xl-header'>
+               <img className='xl-head-logo' src='/imgs/logo.png'/>
+               <span className='xl-head-title'>{para['blog_head_title']}</span>
+               <span className='xl-head-motto'>{para['blog_head_motto']}</span>
+           </header>
             <Menu style={{position: 'fixed', right: '20px', top: '20px'}} activeKey='index' title={'导航'}>
                 <MenuItem menuKey='index' to='/' label='首页'/>
                 <MenuItem menuKey='types' to='/blog/types/init' label='分类'/>

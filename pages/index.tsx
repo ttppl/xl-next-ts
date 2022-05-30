@@ -3,10 +3,11 @@ import '../styles/pages/Index.scss'
 import {getDefaultLayout} from "../components/layouts/main";
 import {NextPageWithLayout} from "./_app";
 import {Blog, getBlogsByType} from "../request/modules/blogRequest";
-import React from "react";
-import BlogCard from "../components/common/BlogCard";
+import React, {useMemo} from "react";
 import XlPagination from "../components/common/XlPagination";
-import {NextPage} from "next";
+import Link from "next/link";
+import {encryptUrl} from "../utils/dom";
+
 // import Bingdundun from '../components/threejs/Bingdundun'
 
 export async function getServerSideProps(context: any) {
@@ -27,11 +28,11 @@ interface HomePageProps {
     blogs: Array<any>
     total: number,
     page: number,
-    pageSize:number
+    pageSize: number
 }
 
 // @ts-ignore
-const Index: NextPageWithLayout = (props:HomePageProps) => {
+const Index: NextPageWithLayout = (props: HomePageProps) => {
     const columnCount = 4//列数量
     return (
         <>
@@ -44,11 +45,12 @@ const Index: NextPageWithLayout = (props:HomePageProps) => {
             {/*<Bingdundun className='xl-bing-dun-dun'/>*/}
             {/*<img className='header' src={`${process.env.NEXT_PUBLIC_BASE_CLIENT_REQUEST_URL}/file/defaultCoverImg`}/>*/}
             <main className='index-main'>
+                {/*<div className='xl-user-info'></div>*/}
                 <div className='xl-index-blogs'>
-                    {Array.from({length:columnCount}).map((i,columnIndex)=>{
+                    {Array.from({length: columnCount}).map((i, columnIndex) => {
                         return <div key={`index-blog-column-${columnIndex}`} className='xl-index-blogs-column'>
                             {props.blogs.map((blog: Blog, index: number) => {
-                                if(index%columnCount===columnIndex) {
+                                if (index % columnCount === columnIndex) {
                                     return <IndexBlogCard key={blog.blogId} blog={blog}/>
                                 }
                             })}
@@ -83,16 +85,32 @@ const Index: NextPageWithLayout = (props:HomePageProps) => {
     )
 }
 
-function IndexBlogCard({blog}:{blog:Blog}){
+function IndexBlogCard({blog}: { blog: Blog }) {
+    const tags = useMemo(() => {
+        const blogTags = Array.isArray(blog.tags) ? blog.tags : (blog.tags as string).split(',')
+        return blogTags.map((tag: any, index: number) => {
+            if (tag)
+                return <Link passHref href={`/blog/search/p1?key=${encryptUrl(tag)}`}><a key={`tag-${index}`}
+                                                                                         className='xl-blog-tag'>{tag}</a></Link>
+        })
+    }, [blog.tags])
     return <div className='xl-index-blog-card'>
-        <img className='xl-blog-cover-img'
-             src={blog.coverImg?`${process.env.NEXT_PUBLIC_BASE_FILE_URL}${blog.coverImg}`:process.env.NEXT_PUBLIC_DEFAULT_COVER_IMG_URL+'?t='+blog.blogId}
-             alt='blogCoverImg'/>
-        <div className='xl-blog-info'>
-            <p>{blog.title}</p>
-            <div className='xl-blog-abstract'>{blog.plainText}</div>
+        <Link href={`/blog/detail/${blog.blogId}`} passHref>
+            <a className='xl-blog-info'>
+                <p className='xl-blog-title'>{blog.title}</p>
+                <p className='xl-blog-publish-time'>{new Date(blog.publishTime).toLocaleDateString()}</p>
+                <img className='xl-blog-cover-img'
+                     src={blog.coverImg ? `${process.env.NEXT_PUBLIC_BASE_FILE_URL}${blog.coverImg}` : process.env.NEXT_PUBLIC_DEFAULT_COVER_IMG_URL + '?t=' + blog.blogId}
+                     alt='blogCoverImg'/>
+                <div className='xl-blog-abstract'>{blog.plainText}</div>
+            </a>
+        </Link>
+        <div className='xl-blog-card-category'>
+            {blog.category && <>分类：<Link passHref href={`/blog/search/p1?key=${encryptUrl(blog.category as string)}`}>
+                <a>{blog.category}</a>
+            </Link></>}
         </div>
-
+        <div className='xl-blog-tags'>{tags}</div>
     </div>
 }
 

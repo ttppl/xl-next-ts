@@ -2,7 +2,7 @@ import {decryptUrl, encryptUrl} from "../../../utils/dom";
 import {getChapter,} from "../../../request/modules/txtDownloadRequest";
 import {getDefaultLayout} from "../../../components/layouts/main";
 import '../../../styles/pages/txtDownload/chapterDetail.scss'
-import {useRouter} from "next/router";
+import Link from "next/link";
 
 export async function getServerSideProps({query}: any) {
     const url = decryptUrl(query.key)
@@ -25,25 +25,18 @@ interface Props {
 }
 
 function TxtChapterDetail({chapterInfo}: Props) {
-    const router = useRouter()
-    const toDetail = (url:string)=>{
-        router.push(`/txtDownload/chapter?key=${encryptUrl(url)}`)
-    }
-    const toBookInfo = (url:string)=>{
-        router.push(`/txtDownload/detail?key=${encryptUrl(url)}`)
-    }
     return <div className='xl-chapter-main'>
         <p className='xl-chapter-title'>{chapterInfo.name}</p>
         <div className='xl-pre-next-chapter'>
-            <span onClick={()=>toDetail(chapterInfo.pre)}>上一章</span>
-            <span onClick={()=>toBookInfo(chapterInfo.bookInfo)}>目录</span>
-            <span onClick={()=>toDetail(chapterInfo.next)}>下一章</span>
+            <Link href={`/txtDownload/chapter?key=${encryptUrl(chapterInfo.pre)}`}>上一章</Link>
+            <Link href={`/txtDownload/detail?key=${encryptUrl(chapterInfo.bookInfo)}`}>目录</Link>
+            <Link href={`/txtDownload/chapter?key=${encryptUrl(chapterInfo.next)}`}>下一章</Link>
         </div>
         <div className='xl-chapter-content'>{chapterInfo.content?.replace(/\n\n/g,'\n')}</div>
         <div className='xl-pre-next-chapter'>
-            <span onClick={()=>toDetail(chapterInfo.pre)}>上一章</span>
-            <span onClick={()=>toBookInfo(chapterInfo.bookInfo)}>目录</span>
-            <span onClick={()=>toDetail(chapterInfo.next)}>下一章</span>
+            <Link href={`/txtDownload/chapter?key=${encryptUrl(chapterInfo.pre)}`}>上一章</Link>
+            <Link href={`/txtDownload/detail?key=${encryptUrl(chapterInfo.bookInfo)}`}>目录</Link>
+            <Link href={`/txtDownload/chapter?key=${encryptUrl(chapterInfo.next)}`}>下一章</Link>
         </div>
     </div>
 }

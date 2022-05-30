@@ -1,6 +1,6 @@
 import {get, post} from "../config";
 
-export interface Parameter {
+export interface XlParameter {
     key: string,
     keyDesc: string,
     type:string,
@@ -9,11 +9,11 @@ export interface Parameter {
     modifyTimestamp:Date
 }
 
-export async function addPara(para: Parameter) {
+export async function addPara(para: XlParameter) {
     return post(`/para/addPara`, para)
 }
 
-export async function modifyPara(para: Parameter) {
+export async function modifyPara(para: XlParameter) {
     return await post(`/para/modifyPara`, para)
 }
 
@@ -26,7 +26,7 @@ export async function getParaByKey(key:string) {
     return res.data?.paraValue
 }
 
-export async function getParaByKeys(keys:[string?]) {
+export async function getParaByKeys(keys:[string?]):Promise<{data:Array<XlParameter>}> {
     return get(`/para/getParas`,{keys})
 }
 

@@ -1,6 +1,7 @@
 const LIGHT_THEME = {
     'base-color':'#ffffff',//基本色
     'base-bg-color':'#000000',//基本背景色
+    'header-bg':'#000000',//header背景色
     'menu-icon':'#ffffff',//菜单bar颜色
     'menu-bg':'#666666',//菜单弹出框背景色
     'category-bg':'#4e4b4b',//目录背景颜色（手机端弹出框目录）
@@ -10,7 +11,8 @@ const LIGHT_THEME = {
     'loading':'#3cee3c',//加载图标颜色
     'modal-bg':'#575656',//modal背景
     'modal-title':'#eaeaea',//modal标题
-    'index-blog-card-border':'1px solid #9a9090',//首页博客卡边框
+    'index-blog-card-border':'3px solid #ffffff',//首页博客卡边框
+    'index-bg':'#565a5e',//主页博客列表背景
 }
 
 export default LIGHT_THEME

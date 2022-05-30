@@ -6,6 +6,9 @@
             //width: 70%;
         }
         .index-main{
+            .xl-user-info{
+                display: none;
+            }
             .xl-index-blogs{
                 flex-wrap: wrap;
                 .xl-index-blogs-column{
@@ -22,17 +25,25 @@
     //left: 50%;
     //transform: translateX(-50%);
     //display: inline-block;
+    display: flex;
+    justify-content: space-around;
     margin-top: 60px;
+    .xl-user-info{
+
+    }
     .xl-index-blogs{
+        ;
         display: flex;
+        border-radius: 4px;
         .xl-index-blogs-column{
             //padding: 20px;
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            width: 16vw;
+            width: 20vw;
+            justify-content: space-between;
             >*{
-                flex-grow: 1;
+                //flex-grow: 1;
             }
             //align-content: stretch;
         }
@@ -41,6 +52,7 @@
 }
 
 .xl-index-blog-card{
+    background-color: var(--index-bg);
     border-radius: 4px;
     //width: 20vw;
     //display: inline-block;
@@ -48,29 +60,66 @@
     margin: 10px;
     box-shadow: $box-shadow;
     padding: 10px;
+    border-bottom: var(--index-blog-card-border);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all ease-in-out .3s;
+    &:hover{
+        transform: scale(1.05);
+    }
+    .xl-blog-info{
+        display: block;
+
+    }
+    .xl-blog-title{
+        font-weight: bold;
+        font-size: 24px;
+        margin: 6px 0;
+        word-break: break-all;
+    }
+    .xl-blog-publish-time{
+        font-style: italic;
+        font-size: 12px;
+        margin: 6px 0;
+    }
     .xl-blog-cover-img{
         width: 100%;
         object-fit: cover;
         display: inline-block;
         border-radius: 4px;
     }
-    .xl-blog-info{
-        border-bottom: var(--index-blog-card-border);
-        //margin-top: 10px;
-        padding-bottom: 20px;
-        border-radius: 4px;
-        .xl-blog-abstract{
-            overflow: hidden;
-            text-overflow: ellipsis;
-            //white-space: nowrap;
-            white-space: pre-wrap;
-            display:-webkit-box;
-            height: 100px;
-            //-webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
+    .xl-blog-abstract{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        //white-space: nowrap;
+        white-space: pre-wrap;
+        display:-webkit-box;
+        //height: 100px;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        margin: 6px 0;
+    }
+    .xl-blog-card-category{
+        margin-top: 14px;
+        a:hover{
+            color: $primaryColor;
         }
     }
-
+    .xl-blog-tags{
+        margin: 10px 0;
+        padding: 6px;
+        .xl-blog-tag{
+            padding: 4px;
+            border: $border;
+            border-radius: 4px;
+            margin-right: 6px;
+            cursor: pointer;
+            &:hover{
+                border: 1px solid $primaryColor;
+            }
+        }
+    }
 }
 
 

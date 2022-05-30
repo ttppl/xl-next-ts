@@ -1,5 +1,13 @@
 @import "../global/variable";
 
+@media screen and (max-width: 900px){
+  body{
+    .xl-header{
+      width: 100%;
+    }
+  }
+}
+
 #particles-js{
   canvas{
     position: fixed;
@@ -17,9 +25,47 @@ body{
   background-attachment: fixed;
   color:var(--base-color)
 }
+.xl-header{
+  height: $headerHeight;
+  position: fixed;
+  width: 99%;
+  padding: 4px;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: auto auto;
+  background-color: var(--header-bg);
+  z-index: 999;
+  //line-height: $headerHeight;
+  display: flex;
+  //justify-content: space-between;
+  align-items: flex-end;
+  box-shadow: $box-shadow;
+  .xl-head-logo{
+    height: $headerHeight+(-8);
+  }
+  .xl-head-title{
+    font-family: font-rz, serif, sans-serif, cursive;
+    font-size: 50px;
+    vertical-align: center;
+    padding: 0 20px;
+  }
+  .xl-head-motto{
+    //flex-grow: 1;
+    padding: 0 10px;
+    margin-right: 40px;
+    text-align: center;
+    font-size: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: bottom;
+  }
+}
 
 .xl-main-content{
   position: relative;
+  margin-top: $headerHeight+5;
 }
 
 //分页器下方给一定空间

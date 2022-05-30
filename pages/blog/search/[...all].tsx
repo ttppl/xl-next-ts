@@ -6,11 +6,12 @@ import {queryBlogs} from "../../../request/modules/blogRequest";
 import BlogCard from "../../../components/common/BlogCard";
 import XlPagination from "../../../components/common/XlPagination";
 import {useRouter} from "next/router";
+import {decryptUrl, encryptUrl} from "../../../utils/dom";
 
 //query:/key/:p1/:t1
 export const getServerSideProps = async ({req, query}: any) => {
     // console.log(query)
-    const key = query.key || ''
+    const key = decryptUrl(query.key || '')
     const page = query.all[0]?.slice(1) || 1
     const pageSize = 10
     const blogRes = await queryBlogs(key, {page, pageSize})
@@ -40,7 +41,7 @@ function Search(props: SearchProps) {
     const router = useRouter()
     const search = (e:any)=>{
         e.preventDefault()
-        router.push(`/blog/search/p1?key=${key}`)
+        router.push(`/blog/search/p1?key=${encryptUrl(key)}`)
     }
     return <div className='xl-blog-search-page'>
         <form action='/blog/search' className='xl-search-input' method='get' onSubmit={search}

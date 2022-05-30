@@ -1,6 +1,7 @@
 const LIGHT_THEME = {
     'base-color':'#000000',//基本色
     'base-bg-color':'#ffffff',//基本背景色
+    'header-bg':'#f5f6f7',//header背景色
     'menu-icon':'#808080',//菜单bar颜色,灰色
     'menu-bg':'#ffffff',//菜单弹出框背景色
     'category-bg':'#ffffff',//目录背景颜色（手机端弹出框目录）
@@ -11,6 +12,7 @@ const LIGHT_THEME = {
     'modal-bg':'#ffffff',//modal背景
     'modal-title':'#666',//modal标题
     'index-blog-card-border':'none',//首页博客卡边框
+    'index-bg':'#f5f6f7',//主页博客列表背景
 }
 
 export default LIGHT_THEME

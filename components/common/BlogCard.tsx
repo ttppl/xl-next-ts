@@ -36,9 +36,9 @@ function BlogCard({blog, openBlank, style, className}: { blog: Blog, openBlank: 
         }}>{blog.plainText?.replace(/[\r\n]/g, "")}</p>
         <footer className='xl-blog-card-footer'>
             <span className='xl-blog-card-publish-date'>{new Date(blog.publishTime).toLocaleDateString()}</span>
-            <span><Icon className='view'/>{blog.viewCount}</span>
-            <span><Icon className='heart'/>{blog.likeCount}</span>
-            <span><Icon className='comment'/>{blog.commentCount}</span>
+            {/*<span><Icon className='view'/>{blog.viewCount}</span>*/}
+            {/*<span><Icon className='heart'/>{blog.likeCount}</span>*/}
+            {/*<span><Icon className='comment'/>{blog.commentCount}</span>*/}
             {blog.category && <span className='xl-blog-card-category'>分类：{blog.category}</span>}
             <span>{tags}</span>
         </footer>
