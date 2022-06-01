@@ -13,6 +13,7 @@ const LIGHT_THEME = {
     'modal-title':'#666',//modal标题
     'index-blog-card-border':'none',//首页博客卡边框
     'index-bg':'#f5f6f7',//主页博客列表背景
+    'code-run-detail-tag-bg':'#a09b9b',//code-run标签背景色
 }
 
 export default LIGHT_THEME

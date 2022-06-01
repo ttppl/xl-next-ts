@@ -20,19 +20,10 @@
 }
 
 .index-main {
-    //position: relative;
-    //top: 20px;
-    //left: 50%;
-    //transform: translateX(-50%);
-    //display: inline-block;
     display: flex;
     justify-content: space-around;
     margin-top: 60px;
-    .xl-user-info{
-
-    }
     .xl-index-blogs{
-        ;
         display: flex;
         border-radius: 4px;
         .xl-index-blogs-column{
@@ -40,10 +31,10 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            width: 20vw;
+            width: 12vw;
             justify-content: space-between;
             >*{
-                //flex-grow: 1;
+                flex-grow: 1;
             }
             //align-content: stretch;
         }
@@ -52,19 +43,17 @@
 }
 
 .xl-index-blog-card{
-    background-color: var(--index-bg);
+    //background-color: var(--index-bg);
     border-radius: 4px;
-    //width: 20vw;
-    //display: inline-block;
-    //float: left;
     margin: 10px;
     box-shadow: $box-shadow;
     padding: 10px;
     border-bottom: var(--index-blog-card-border);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    //justify-content: space-between;
     transition: all ease-in-out .3s;
+    position: relative;
     &:hover{
         transform: scale(1.05);
     }
@@ -95,13 +84,16 @@
         //white-space: nowrap;
         white-space: pre-wrap;
         display:-webkit-box;
-        //height: 100px;
         -webkit-line-clamp: 4;
         -webkit-box-orient: vertical;
+        line-height: 18px;
         margin: 6px 0;
     }
     .xl-blog-card-category{
         margin-top: 14px;
+        a{
+            word-break: break-all;
+        }
         a:hover{
             color: $primaryColor;
         }
@@ -109,11 +101,14 @@
     .xl-blog-tags{
         margin: 10px 0;
         padding: 6px;
+        overflow: hidden;
         .xl-blog-tag{
+            float: left;
             padding: 4px;
             border: $border;
             border-radius: 4px;
             margin-right: 6px;
+            margin-top: 4px;
             cursor: pointer;
             &:hover{
                 border: 1px solid $primaryColor;

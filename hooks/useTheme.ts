@@ -24,7 +24,8 @@ const useTheme = (theme:string)=>{
             let img = new Image();
             img.src = `/imgs/${appTheme}-bg.jpg`;
             img.onload = function () {
-                document.body.style.backgroundImage = "url(" + img.src + ")";
+                // document.body.style.backgroundImage = "url(" + img.src + ")";
+                document.documentElement.style.setProperty('--base-bg-img',"url(" + img.src + ")")
                 Object.keys(themeVars).forEach((item) => {
                     document.documentElement.style.setProperty(
                         `--${item}`,

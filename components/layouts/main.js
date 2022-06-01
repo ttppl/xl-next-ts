@@ -44,7 +44,8 @@ function MyLayout({theme, children}) {
            </header>
             <Menu style={{position: 'fixed', right: '20px', top: '20px'}} activeKey='index' title={'导航'}>
                 <MenuItem menuKey='index' to='/' label='首页'/>
-                <MenuItem menuKey='types' to='/blog/types/init' label='分类'/>
+                <MenuItem menuKey='types' to='/blog/types/init' label='博客分类'/>
+                <MenuItem menuKey='codeRun' to='/codeRun' label='localCode'/>
                 <MenuItem menuKey='search' to='/blog/search/key' label='搜索'/>
                 <MenuItem menuKey='jsEditor' to='/editor' label='JS在线测试'/>
                 <MenuItem menuKey='txtDownload' to='/txtDownload' label='网文爬取'/>

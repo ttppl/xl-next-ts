@@ -1,7 +1,7 @@
 import {isFunction, isNumber} from "../check";
 import {off, on} from "../dom";
 
-type Callback = (e: Event, dom?: HTMLElement, eventName?: string) => void
+type Callback = (e: Event, dom?: HTMLElement|Window, eventName?: string) => void
 type WrapperFun = (event: Event) => void
 type EventListener = {
     // isListening: boolean,//是否监听
@@ -9,17 +9,17 @@ type EventListener = {
     callbacks: Array<Callback>//回调函数
 }
 type Result = {
-    dom?: HTMLElement,
+    dom?: HTMLElement|Window,
     event?: string,
     callbackIndex?: number
 } | null
 
-const domListeners: Map<HTMLElement, Map<string, EventListener>> = new Map()
+const domListeners: Map<HTMLElement|Window, Map<string, EventListener>> = new Map()
 
 // <dom,<eventName,{isListening,wrapperFun,[...callback]}>>
 
 
-export function addListener(dom: HTMLElement, event: string, callback: Callback): Result {
+export function addListener(dom: HTMLElement|Window, event: string, callback: Callback): Result {
     if (!dom || !event || !isFunction(callback)) return null
     const eventListeners = domListeners.get(dom)
     if (!eventListeners) {
@@ -57,7 +57,7 @@ export function removeListenerRS(result: Result): Result {
     } else return null
 }
 
-export function removeListener(dom: HTMLElement, event?: string, callback?: Callback | number): Result {
+export function removeListener(dom: HTMLElement|Window, event?: string, callback?: Callback | number): Result {
     if (!dom) return null
     const eventListeners = domListeners.get(dom)
     if (!eventListeners) return null

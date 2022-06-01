@@ -3,7 +3,7 @@ import '../styles/pages/Index.scss'
 import {getDefaultLayout} from "../components/layouts/main";
 import {NextPageWithLayout} from "./_app";
 import {Blog, getBlogsByType} from "../request/modules/blogRequest";
-import React, {useMemo} from "react";
+import React, {useEffect, useMemo, useRef} from "react";
 import XlPagination from "../components/common/XlPagination";
 import Link from "next/link";
 import {encryptUrl} from "../utils/dom";
@@ -94,7 +94,25 @@ function IndexBlogCard({blog}: { blog: Blog }) {
                                                                                          className='xl-blog-tag'>{tag}</a></Link>
         })
     }, [blog.tags])
-    return <div className='xl-index-blog-card'>
+    const container = useRef<HTMLDivElement>(null)
+    const abstract = useRef<HTMLDivElement>(null)
+    useEffect(()=>{
+        const el:HTMLElement = container.current as HTMLElement
+        const containerHeight = el.clientHeight
+        const padding = parseFloat(window.getComputedStyle(el).getPropertyValue('padding-bottom'))
+        const lastChild = el.lastChild as HTMLElement
+        const childMargin = parseFloat(window.getComputedStyle(lastChild).getPropertyValue('margin-bottom'))
+        const restHeight:number = containerHeight-padding-lastChild.offsetTop -lastChild.clientHeight -childMargin
+        if(restHeight>0){
+            const abstEl = abstract.current as HTMLElement
+            const style = window.getComputedStyle(abstEl)
+            const lineHeight:number = parseFloat(style.getPropertyValue('line-height'))
+            const line = parseFloat(style.getPropertyValue('-webkit-line-clamp'))
+            // @ts-ignore
+            abstEl.style['-webkit-line-clamp'] = line+Math.floor(restHeight/lineHeight)
+        }
+    },[])
+    return <div ref={container} className='xl-index-blog-card'>
         <Link href={`/blog/detail/${blog.blogId}`} passHref>
             <a className='xl-blog-info'>
                 <p className='xl-blog-title'>{blog.title}</p>
@@ -102,7 +120,7 @@ function IndexBlogCard({blog}: { blog: Blog }) {
                 <img className='xl-blog-cover-img'
                      src={blog.coverImg ? `${process.env.NEXT_PUBLIC_BASE_FILE_URL}${blog.coverImg}` : process.env.NEXT_PUBLIC_DEFAULT_COVER_IMG_URL + '?t=' + blog.blogId}
                      alt='blogCoverImg'/>
-                <div className='xl-blog-abstract'>{blog.plainText}</div>
+                <div ref={abstract} className='xl-blog-abstract'>{blog.plainText}</div>
             </a>
         </Link>
         <div className='xl-blog-card-category'>
@@ -110,7 +128,7 @@ function IndexBlogCard({blog}: { blog: Blog }) {
                 <a>{blog.category}</a>
             </Link></>}
         </div>
-        <div className='xl-blog-tags'>{tags}</div>
+        {tags.length>1&&<div className='xl-blog-tags'>{tags}</div>}
     </div>
 }
 
