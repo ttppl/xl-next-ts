@@ -1,0 +1,22 @@
+{
+  "/[page]": "pages/[page].js",
+  "/_app": "pages/_app.js",
+  "/api/auth/login": "pages/api/auth/login.js",
+  "/api/auth/logoutUser": "pages/api/auth/logoutUser.js",
+  "/blog/detail/[blogId]": "pages/blog/detail/[blogId].js",
+  "/blog/search/[...all]": "pages/blog/search/[...all].js",
+  "/blog/types/[...all]": "pages/blog/types/[...all].js",
+  "/codeRun/[page]": "pages/codeRun/[page].js",
+  "/codeRun/detail/[id]": "pages/codeRun/detail/[id].js",
+  "/codeRun": "pages/codeRun.js",
+  "/editor": "pages/editor.html",
+  "/": "pages/index.js",
+  "/txtDownload/[page]": "pages/txtDownload/[page].js",
+  "/txtDownload/chapter": "pages/txtDownload/chapter.js",
+  "/txtDownload/detail": "pages/txtDownload/detail.js",
+  "/txtDownload": "pages/txtDownload.js",
+  "/userIndex/[...userId]": "pages/userIndex/[...userId].js",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/404": "pages/404.html"
+}
