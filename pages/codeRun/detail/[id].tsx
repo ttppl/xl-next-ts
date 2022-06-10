@@ -17,7 +17,7 @@ export async function getServerSideProps({query}: any) {
 
 function CodeRunDetail({codeRun}: { codeRun: CodeRun }) {
     const [showCode, setShowCode] = useState(false)
-    const [code, setCode] = useState('html')
+    const [code, setCode] = useState('preview')
     useEffect(() => {
         document.querySelectorAll("pre code").forEach(block => {
             try {
@@ -27,15 +27,27 @@ function CodeRunDetail({codeRun}: { codeRun: CodeRun }) {
             }
         });
     }, [])
+    const setIframeHeight = ()=>{
+        console.log(111)
+        // const ifm= document.getElementById("xl-iframe");
+        // console.log(ifm)
+        // ifm.height=ifm.contentWindow.document.documentElement.offsetHeight;
+    }
     return <div className='xl-code-run-detail'>
-        <iframe width='100%' className='xl-code-run-iframe' srcDoc={codeRun.htmlValue}>
-            加载中
-        </iframe>
         <div className='xl-lang-tags'>
+            <div className={getClass(['xl-lang-tag',{'active':code==='preview'}])} onClick={()=>setCode('preview')}>preview</div>
             <div className={getClass(['xl-lang-tag',{'active':code==='html'}])} onClick={()=>setCode('html')}>html</div>
             <div className={getClass(['xl-lang-tag',{'active':code==='script'}])} onClick={()=>setCode('script')}>script</div>
             <div className={getClass(['xl-lang-tag',{'active':code==='style'}])} onClick={()=>setCode('style')}>style</div>
         </div>
+        <iframe width='100%'
+                id='xl-iframe'
+                style={{display:code==='preview'?'':'none'}}
+                className='xl-code-run-iframe'
+                srcDoc={codeRun.htmlValue}
+                onLoad={setIframeHeight}>
+            加载中
+        </iframe>
         <div>
             <pre style={{display:code==='html'?'':'none'}}>
             <code lang={codeRun.xmlLanguage}>

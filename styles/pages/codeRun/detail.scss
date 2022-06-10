@@ -3,15 +3,18 @@
 .xl-code-run-detail{
   padding: 20px;
   .xl-code-run-iframe{
-    height: 40vh;
+    //height: 40vh;
+    min-height: 70vh;
     border: $border;
     outline: none;
     border-radius: 4px;
     position: relative;
+    overflow: visible;
+    height: auto;
   }
   .xl-lang-tags{
     display: flex;
-    margin-top: 20px;
+    margin-bottom: 20px;
     padding-left: 20px;
     $tagHeight:40px;
     .xl-lang-tag{
