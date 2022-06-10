@@ -54,7 +54,7 @@ function CodeRunDetail({
   const {
     0: code,
     1: setCode
-  } = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)('html');
+  } = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)('preview');
   (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
     document.querySelectorAll("pre code").forEach(block => {
       try {
@@ -64,16 +64,24 @@ function CodeRunDetail({
       }
     });
   }, []);
+
+  const setIframeHeight = () => {
+    console.log(111); // const ifm= document.getElementById("xl-iframe");
+    // console.log(ifm)
+    // ifm.height=ifm.contentWindow.document.documentElement.offsetHeight;
+  };
+
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
     className: "xl-code-run-detail",
-    children: [/*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx("iframe", {
-      width: "100%",
-      className: "xl-code-run-iframe",
-      srcDoc: codeRun.htmlValue,
-      children: "\u52A0\u8F7D\u4E2D"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
       className: "xl-lang-tags",
       children: [/*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx("div", {
+        className: (0,_utils__WEBPACK_IMPORTED_MODULE_5__/* .getClass */ .ll)(['xl-lang-tag', {
+          'active': code === 'preview'
+        }]),
+        onClick: () => setCode('preview'),
+        children: "preview"
+      }), /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx("div", {
         className: (0,_utils__WEBPACK_IMPORTED_MODULE_5__/* .getClass */ .ll)(['xl-lang-tag', {
           'active': code === 'html'
         }]),
@@ -92,6 +100,16 @@ function CodeRunDetail({
         onClick: () => setCode('style'),
         children: "style"
       })]
+    }), /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx("iframe", {
+      width: "100%",
+      id: "xl-iframe",
+      style: {
+        display: code === 'preview' ? '' : 'none'
+      },
+      className: "xl-code-run-iframe",
+      srcDoc: codeRun.htmlValue,
+      onLoad: setIframeHeight,
+      children: "\u52A0\u8F7D\u4E2D"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
       children: [/*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx("pre", {
         style: {
