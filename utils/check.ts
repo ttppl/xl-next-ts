@@ -22,6 +22,10 @@ export const isNumber = function (obj: unknown): boolean {
     return Object.prototype.toString.call(obj) === '[object Number]'
 }
 
+export const isNum = function (num: unknown): boolean {
+    return isNumber(num) ? true : /^-?\d*\.?\d*$/.test(num as any)
+}
+
 export const isNull = function (obj: unknown): boolean {
     return ['[object Null]', '[object Undefined]'].includes(Object.prototype.toString.call(obj))
 }

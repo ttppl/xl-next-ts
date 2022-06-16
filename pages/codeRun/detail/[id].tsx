@@ -28,10 +28,14 @@ function CodeRunDetail({codeRun}: { codeRun: CodeRun }) {
         });
     }, [])
     const setIframeHeight = ()=>{
-        console.log(111)
-        // const ifm= document.getElementById("xl-iframe");
-        // console.log(ifm)
-        // ifm.height=ifm.contentWindow.document.documentElement.offsetHeight;
+        const ifm:any = document.getElementById("xl-iframe");
+        try {
+            const contentHeight = ifm.contentWindow.document.documentElement.offsetHeight
+            ifm.height=contentHeight+100
+        }catch (e) {
+            console.error(e)
+        }
+
     }
     return <div className='xl-code-run-detail'>
         <div className='xl-lang-tags'>

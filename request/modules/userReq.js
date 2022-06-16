@@ -9,5 +9,8 @@ const {doGet, doPost, doRestGet} = request(module)
 
 export async function login(userName, password) {
     return await doPost(`/login`, {userName, password})
+}
 
+export async function getBlogUser() {
+    return await doGet(`/blogUser`)
 }

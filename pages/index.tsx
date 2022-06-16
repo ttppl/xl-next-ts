@@ -7,6 +7,9 @@ import React, {useEffect, useMemo, useRef} from "react";
 import XlPagination from "../components/common/XlPagination";
 import Link from "next/link";
 import {encryptUrl} from "../utils/dom";
+import {getBlogUser} from '../request/modules/userReq'
+import {isNum, isNumber} from "../utils/check";
+import Icon from "../components/common/Icon";
 
 // import Bingdundun from '../components/threejs/Bingdundun'
 
@@ -14,26 +17,45 @@ export async function getServerSideProps(context: any) {
     const pageSize = 20
     // 获取最新博客
     const res = await getBlogsByType('newest', 1, pageSize)
+    const userRes = await getBlogUser()
+    const user:User = userRes.data||{}
+    user.avatar = isNum(user.avatar)?`${process.env.NEXT_PUBLIC_BASE_FILE_URL}${user.avatar}`:user.avatar
+    try{
+        user.detailInfo = JSON.parse(user.detailInfo)
+    }catch (e) {
+       console.error(e)
+    }
     return {
         props: {
             blogs: res.data,
             total: res.total,
+            user,
             page: 1,
             pageSize
         }
     }
 }
+interface User {
+    userId?:number,
+    userName?:string,
+    password?:string,
+    avatar?:string,
+    lastToken?:string,
+    detailInfo?:any,
+    modifyTimestamp?:string
+}
 
 interface HomePageProps {
     blogs: Array<any>
+    user:User,
     total: number,
     page: number,
     pageSize: number
 }
 
 // @ts-ignore
-const Index: NextPageWithLayout = (props: HomePageProps) => {
-    const columnCount = 4//列数量
+const Index: NextPageWithLayout = ({blogs,user,...props}: HomePageProps) => {
+    const columnCount = 3//列数量
     return (
         <>
             <Head>
@@ -46,10 +68,20 @@ const Index: NextPageWithLayout = (props: HomePageProps) => {
             {/*<img className='header' src={`${process.env.NEXT_PUBLIC_BASE_CLIENT_REQUEST_URL}/file/defaultCoverImg`}/>*/}
             <main className='index-main'>
                 {/*<div className='xl-user-info'></div>*/}
+                <div className='xl-user-info'>
+                    <div className='xl-user-main'>
+                        <img className='xl-user-avatar' src={user.avatar}/>
+                        <p className='xl-user-nickname'>{user.detailInfo.nickname}</p>
+                        <p className='xl-user-introduction'>{user.detailInfo.introduction}</p>
+                        <div className='xl-user-contact'>
+                            {user.detailInfo.contact.map((contactInfo:any)=><Icon key={contactInfo.name} size={30} className={contactInfo.name} title={contactInfo.value} />)}
+                        </div>
+                    </div>
+                </div>
                 <div className='xl-index-blogs'>
                     {Array.from({length: columnCount}).map((i, columnIndex) => {
                         return <div key={`index-blog-column-${columnIndex}`} className='xl-index-blogs-column'>
-                            {props.blogs.map((blog: Blog, index: number) => {
+                            {blogs.map((blog: Blog, index: number) => {
                                 if (index % columnCount === columnIndex) {
                                     return <IndexBlogCard key={blog.blogId} blog={blog}/>
                                 }
@@ -96,30 +128,30 @@ function IndexBlogCard({blog}: { blog: Blog }) {
     }, [blog.tags])
     const container = useRef<HTMLDivElement>(null)
     const abstract = useRef<HTMLDivElement>(null)
-    useEffect(()=>{
-        const el:HTMLElement = container.current as HTMLElement
-        const containerHeight = el.clientHeight
-        const padding = parseFloat(window.getComputedStyle(el).getPropertyValue('padding-bottom'))
-        const lastChild = el.lastChild as HTMLElement
-        const childMargin = parseFloat(window.getComputedStyle(lastChild).getPropertyValue('margin-bottom'))
-        const restHeight:number = containerHeight-padding-lastChild.offsetTop -lastChild.clientHeight -childMargin
-        if(restHeight>0){
-            const abstEl = abstract.current as HTMLElement
-            const style = window.getComputedStyle(abstEl)
-            const lineHeight:number = parseFloat(style.getPropertyValue('line-height'))
-            const line = parseFloat(style.getPropertyValue('-webkit-line-clamp'))
-            // @ts-ignore
-            abstEl.style['-webkit-line-clamp'] = line+Math.floor(restHeight/lineHeight)
-        }
-    },[])
+    // useEffect(()=>{
+    //     const el:HTMLElement = container.current as HTMLElement
+    //     const containerHeight = el.clientHeight
+    //     const padding = parseFloat(window.getComputedStyle(el).getPropertyValue('padding-bottom'))
+    //     const lastChild = el.lastChild as HTMLElement
+    //     const childMargin = parseFloat(window.getComputedStyle(lastChild).getPropertyValue('margin-bottom'))
+    //     const restHeight:number = containerHeight-padding-lastChild.offsetTop -lastChild.clientHeight -childMargin
+    //     if(restHeight>0){
+    //         const abstEl = abstract.current as HTMLElement
+    //         const style = window.getComputedStyle(abstEl)
+    //         const lineHeight:number = parseFloat(style.getPropertyValue('line-height'))
+    //         const line = parseFloat(style.getPropertyValue('-webkit-line-clamp'))
+    //         // @ts-ignore
+    //         abstEl.style['-webkit-line-clamp'] = line+Math.floor(restHeight/lineHeight)
+    //     }
+    // },[])
     return <div ref={container} className='xl-index-blog-card'>
         <Link href={`/blog/detail/${blog.blogId}`} passHref>
             <a className='xl-blog-info'>
                 <p className='xl-blog-title'>{blog.title}</p>
                 <p className='xl-blog-publish-time'>{new Date(blog.publishTime).toLocaleDateString()}</p>
-                <img className='xl-blog-cover-img'
-                     src={blog.coverImg ? `${process.env.NEXT_PUBLIC_BASE_FILE_URL}${blog.coverImg}` : process.env.NEXT_PUBLIC_DEFAULT_COVER_IMG_URL + '?t=' + blog.blogId}
-                     alt='blogCoverImg'/>
+                {blog.coverImg && <img className='xl-blog-cover-img'
+                                       src={isNum(blog.coverImg) ? `${process.env.NEXT_PUBLIC_BASE_FILE_URL}${blog.coverImg}` : blog.coverImg}
+                                       alt='blogCoverImg'/>}
                 <div ref={abstract} className='xl-blog-abstract'>{blog.plainText}</div>
             </a>
         </Link>

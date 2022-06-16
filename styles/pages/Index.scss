@@ -7,35 +7,91 @@
         }
         .index-main{
             .xl-user-info{
-                display: none;
+                //display: none;
+                width: 100%;
+                margin-bottom: 20px;
+                .xl-user-main{
+                    left: auto;
+                    position: relative;
+                    width: 70%;
+                }
             }
             .xl-index-blogs{
+                width: 100%;
                 flex-wrap: wrap;
+                justify-content: center;
                 .xl-index-blogs-column{
-                    width: 50vw;
+                    width: 90%;
                 }
             }
         }
     }
 }
 
+$blogCardMargin:14px;//博客卡片外边距
 .index-main {
     display: flex;
-    justify-content: space-around;
+    overflow: hidden;
+    flex-wrap: wrap;
+    //justify-content: space-around;
     margin-top: 60px;
+    //justify-content: space-between;
+    .xl-user-info{
+        margin-top: $blogCardMargin;
+        width: 20%;
+        flex-shrink: 0;
+
+        .xl-user-main{
+            position: fixed;
+            //width: 80%;
+            width: 16vw;
+            left: 2vw;
+            margin: 0 auto;
+            box-shadow: $box-shadow;
+            text-align: center;
+            border-radius: 4px;
+            padding: 20px;
+            background-color: var(--index-user-card-bg);
+            .xl-user-avatar{
+                $avatarSize:100px;
+                width: $avatarSize;
+                height: $avatarSize;
+                border-radius: 50%;
+            }
+            .xl-user-nickname{
+                font-size: 24px;
+                font-weight: bold;
+            }
+            .xl-user-introduction{
+                text-align: left;
+                line-height: 20px;
+                text-indent: 2rem;
+            }
+            .xl-user-contact{
+                margin-top: 40px;
+                display: flex;
+                justify-content: center;
+                .xl-iconfont{
+                    cursor: pointer;
+                    margin: 0 6px;
+                }
+            }
+        }
+    }
     .xl-index-blogs{
-        display: flex;
+        width: 55%;
         border-radius: 4px;
+        display: flex;
+        justify-content: space-around;
         .xl-index-blogs-column{
             //padding: 20px;
-            display: flex;
+            display: inline-flex;
             flex-direction: column;
-            overflow: hidden;
-            width: 12vw;
+            width: 30%;
             justify-content: space-between;
-            >*{
-                flex-grow: 1;
-            }
+            //>*{
+            //    flex-grow: 1;
+            //}
             //align-content: stretch;
         }
         //justify-content: space-between;
@@ -43,12 +99,12 @@
 }
 
 .xl-index-blog-card{
-    //background-color: var(--index-bg);
+    background-color: var(--index-bg);
     border-radius: 4px;
-    margin: 10px;
-    box-shadow: $box-shadow;
-    padding: 10px;
-    border-bottom: var(--index-blog-card-border);
+    margin: $blogCardMargin 0;
+    //box-shadow: $box-shadow;
+    padding: 20px;
+    //border-bottom: var(--index-blog-card-border);
     display: flex;
     flex-direction: column;
     //justify-content: space-between;
@@ -74,6 +130,7 @@
     }
     .xl-blog-cover-img{
         width: 100%;
+        max-height: 200px;
         object-fit: cover;
         display: inline-block;
         border-radius: 4px;
@@ -84,7 +141,7 @@
         //white-space: nowrap;
         white-space: pre-wrap;
         display:-webkit-box;
-        -webkit-line-clamp: 4;
+        -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         line-height: 18px;
         margin: 6px 0;

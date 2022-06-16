@@ -10,16 +10,18 @@
     border-radius: 4px;
     position: relative;
     overflow: visible;
-    height: auto;
+    //height: auto;
   }
   .xl-lang-tags{
     display: flex;
     margin-bottom: 20px;
     padding-left: 20px;
     $tagHeight:40px;
+    flex-wrap: wrap;
     .xl-lang-tag{
       font-size: 20px;
       padding:0 30px;
+      margin-bottom: 10px;
       margin-right: $tagHeight;
       border-radius:  1px 4px 4px 1px;
       height: $tagHeight;

@@ -16,7 +16,7 @@ const IconFun=(props,ref)=> {
         stl.color = props.color
         return stl
     }, [props.style, props.size, props.onClick])
-    return <i ref={ref} className={className} onClick={props.onClick} title={props.title} style={style}>{props.children}</i>
+    return <i ref={ref} {...props} className={className} onClick={props.onClick} title={props.title} style={style}>{props.children}</i>
 }
 const Icon = forwardRef(IconFun)
 

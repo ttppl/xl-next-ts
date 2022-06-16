@@ -11,9 +11,9 @@ const LIGHT_THEME = {
     'loading':'#3cee3c',//加载图标颜色
     'modal-bg':'#ffffff',//modal背景
     'modal-title':'#666',//modal标题
-    'index-blog-card-border':'none',//首页博客卡边框
-    'index-bg':'#f5f6f7',//主页博客列表背景
-    'code-run-detail-tag-bg':'#a09b9b',//code-run标签背景色
+    'index-bg':'rgba(236,236,229,0.5)',//主页博客列表背景
+    'index-user-card-bg':'rgba(110,120,159,0.3)',//主页博客用户信息卡背景
+    'code-run-detail-tag-bg':'#e8e1e1',//code-run标签背景色
 }
 
 export default LIGHT_THEME

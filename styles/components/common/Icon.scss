@@ -5,11 +5,18 @@
 //  url('../iconfont/iconfont.ttf') format('truetype');
 //}
 
+//@font-face {
+//  font-family: 'iconfont';  /* Project id 3018983 */
+//  src: url('//at.alicdn.com/t/font_3018983_7cpz8eckg2t.woff2?t=1645407890941') format('woff2'),
+//  url('//at.alicdn.com/t/font_3018983_7cpz8eckg2t.woff?t=1645407890941') format('woff'),
+//  url('//at.alicdn.com/t/font_3018983_7cpz8eckg2t.ttf?t=1645407890941') format('truetype');
+//}
+
 @font-face {
   font-family: 'iconfont';  /* Project id 3018983 */
-  src: url('//at.alicdn.com/t/font_3018983_7cpz8eckg2t.woff2?t=1645407890941') format('woff2'),
-  url('//at.alicdn.com/t/font_3018983_7cpz8eckg2t.woff?t=1645407890941') format('woff'),
-  url('//at.alicdn.com/t/font_3018983_7cpz8eckg2t.ttf?t=1645407890941') format('truetype');
+  src: url('../../fonts/iconfont.woff2') format('woff2'),
+  url('../../fonts/iconfont.woff') format('woff'),
+  url('../../fonts/iconfont.ttf') format('truetype');
 }
 
 .xl-iconfont {
@@ -22,6 +29,30 @@
 
 .xl-icon-unknown:before {
   content: "\e605";
+}
+
+.xl-icon-qq:before {
+  content: "\e600";
+}
+
+.xl-icon-weibo:before {
+  content: "\e73c";
+}
+
+.xl-icon-mail:before {
+  content: "\e649";
+}
+
+.xl-icon-csdn:before {
+  content: "\e638";
+}
+
+.xl-icon-weixin:before {
+  content: "\e607";
+}
+
+.xl-icon-cnblogs:before {
+  content: "\e609";
 }
 
 .xl-icon-category:before {
