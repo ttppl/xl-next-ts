@@ -15,6 +15,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _request_modules_blogRequest__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5577);
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2119);
+/* harmony import */ var _utils_check__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7549);
+/* harmony import */ var _request_modules_userReq__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3902);
+
+
 
 
 
@@ -24,10 +28,21 @@ async function getServerSideProps({
   const page = parseFloat(query.page.slice(1));
   const pageSize = 20;
   const res = await (0,_request_modules_blogRequest__WEBPACK_IMPORTED_MODULE_0__/* .getBlogsByType */ .Wj)('newest', page, pageSize);
+  const userRes = await (0,_request_modules_userReq__WEBPACK_IMPORTED_MODULE_2__/* .getBlogUser */ .T)();
+  const user = userRes.data || {};
+  user.avatar = (0,_utils_check__WEBPACK_IMPORTED_MODULE_3__/* .isNum */ .e9)(user.avatar) ? `${"https://ttppl.xyz/file/id/"}${user.avatar}` : user.avatar;
+
+  try {
+    user.detailInfo = JSON.parse(user.detailInfo);
+  } catch (e) {
+    console.error(e);
+  }
+
   return {
     props: {
       blogs: res.data,
       total: res.total,
+      user,
       page,
       pageSize
     }
@@ -219,7 +234,7 @@ module.exports = require("https");
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [400,664,431,264,330,577,119], () => (__webpack_exec__(7369)));
+var __webpack_exports__ = __webpack_require__.X(0, [400,664,431,264,47,330,577,119], () => (__webpack_exec__(7369)));
 module.exports = __webpack_exports__;
 
 })();

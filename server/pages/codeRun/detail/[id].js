@@ -66,9 +66,14 @@ function CodeRunDetail({
   }, []);
 
   const setIframeHeight = () => {
-    console.log(111); // const ifm= document.getElementById("xl-iframe");
-    // console.log(ifm)
-    // ifm.height=ifm.contentWindow.document.documentElement.offsetHeight;
+    const ifm = document.getElementById("xl-iframe");
+
+    try {
+      const contentHeight = ifm.contentWindow.document.documentElement.offsetHeight;
+      ifm.height = contentHeight + 100;
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {

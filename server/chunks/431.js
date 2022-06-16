@@ -81,6 +81,7 @@ function Loading(props) {
 /* harmony export */   "HD": () => (/* binding */ isString),
 /* harmony export */   "mf": () => (/* binding */ isFunction),
 /* harmony export */   "hj": () => (/* binding */ isNumber),
+/* harmony export */   "e9": () => (/* binding */ isNum),
 /* harmony export */   "Ft": () => (/* binding */ isNull),
 /* harmony export */   "n$": () => (/* binding */ checkDevice),
 /* harmony export */   "sk": () => (/* binding */ isServer)
@@ -103,6 +104,9 @@ const isBoolean = function (obj) {
 };
 const isNumber = function (obj) {
   return Object.prototype.toString.call(obj) === '[object Number]';
+};
+const isNum = function (num) {
+  return isNumber(num) ? true : /^-?\d*\.?\d*$/.test(num);
 };
 const isNull = function (obj) {
   return ['[object Null]', '[object Undefined]'].includes(Object.prototype.toString.call(obj));

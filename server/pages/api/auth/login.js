@@ -42,6 +42,9 @@ const isBoolean = function (obj) {
 const isNumber = function (obj) {
   return Object.prototype.toString.call(obj) === '[object Number]';
 };
+const isNum = function (num) {
+  return isNumber(num) ? true : /^-?\d*\.?\d*$/.test(num);
+};
 const isNull = function (obj) {
   return ['[object Null]', '[object Undefined]'].includes(Object.prototype.toString.call(obj));
 };
@@ -286,6 +289,9 @@ async function login(userName, password) {
     userName,
     password
   });
+}
+async function getBlogUser() {
+  return await doGet(`/blogUser`);
 }
 ;// CONCATENATED MODULE: external "jsonwebtoken"
 const external_jsonwebtoken_namespaceObject = require("jsonwebtoken");

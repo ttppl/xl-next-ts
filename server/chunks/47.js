@@ -41,14 +41,15 @@ const IconFun = (props, ref) => {
     stl.color = props.color;
     return stl;
   }, [props.style, props.size, props.onClick]);
-  return /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx("i", {
-    ref: ref,
+  return /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx("i", _objectSpread(_objectSpread({
+    ref: ref
+  }, props), {}, {
     className: className,
     onClick: props.onClick,
     title: props.title,
     style: style,
     children: props.children
-  });
+  }));
 };
 
 const Icon = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(IconFun);
