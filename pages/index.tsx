@@ -90,7 +90,17 @@ const Index: NextPageWithLayout = ({blogs,user,...props}: HomePageProps) => {
                     })}
 
                 </div>
+                <div className='xl-index-right-side'>
+                    <div className='xl-rank-card xl-top'>
+                        <p className='xl-rank-card-title'><span>这里应该有点什么</span></p>
+                        <p>但是我还没想好</p>
+                    </div>
 
+                    <div className='xl-rank-card xl-tags'>
+                        <p className='xl-rank-card-title'><span>它必须做点什么</span></p>
+                        <p>辉煌一刻，谁都别拿一刻当永久</p>
+                    </div>
+                </div>
 
             </main>
             <XlPagination

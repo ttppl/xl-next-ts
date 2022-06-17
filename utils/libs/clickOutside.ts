@@ -44,12 +44,14 @@ const callback = (e: Event) => {
 }
 
 function start() {
-    on(document, 'click', callback)
+    on(document, 'click', callback,true)
+    // on(document, 'touchstart', callback)
     isListening = true
 }
 
 function stop() {
-    off(document, 'click', callback)
+    off(document, 'click', callback,true)
+    // off(document, 'touchstart', callback)
     isListening = false
 }
 

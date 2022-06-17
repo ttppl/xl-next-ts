@@ -2,6 +2,9 @@
 @media screen and (max-width: 800px) {
   body .xl-blog-card{
     width: 100% !important;
+    .xl-blog-cover-img{
+      width: 100px;
+    }
   }
 }
 
@@ -9,7 +12,6 @@
   width: 35vw;
   overflow: hidden;
   word-break: break-all;
-  border-bottom: 1px solid #ffffff;
   padding: 0 10px 10px 10px;
   margin-bottom: 40px;
   position: relative;
@@ -18,39 +20,56 @@
   &:hover{
     box-shadow: $box-shadow;
     border-radius: 4px;
-    transform: scale(1.1);
+    //transform: scale(1.1);
   }
-  .xl-blog-card-title{
-    font-size: 2rem;
-    color:var(--base-color);
-  }
-  .xl-blog-card-content{
-    margin: 30px 0;
-    color:var(--base-color);
-    font-size: 1.2rem;
-    text-overflow:ellipsis;
+  display: flex;
+  align-items: center;
+  .xl-blog-cover-img{
+    width: 200px;
     overflow: hidden;
-    white-space:pre-wrap;
-    word-break: break-all;
-    text-indent: 2rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    cursor: pointer;
+    object-fit: fill;
+    padding-right: 20px;
+    flex-shrink: 0;
   }
-  .xl-blog-card-footer{
-    margin-bottom: 10px;
-    color:var(--base-color);
-    >span{
-      margin-right: 20px;
+  .xl-blog-info{
+    .xl-blog-card-title{
+      font-size: 2rem;
+      color:var(--base-color);
     }
-    .xl-iconfont{
-      margin-right: 10px;
+    .xl-blog-card-content{
+      margin: 30px 0;
+      color:var(--base-color);
+      font-size: 1.2rem;
+      text-overflow:ellipsis;
+      overflow: hidden;
+      white-space:pre-wrap;
+      word-break: break-all;
+      text-indent: 2rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      cursor: pointer;
     }
-    .xl-blog-card-publish-date,.xl-blog-card-category{
-      white-space: nowrap;
+    .xl-blog-card-footer{
+      margin-bottom: 10px;
+      color:var(--base-color);
+      >span{
+        margin-right: 20px;
+      }
+      .xl-iconfont{
+        margin-right: 10px;
+      }
+      .xl-blog-card-publish-date,.xl-blog-card-category{
+        white-space: nowrap;
+      }
+      .xl-blog-card-category{
+        a:hover{
+          color: $primaryColor;
+        }
+      }
     }
   }
+
 }
 
 //博客标签
@@ -63,6 +82,9 @@
   padding: 2px 5px;
   border-color: #909399;
   white-space: nowrap;
+  &:hover{
+    border-color: $primaryColor;
+  }
 }
 
 //载入效果

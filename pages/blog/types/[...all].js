@@ -10,6 +10,7 @@ import Link from "next/link";
 import {useRouter} from "next/router";
 import XlPagination from "../../../components/common/XlPagination";
 import ClickOutside from "../../../utils/libs/clickOutside";
+import useLogoClick from "../../../hooks/useLogoClick";
 
 export const getServerSideProps = async ({req, res, params, query}) => {
 
@@ -42,7 +43,6 @@ function BlogTypes({categories, categoryId, blogs, total, page, pageSize}) {
     useEffect(() => {
         // 路由返回时自动滚动到原本位置
         router.beforePopState(({url, as, options}) => {
-            console.log(options)
             options.scroll = false
             return true
         })
@@ -61,19 +61,25 @@ function BlogTypes({categories, categoryId, blogs, total, page, pageSize}) {
 
     }
     // mobile模式下显示目录
-    const [showCategory, setShowCategory] = useState(true)
+    const [showCategory, setShowCategory] = useState(false)
+    const {logoRef} = useLogoClick(()=>{
+        setShowCategory(!showCategory)
+    })
     const category = useRef(null)
     useEffect(() => {
-        const clickOutsideDom = ClickOutside.addSource(category.current, (e) => {
-            // if (!menuIcon.current.contains(e.target)) {
-            e.stopPropagation()
-                setShowCategory(false)
-            // }
-        })
-        return () => {
-            ClickOutside.deleteSource(clickOutsideDom)
+        if(showCategory) {
+            const clickOutsideDom = ClickOutside.addSource(category.current, (e) => {
+                if (!logoRef.current.contains(e.target)) {
+                    e.stopPropagation()
+                    e.preventDefault()
+                    setShowCategory(false)
+                }
+            })
+            return () => {
+                ClickOutside.deleteSource(clickOutsideDom)
+            }
         }
-    }, [])
+    }, [showCategory])
     // 目录jsx
     const categoryRender = useMemo(() => {
         const getCategoryRender = (categories) => {
@@ -109,20 +115,10 @@ function BlogTypes({categories, categoryId, blogs, total, page, pageSize}) {
     }, [categories, activeItem])
 
     return <div className='xl-blog-type-main'>
-
-        <div className={`xl-blog-type-category-tree ${showCategory && 'show'}`}>
+        <div ref={category} className={`xl-blog-type-category-tree ${showCategory && 'show'}`}>
             <h1 className='title'>分类</h1>
             {categoryRender}
         </div>
-        <div ref={category} className={`xl-show-category ${showCategory && 'active'}`} onClick={(e) => {
-            e.stopPropagation()
-            setShowCategory(!showCategory)
-        }}>
-            <Icon className={`back xl-show-category-icon ${showCategory && 'showed'}`}/>
-            {/*<span className='expand-icon-label'>{showCategory ? '收起' : '目录'}</span>*/}
-        </div>
-
-
         <div className='xl-blog-type-blog-list'>
             {blogs.length > 0 ? blogs.map((blog) => {
                 return <BlogCard openBlank={false} key={blog.blogId} style={{width: '50vw'}} blog={blog}/>

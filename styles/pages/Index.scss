@@ -24,6 +24,12 @@
                     width: 90%;
                 }
             }
+            .xl-index-right-side{
+                width: 100%;
+                .xl-rank-card{
+                    min-height: 0;
+                }
+            }
         }
     }
 }
@@ -35,17 +41,16 @@ $blogCardMargin:14px;//博客卡片外边距
     flex-wrap: wrap;
     //justify-content: space-around;
     margin-top: 60px;
-    //justify-content: space-between;
+    justify-content: space-between;
     .xl-user-info{
         margin-top: $blogCardMargin;
         width: 20%;
         flex-shrink: 0;
-
         .xl-user-main{
             position: fixed;
             //width: 80%;
-            width: 16vw;
-            left: 2vw;
+            width: 16%;
+            left: 2%;
             margin: 0 auto;
             box-shadow: $box-shadow;
             text-align: center;
@@ -79,7 +84,7 @@ $blogCardMargin:14px;//博客卡片外边距
         }
     }
     .xl-index-blogs{
-        width: 55%;
+        width: 54%;
         border-radius: 4px;
         display: flex;
         justify-content: space-around;
@@ -95,6 +100,31 @@ $blogCardMargin:14px;//博客卡片外边距
             //align-content: stretch;
         }
         //justify-content: space-between;
+    }
+
+    .xl-index-right-side{
+        width: 24%;
+        margin-top: $blogCardMargin;
+        padding: 0 40px;
+        .xl-rank-card{
+            min-height: 200px;
+            margin-bottom: 40px;
+            font-size: 18px;
+            //&:before{
+            //    content: '';
+            //    display: block;
+            //    height: 20px;
+            //    background-color: var(--index-rank-card-header);
+            //}
+            .xl-rank-card-title{
+                margin: 0;
+                font-size: 30px;
+                span{
+                    padding-bottom: 4px;
+                    border-bottom: 2px solid var(--index-rank-card-header);
+                }
+            }
+        }
     }
 }
 

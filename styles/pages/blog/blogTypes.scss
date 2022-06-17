@@ -3,26 +3,7 @@
 @media screen and (max-width: 900px) {
   body{
     .xl-blog-type-main{
-      .xl-show-category{
-        display: block;
-        position: fixed;
-        left: 0;
-        top: $headerHeight;
-        &[class*="active"]{
-          color:$primaryColor;
-        }
-      }
-      .xl-show-category-icon{
-        display: inline-block;
-        transform: rotate(-180deg);
-        &[class*='showed']{
-          transform: rotate(0deg);
-        }
-      }
-      .expand-icon-label{
-        display: inline;
-        font-size: 10px;
-      }
+      padding:0;
       .xl-blog-type-category-tree{
         display: none;
         border: none;
@@ -30,6 +11,7 @@
         box-shadow: $box-shadow;
         height: auto;
         max-height: 80%;
+        width: 60%;
         top:$headerHeight+10;
         overflow: hidden;
         &[class*='show']{
@@ -39,6 +21,7 @@
       }
       .xl-blog-type-blog-list{
         margin-left: 0;
+        padding: 0 5px;
       }
     }
   }
@@ -46,27 +29,24 @@
 
 //博客分类页面
 .xl-blog-type-main{
-  color:var(--base-color);
   padding: 20px 0 0 20px;
-
-  .xl-show-category-icon,.expand-icon-label{
-    display: none;
-  }
   //目录树
   .xl-blog-type-category-tree{
+    box-shadow: $box-shadow;
+    border-radius: 6px;
     position: fixed;
     z-index: 2;
-    top: $headerHeight;
+    top: $headerHeight+20;
     min-width: 200px;
     width: 16%;
-    height:100%;
     overflow: auto;
-    border-right: $border;
+    padding: 0 20px;
     transition: all 300ms ease-in-out;
     >.title{//标题
       text-align: left;
       font-size: 30px;
       margin-left: 10px;
+      margin-bottom: 30px;
       font-weight: bold;
     }
     //目录列表，目录项
@@ -107,10 +87,6 @@
         }
       }
     }
-  }
-  //mobile模式下展开图标
-  .xl-show-category{
-    display: none;
   }
   //博客列表
   .xl-blog-type-blog-list{

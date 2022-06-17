@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react'
+import PropTypes, {func} from 'prop-types';
+import React, {createContext, useEffect, useRef, useState} from 'react'
 import '/styles/layouts/main.scss'
 import MenuItem from "../menu/MenuItem";
 import Menu from "../menu/menu";
@@ -8,6 +8,7 @@ import useTheme from "../../hooks/useTheme";
 // import Wave from "../svg/Wave";
 import {addScript} from "../../utils/dom";
 import {getParaByKeys} from "../../request/modules/paraRequest";
+import {isFunction} from "../../utils/check";
 
 
 MyLayout.propTypes = {
@@ -17,13 +18,16 @@ MyLayout.defaultProps = {
     theme: 'light'
 }
 
-//带菜单的布局
+export const LayoutContext = createContext(null)
 
+//带菜单的布局
 function MyLayout({theme, children}) {
     // 主题
     const [appTheme, changeTheme] = useTheme(theme)
     // 菜单过度效果
     const [para,setPara] = useState({})
+    //logo点击事件回调函数
+
     useEffect(()=>{
         getParaByKeys(['blog_head_title','blog_head_motto']).then((res)=>{
             const newPara = {}
@@ -33,12 +37,22 @@ function MyLayout({theme, children}) {
             setPara(newPara)
         })
     },[])
+    const logoRef = useRef(null)
+    const logoClickCallback = useRef([])
+    // logo点击事件
+    const logoClick = ()=>{
+        logoClickCallback.current.forEach(fun=>{
+            if(isFunction(fun)) {
+                fun.call(this)
+            }
+        })
+    }
 
     return (
         <>
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
            <header className='xl-header'>
-               <img className='xl-head-logo' src='/imgs/logo.png'/>
+               <img ref={logoRef} onClick={logoClick} className='xl-head-logo' src='/imgs/logo.png'/>
                <span className='xl-head-title'>{para['blog_head_title']}</span>
                <span className='xl-head-motto'>{para['blog_head_motto']}</span>
            </header>
@@ -57,7 +71,11 @@ function MyLayout({theme, children}) {
             {/*波浪纹*/}
             {/*<Wave className='xl-wave' height={40} color={appTheme === 'light'?'#92c3d3':'white'} waveCount={5}  radius={40} width={3000} />*/}
             {/*菜单对应界面*/}
-            <main className='xl-main-content'>{children}</main>
+            <main className='xl-main-content'>
+                <LayoutContext.Provider value={{logoClickCallback,logoRef}}>
+                    {children}
+                </LayoutContext.Provider>
+            </main>
             {/*粒子背景加载*/}
             <Script src="/libs/particleBg/particles.js" strategy='afterInteractive' onLoad={() => {
                 addScript('/libs/particleBg/app.js')

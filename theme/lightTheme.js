@@ -13,6 +13,7 @@ const LIGHT_THEME = {
     'modal-title':'#666',//modal标题
     'index-bg':'rgba(236,236,229,0.5)',//主页博客列表背景
     'index-user-card-bg':'rgba(110,120,159,0.3)',//主页博客用户信息卡背景
+    'index-rank-card-header':'rgba(151,139,134,0.5)',//主页排行榜卡片标头颜色
     'code-run-detail-tag-bg':'#e8e1e1',//code-run标签背景色
 }
 
