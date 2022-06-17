@@ -145,7 +145,7 @@ function CodeRunDetail({
   });
 }
 
-CodeRunDetail.layout = _components_layouts_main__WEBPACK_IMPORTED_MODULE_1__/* .getDefaultLayout */ .u;
+CodeRunDetail.layout = _components_layouts_main__WEBPACK_IMPORTED_MODULE_1__/* .getDefaultLayout */ .uy;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CodeRunDetail);
 });
 

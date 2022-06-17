@@ -79,7 +79,7 @@ function TxtChapterDetail({
   });
 }
 
-TxtChapterDetail.layout = _components_layouts_main__WEBPACK_IMPORTED_MODULE_2__/* .getDefaultLayout */ .u;
+TxtChapterDetail.layout = _components_layouts_main__WEBPACK_IMPORTED_MODULE_2__/* .getDefaultLayout */ .uy;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TxtChapterDetail);
 
 /***/ }),

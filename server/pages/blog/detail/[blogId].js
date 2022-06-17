@@ -104,7 +104,7 @@ var jsx_runtime_ = __webpack_require__(997);
 
 
 
-BlogDetail.layout = main/* getDefaultLayout */.u;
+BlogDetail.layout = main/* getDefaultLayout */.uy;
 async function getServerSideProps({
   req,
   res,

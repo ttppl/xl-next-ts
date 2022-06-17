@@ -214,7 +214,7 @@ function CodeRunCube({
   });
 }
 
-CodeRunIndex.layout = main/* getDefaultLayout */.u;
+CodeRunIndex.layout = main/* getDefaultLayout */.uy;
 /* harmony default export */ const codeRun = (CodeRunIndex);
 
 /***/ }),

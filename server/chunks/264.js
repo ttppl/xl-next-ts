@@ -127,7 +127,8 @@ function XlTransition({
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
-  "u": () => (/* binding */ getDefaultLayout)
+  "VY": () => (/* binding */ LayoutContext),
+  "uy": () => (/* binding */ getDefaultLayout)
 });
 
 // UNUSED EXPORTS: default
@@ -424,6 +425,8 @@ const useTheme = theme => {
 };
 
 /* harmony default export */ const hooks_useTheme = (useTheme);
+// EXTERNAL MODULE: ./utils/check.ts
+var check = __webpack_require__(7549);
 ;// CONCATENATED MODULE: ./components/layouts/main.js
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
@@ -443,9 +446,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 MyLayout.defaultProps = {
   theme: 'light'
-}; //带菜单的布局
+};
+const LayoutContext = /*#__PURE__*/(0,external_react_.createContext)(null); //带菜单的布局
 
 function MyLayout({
   theme,
@@ -457,7 +462,8 @@ function MyLayout({
   const {
     0: para,
     1: setPara
-  } = (0,external_react_.useState)({});
+  } = (0,external_react_.useState)({}); //logo点击事件回调函数
+
   (0,external_react_.useEffect)(() => {
     getParaByKeys(['blog_head_title', 'blog_head_motto']).then(res => {
       const newPara = {};
@@ -467,6 +473,17 @@ function MyLayout({
       setPara(newPara);
     });
   }, []);
+  const logoRef = (0,external_react_.useRef)(null);
+  const logoClickCallback = (0,external_react_.useRef)([]); // logo点击事件
+
+  const logoClick = () => {
+    logoClickCallback.current.forEach(fun => {
+      if ((0,check/* isFunction */.mf)(fun)) {
+        fun.call(this);
+      }
+    });
+  };
+
   return /*#__PURE__*/(0,jsx_runtime_.jsxs)(jsx_runtime_.Fragment, {
     children: [/*#__PURE__*/jsx_runtime_.jsx("meta", {
       name: "viewport",
@@ -474,6 +491,8 @@ function MyLayout({
     }), /*#__PURE__*/(0,jsx_runtime_.jsxs)("header", {
       className: "xl-header",
       children: [/*#__PURE__*/jsx_runtime_.jsx("img", {
+        ref: logoRef,
+        onClick: logoClick,
         className: "xl-head-logo",
         src: "/imgs/logo.png"
       }), /*#__PURE__*/jsx_runtime_.jsx("span", {
@@ -522,7 +541,13 @@ function MyLayout({
       })]
     }), /*#__PURE__*/jsx_runtime_.jsx("main", {
       className: "xl-main-content",
-      children: children
+      children: /*#__PURE__*/jsx_runtime_.jsx(LayoutContext.Provider, {
+        value: {
+          logoClickCallback,
+          logoRef
+        },
+        children: children
+      })
     }), /*#__PURE__*/jsx_runtime_.jsx((script_default()), {
       src: "/libs/particleBg/particles.js",
       strategy: "afterInteractive",
@@ -802,6 +827,8 @@ const LIGHT_THEME = {
   //主页博客列表背景
   'index-user-card-bg': 'rgba(86,90,94,0.7)',
   //主页博客用户信息卡背景
+  'index-rank-card-header': 'rgba(151,139,134,0.5)',
+  //主页排行榜卡片标头颜色
   'code-run-detail-tag-bg': '#a09b9b' //code-run标签背景色
 
 };
@@ -846,6 +873,8 @@ const LIGHT_THEME = {
   //主页博客列表背景
   'index-user-card-bg': 'rgba(110,120,159,0.3)',
   //主页博客用户信息卡背景
+  'index-rank-card-header': 'rgba(151,139,134,0.5)',
+  //主页排行榜卡片标头颜色
   'code-run-detail-tag-bg': '#e8e1e1' //code-run标签背景色
 
 };
@@ -1300,12 +1329,14 @@ const callback = e => {
 };
 
 function start() {
-  (0,_dom__WEBPACK_IMPORTED_MODULE_0__.on)(document, 'click', callback);
+  (0,_dom__WEBPACK_IMPORTED_MODULE_0__.on)(document, 'click', callback, true); // on(document, 'touchstart', callback)
+
   isListening = true;
 }
 
 function stop() {
-  (0,_dom__WEBPACK_IMPORTED_MODULE_0__/* .off */ .S1)(document, 'click', callback);
+  (0,_dom__WEBPACK_IMPORTED_MODULE_0__/* .off */ .S1)(document, 'click', callback, true); // off(document, 'touchstart', callback)
+
   isListening = false;
 }
 

@@ -5,7 +5,7 @@ exports.id = 857;
 exports.ids = [857,839];
 exports.modules = {
 
-/***/ 4343:
+/***/ 2685:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 // ESM COMPAT FLAG
@@ -234,7 +234,24 @@ var router_ = __webpack_require__(1853);
 var XlPagination = __webpack_require__(9330);
 // EXTERNAL MODULE: ./utils/libs/clickOutside.ts
 var clickOutside = __webpack_require__(1578);
+;// CONCATENATED MODULE: ./hooks/useLogoClick.ts
+
+
+function useLogoClick(callback, deps) {
+  const layoutContext = (0,external_react_.useContext)(main/* LayoutContext */.VY);
+  const logoClickCallback = layoutContext.logoClickCallback.current;
+  (0,external_react_.useEffect)(() => {
+    logoClickCallback.push(callback);
+    return () => {
+      logoClickCallback.splice(logoClickCallback.findIndex(c => c === callback), 1);
+    };
+  }, deps);
+  return {
+    logoRef: layoutContext.logoRef
+  };
+}
 ;// CONCATENATED MODULE: ./pages/blog/types/[...all].js
+
 
 
 
@@ -277,7 +294,7 @@ const getServerSideProps = async ({
     }
   };
 };
-BlogTypes.layout = main/* getDefaultLayout */.u;
+BlogTypes.layout = main/* getDefaultLayout */.uy;
 
 function BlogTypes({
   categories,
@@ -295,7 +312,6 @@ function BlogTypes({
       as,
       options
     }) => {
-      console.log(options);
       options.scroll = false;
       return true;
     });
@@ -320,18 +336,27 @@ function BlogTypes({
   const {
     0: showCategory,
     1: setShowCategory
-  } = (0,external_react_.useState)(true);
+  } = (0,external_react_.useState)(false);
+  const {
+    logoRef
+  } = useLogoClick(() => {
+    setShowCategory(!showCategory);
+  });
   const category = (0,external_react_.useRef)(null);
   (0,external_react_.useEffect)(() => {
-    const clickOutsideDom = clickOutside/* default.addSource */.ZP.addSource(category.current, e => {
-      // if (!menuIcon.current.contains(e.target)) {
-      e.stopPropagation();
-      setShowCategory(false); // }
-    });
-    return () => {
-      clickOutside/* default.deleteSource */.ZP.deleteSource(clickOutsideDom);
-    };
-  }, []); // 目录jsx
+    if (showCategory) {
+      const clickOutsideDom = clickOutside/* default.addSource */.ZP.addSource(category.current, e => {
+        if (!logoRef.current.contains(e.target)) {
+          e.stopPropagation();
+          e.preventDefault();
+          setShowCategory(false);
+        }
+      });
+      return () => {
+        clickOutside/* default.deleteSource */.ZP.deleteSource(clickOutsideDom);
+      };
+    }
+  }, [showCategory]); // 目录jsx
 
   const categoryRender = (0,external_react_.useMemo)(() => {
     const getCategoryRender = categories => {
@@ -377,21 +402,12 @@ function BlogTypes({
   return /*#__PURE__*/(0,jsx_runtime_.jsxs)("div", {
     className: "xl-blog-type-main",
     children: [/*#__PURE__*/(0,jsx_runtime_.jsxs)("div", {
+      ref: category,
       className: `xl-blog-type-category-tree ${showCategory && 'show'}`,
       children: [/*#__PURE__*/jsx_runtime_.jsx("h1", {
         className: "title",
         children: "\u5206\u7C7B"
       }), categoryRender]
-    }), /*#__PURE__*/jsx_runtime_.jsx("div", {
-      ref: category,
-      className: `xl-show-category ${showCategory && 'active'}`,
-      onClick: e => {
-        e.stopPropagation();
-        setShowCategory(!showCategory);
-      },
-      children: /*#__PURE__*/jsx_runtime_.jsx(Icon/* default */.Z, {
-        className: `back xl-show-category-icon ${showCategory && 'showed'}`
-      })
     }), /*#__PURE__*/(0,jsx_runtime_.jsxs)("div", {
       className: "xl-blog-type-blog-list",
       children: [blogs.length > 0 ? blogs.map(blog => {
@@ -591,7 +607,7 @@ module.exports = require("https");
 var __webpack_require__ = require("../../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [400,664,431,264,47,330,577,889], () => (__webpack_exec__(4343)));
+var __webpack_exports__ = __webpack_require__.X(0, [400,664,431,264,47,330,577,889], () => (__webpack_exec__(2685)));
 module.exports = __webpack_exports__;
 
 })();

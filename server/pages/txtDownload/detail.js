@@ -401,7 +401,7 @@ function ChapterItem(_ref) {
   }));
 }
 
-TxtDetail.layout = main/* getDefaultLayout */.u;
+TxtDetail.layout = main/* getDefaultLayout */.uy;
 /* harmony default export */ const detail = (TxtDetail);
 
 /***/ }),

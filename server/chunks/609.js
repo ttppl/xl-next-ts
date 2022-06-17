@@ -162,7 +162,7 @@ function BookSearchItem({
 // }
 
 
-TxtDownload.layout = _components_layouts_main__WEBPACK_IMPORTED_MODULE_0__/* .getDefaultLayout */ .u;
+TxtDownload.layout = _components_layouts_main__WEBPACK_IMPORTED_MODULE_0__/* .getDefaultLayout */ .uy;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TxtDownload);
 
 /***/ })

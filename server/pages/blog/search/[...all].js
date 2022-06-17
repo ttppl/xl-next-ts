@@ -61,7 +61,7 @@ const getServerSideProps = async ({
     }
   };
 };
-Search.layout = _components_layouts_main__WEBPACK_IMPORTED_MODULE_0__/* .getDefaultLayout */ .u;
+Search.layout = _components_layouts_main__WEBPACK_IMPORTED_MODULE_0__/* .getDefaultLayout */ .uy;
 
 function Search(props) {
   const {

@@ -132,6 +132,29 @@ const Index = _ref => {
             })
           }, `index-blog-column-${columnIndex}`);
         })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+        className: "xl-index-right-side",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+          className: "xl-rank-card xl-top",
+          children: [/*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx("p", {
+            className: "xl-rank-card-title",
+            children: /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx("span", {
+              children: "\u8FD9\u91CC\u5E94\u8BE5\u6709\u70B9\u4EC0\u4E48"
+            })
+          }), /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx("p", {
+            children: "\u4F46\u662F\u6211\u8FD8\u6CA1\u60F3\u597D"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+          className: "xl-rank-card xl-tags",
+          children: [/*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx("p", {
+            className: "xl-rank-card-title",
+            children: /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx("span", {
+              children: "\u5B83\u5FC5\u987B\u505A\u70B9\u4EC0\u4E48"
+            })
+          }), /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx("p", {
+            children: "\u8F89\u714C\u4E00\u523B\uFF0C\u8C01\u90FD\u522B\u62FF\u4E00\u523B\u5F53\u6C38\u4E45"
+          })]
+        })]
       })]
     }), /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx(_components_common_XlPagination__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
       defaultPageSize: props.pageSize,
@@ -220,7 +243,7 @@ function IndexBlogCard({
   });
 }
 
-Index.layout = _components_layouts_main__WEBPACK_IMPORTED_MODULE_1__/* .getDefaultLayout */ .u;
+Index.layout = _components_layouts_main__WEBPACK_IMPORTED_MODULE_1__/* .getDefaultLayout */ .uy;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Index);
 
 /***/ }),
