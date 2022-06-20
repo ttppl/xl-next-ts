@@ -24,6 +24,7 @@ body{
     height: 100%;
     content: var(--base-bg-img);
     object-fit: cover;
+    transform: translateZ(0)
     //background-repeat: no-repeat;
     //background-size: 100% 100%;
     //background-size:cover;
@@ -45,6 +46,7 @@ body{
     height: 100vh;
     content: var(--base-bg-img);
     object-fit: cover;
+    transform: translateZ(0)
     //background-repeat: no-repeat;
     //background-size: 100% 100%;
     //background-size:cover;
