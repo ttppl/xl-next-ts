@@ -37,9 +37,10 @@
       color:var(--base-color);
     }
   }
-  .xl-blog-type-blog-list{
+  .xl-blog-search-blog-list{
     max-width: 100%;
-    padding: 40px 100px 0 100px;
+    margin-top: 40px;
+    padding: 0 100px;
     overflow: hidden;
   }
 }
@@ -47,8 +48,17 @@
 @media screen and (max-width: 900px) {
   body{
     .xl-blog-search-page{
+      padding: 0;
       .xl-search-input{
         width: 80%;
+      }
+      .xl-blog-search-blog-list{
+        width: 100%;
+        padding: 0;
+        overflow: hidden;
+        .xl-blog-card{
+          box-shadow: $box-shadow;
+        }
       }
     }
   }

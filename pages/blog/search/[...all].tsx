@@ -50,7 +50,7 @@ function Search(props: SearchProps) {
             <input name='key' value={key} onChange={(e) => setKey(e.target.value)}/>
             <button type='submit' className='xl-search-button'><Icon className='search'/></button>
         </form>
-        <div className='xl-blog-type-blog-list'>
+        <div className='xl-blog-search-blog-list'>
             {props.blogs.length > 0 ? props.blogs.map((blog,index) => {
                 return <BlogCard className={`blog-card-index-${index}`} openBlank={false} key={blog.blogId} style={{width: '50vw'}} blog={blog}/>
             }) : '木有呢！！！'}

@@ -1,16 +1,16 @@
 import Head from 'next/head'
-import React, {useCallback, useEffect, useRef, useState} from "react";
+import React, {useEffect, useMemo, useRef, useState} from "react";
 import {getBlogById} from "../../../request/modules/blogRequest";
 import {getDefaultLayout} from "../../../components/layouts/main";
 import '../../../styles/pages/blog/blogDetail.scss'
 import 'highlight.js/styles/xcode.css';
-import Icon from "../../../components/common/Icon";
 import useRunnableScript from "../../../hooks/useRunnableScript";
 import {useRouter} from "next/router";
 import {getClasses, getScrollTop, scrollTo} from "../../../utils/dom";
 import {addListener, removeListenerRS} from "../../../utils/libs/EventManager";
 import lodash from 'lodash'
 import ClickOutside from "../../../utils/libs/clickOutside";
+import useLogoClick from "../../../hooks/useLogoClick";
 
 BlogDetail.layout = getDefaultLayout
 
@@ -36,9 +36,8 @@ function BlogDetail({blog}) {
     const [activeCategory, setActiveCategory] = useState('')
     const [categoryOffset, setCategoryOffset] = useState(0)
     const anchoring = useRef(false)
-    const [showCategory,setShowCategory] = useState(true)
+    const [showCategory, setShowCategory] = useState(true)
     const categoryRef = useRef(null)
-    const showCategoryIconRef = useRef(null)
     const getHead = (parent, level) => {
         const category = []
         Array.from(blogContentRef.current.children).forEach(node => {
@@ -46,7 +45,7 @@ function BlogDetail({blog}) {
                 category.push({
                     id: node.id,
                     level: parseFloat(node.tagName.slice(1)),
-                    text: node.id,
+                    text: node.innerHTML?.replace(/<[^>]*>/g, "")||'',
                 })
 
             }
@@ -82,30 +81,33 @@ function BlogDetail({blog}) {
         return formatCategory(category)
     }
 
-    const categoryRender = useCallback(()=>{
-        const renderer = (category)=>{
+    const categoryRender = useMemo(() => {
+        const renderer = (category) => {
             return category.map((categoryItem, index) => {
-                    if(categoryItem.children){
-                        return <ul className='xl-blog-detail-sub-category'>
-                            {renderer(categoryItem.children)}
-                        </ul>
-                    }else {
-                        return <li
-                            className={getClasses(['xl-blog-detail-category-item', categoryItem.id === activeCategory && 'active'])}
-                            // style={{paddingLeft: `${(categoryItem.level - 2) * 20}px`}}
-                            onClick={() => anchorTo(categoryItem.id)}
-                            key={`categoryItem-${index}`}
-                        >
-                            {categoryItem.text}
-                            <div className='item-bar'/>
-                        </li>
-                    }
-                })}
-        return <ul className='xl-blog-detail-category' ref={categoryRef} style={{transform: `translateY(${categoryOffset}px)`,
-        display:showCategory?'block':'none'}}>
+                if (categoryItem.children) {
+                    return <ul className='xl-blog-detail-sub-category'>
+                        {renderer(categoryItem.children)}
+                    </ul>
+                } else {
+                    return <li
+                        className={getClasses(['xl-blog-detail-category-item', categoryItem.id === activeCategory && 'active'])}
+                        // style={{paddingLeft: `${(categoryItem.level - 2) * 20}px`}}
+                        onClick={() => anchorTo(categoryItem.id)}
+                        key={`categoryItem-${index}`}
+                    >
+                        {categoryItem.text}
+                        <div className='item-bar'/>
+                    </li>
+                }
+            })
+        }
+        return <ul className='xl-blog-detail-category' ref={categoryRef} style={{
+            transform: `translateY(${categoryOffset}px)`,
+            display: showCategory ? 'block' : 'none'
+        }}>
             {renderer(category)}
         </ul>
-    },[category,categoryOffset,showCategory])
+    }, [category, categoryOffset, showCategory])
 
     const anchorTo = (id) => { // 锚点跳转
         const anchorElement = document.getElementById(id)
@@ -119,8 +121,8 @@ function BlogDetail({blog}) {
         const category = getHead(blogContentRef.current, 2)
         setCategory(category)
         setActiveCategory(category[0]?.id)
-        const isMobile = window.innerWidth<900
-        isMobile&&(setShowCategory(false))
+        const isMobile = window.innerWidth < 900
+        isMobile && (setShowCategory(false))
         const scrollListener = addListener(document, 'scroll', lodash.debounce((e) => {
             const scrollTop = getScrollTop()
             setCategoryOffset(Math.max(scrollTop - 80, 0))
@@ -135,8 +137,8 @@ function BlogDetail({blog}) {
                 }
             })
         }, 300))
-        const clickOutsideDom = ClickOutside.addSource(categoryRef.current,(e,dom)=>{
-            if(isMobile&&!showCategoryIconRef.current?.contains(e.target)){
+        const clickOutsideDom = ClickOutside.addSource(categoryRef.current, (e, dom) => {
+            if (isMobile && !logoRef.current?.contains(e.target)) {
                 setShowCategory(false)
             }
         })
@@ -145,17 +147,20 @@ function BlogDetail({blog}) {
             ClickOutside.deleteSource(clickOutsideDom)
         }
     }, [])
+    const {logoRef} = useLogoClick(() => {
+        setShowCategory(!showCategory)
+    }, [showCategory])
     return <div className='xl-blog-detail'>
         <Head>
             <title>博客详情</title>
             <meta name="description" content="博客详细内容"/>
             <link rel="icon" href="/my_favicon.ico"/>
         </Head>
-        <Icon className='back' onClick={back}/>
-        <Icon className='category' ref={showCategoryIconRef} onClick={()=>{setShowCategory(!showCategory)}}/>
+        {/*<Icon className='back' onClick={back}/>*/}
+        {/*<Icon className='category' ref={showCategoryIconRef} onClick={()=>{}}/>*/}
         <h1 className='xl-blog-detail-title'>{blog.title}</h1>
         <div className='xl-blog-detail-main'>
-            {categoryRender()}
+            {categoryRender}
             <div ref={blogContentRef} className='xl-blog-detail-content'
                  dangerouslySetInnerHTML={{__html: blog.htmlText}}/>
         </div>
