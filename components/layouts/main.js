@@ -52,6 +52,7 @@ function MyLayout({theme, children}) {
         <>
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
            <header className='xl-header'>
+               <img className='xl-header-bg'/>
                <img ref={logoRef} onClick={logoClick} className='xl-head-logo' src='/imgs/logo.png'/>
                <span className='xl-head-title'>{para['blog_head_title']}</span>
                <span className='xl-head-motto'>{para['blog_head_motto']}</span>
