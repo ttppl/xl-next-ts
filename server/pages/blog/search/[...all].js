@@ -2,7 +2,7 @@
 (() => {
 var exports = {};
 exports.id = 650;
-exports.ids = [650,839];
+exports.ids = [650,405,839];
 exports.modules = {
 
 /***/ 3367:
@@ -95,7 +95,7 @@ function Search(props) {
         })
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
-      className: "xl-blog-type-blog-list",
+      className: "xl-blog-search-blog-list",
       children: [props.blogs.length > 0 ? props.blogs.map((blog, index) => {
         return /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx(_components_common_BlogCard__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
           className: `blog-card-index-${index}`,
@@ -221,6 +221,13 @@ module.exports = require("next/dist/shared/lib/router/utils/route-regex.js");
 /***/ ((module) => {
 
 module.exports = require("next/dist/shared/lib/utils.js");
+
+/***/ }),
+
+/***/ 968:
+/***/ ((module) => {
+
+module.exports = require("next/head");
 
 /***/ }),
 

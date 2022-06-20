@@ -2,10 +2,37 @@
 (() => {
 var exports = {};
 exports.id = 857;
-exports.ids = [857,839];
+exports.ids = [857,405,839];
 exports.modules = {
 
-/***/ 2685:
+/***/ 3858:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (/* binding */ useLogoClick)
+/* harmony export */ });
+/* harmony import */ var _components_layouts_main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7264);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function useLogoClick(callback, deps) {
+  const layoutContext = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_components_layouts_main__WEBPACK_IMPORTED_MODULE_0__/* .LayoutContext */ .VY);
+  const logoClickCallback = layoutContext.logoClickCallback.current;
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    logoClickCallback.push(callback);
+    return () => {
+      logoClickCallback.splice(logoClickCallback.findIndex(c => c === callback), 1);
+    };
+  }, deps);
+  return {
+    logoRef: layoutContext.logoRef
+  };
+}
+
+/***/ }),
+
+/***/ 4343:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 // ESM COMPAT FLAG
@@ -234,22 +261,8 @@ var router_ = __webpack_require__(1853);
 var XlPagination = __webpack_require__(9330);
 // EXTERNAL MODULE: ./utils/libs/clickOutside.ts
 var clickOutside = __webpack_require__(1578);
-;// CONCATENATED MODULE: ./hooks/useLogoClick.ts
-
-
-function useLogoClick(callback, deps) {
-  const layoutContext = (0,external_react_.useContext)(main/* LayoutContext */.VY);
-  const logoClickCallback = layoutContext.logoClickCallback.current;
-  (0,external_react_.useEffect)(() => {
-    logoClickCallback.push(callback);
-    return () => {
-      logoClickCallback.splice(logoClickCallback.findIndex(c => c === callback), 1);
-    };
-  }, deps);
-  return {
-    logoRef: layoutContext.logoRef
-  };
-}
+// EXTERNAL MODULE: ./hooks/useLogoClick.ts
+var useLogoClick = __webpack_require__(3858);
 ;// CONCATENATED MODULE: ./pages/blog/types/[...all].js
 
 
@@ -339,7 +352,7 @@ function BlogTypes({
   } = (0,external_react_.useState)(false);
   const {
     logoRef
-  } = useLogoClick(() => {
+  } = (0,useLogoClick/* default */.Z)(() => {
     setShowCategory(!showCategory);
   });
   const category = (0,external_react_.useRef)(null);
@@ -537,6 +550,13 @@ module.exports = require("next/dist/shared/lib/utils.js");
 
 /***/ }),
 
+/***/ 968:
+/***/ ((module) => {
+
+module.exports = require("next/head");
+
+/***/ }),
+
 /***/ 1853:
 /***/ ((module) => {
 
@@ -607,7 +627,7 @@ module.exports = require("https");
 var __webpack_require__ = require("../../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [400,664,431,264,47,330,577,889], () => (__webpack_exec__(2685)));
+var __webpack_exports__ = __webpack_require__.X(0, [400,664,431,264,47,330,577,889], () => (__webpack_exec__(4343)));
 module.exports = __webpack_exports__;
 
 })();

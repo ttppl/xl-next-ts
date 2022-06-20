@@ -5,6 +5,33 @@ exports.id = 443;
 exports.ids = [443,839];
 exports.modules = {
 
+/***/ 3858:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (/* binding */ useLogoClick)
+/* harmony export */ });
+/* harmony import */ var _components_layouts_main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7264);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6689);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function useLogoClick(callback, deps) {
+  const layoutContext = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_components_layouts_main__WEBPACK_IMPORTED_MODULE_0__/* .LayoutContext */ .VY);
+  const logoClickCallback = layoutContext.logoClickCallback.current;
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    logoClickCallback.push(callback);
+    return () => {
+      logoClickCallback.splice(logoClickCallback.findIndex(c => c === callback), 1);
+    };
+  }, deps);
+  return {
+    logoRef: layoutContext.logoRef
+  };
+}
+
+/***/ }),
+
 /***/ 3098:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -26,8 +53,6 @@ var external_react_ = __webpack_require__(6689);
 var blogRequest = __webpack_require__(5577);
 // EXTERNAL MODULE: ./components/layouts/main.js + 4 modules
 var main = __webpack_require__(7264);
-// EXTERNAL MODULE: ./components/common/Icon.js
-var Icon = __webpack_require__(6047);
 // EXTERNAL MODULE: ./request/modules/utilRequest.ts
 var utilRequest = __webpack_require__(8031);
 ;// CONCATENATED MODULE: ./hooks/useRunnableScript.ts
@@ -86,6 +111,8 @@ var external_lodash_ = __webpack_require__(6517);
 var external_lodash_default = /*#__PURE__*/__webpack_require__.n(external_lodash_);
 // EXTERNAL MODULE: ./utils/libs/clickOutside.ts
 var clickOutside = __webpack_require__(1578);
+// EXTERNAL MODULE: ./hooks/useLogoClick.ts
+var useLogoClick = __webpack_require__(3858);
 // EXTERNAL MODULE: external "react/jsx-runtime"
 var jsx_runtime_ = __webpack_require__(997);
 ;// CONCATENATED MODULE: ./pages/blog/detail/[blogId].js
@@ -148,7 +175,6 @@ function BlogDetail({
     1: setShowCategory
   } = (0,external_react_.useState)(true);
   const categoryRef = (0,external_react_.useRef)(null);
-  const showCategoryIconRef = (0,external_react_.useRef)(null);
 
   const getHead = (parent, level) => {
     const category = [];
@@ -156,10 +182,12 @@ function BlogDetail({
       var _node$tagName;
 
       if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes((_node$tagName = node.tagName) === null || _node$tagName === void 0 ? void 0 : _node$tagName.toLowerCase())) {
+        var _node$innerHTML;
+
         category.push({
           id: node.id,
           level: parseFloat(node.tagName.slice(1)),
-          text: node.id
+          text: ((_node$innerHTML = node.innerHTML) === null || _node$innerHTML === void 0 ? void 0 : _node$innerHTML.replace(/<[^>]*>/g, "")) || ''
         });
       }
     });
@@ -194,7 +222,7 @@ function BlogDetail({
     return formatCategory(category);
   };
 
-  const categoryRender = (0,external_react_.useCallback)(() => {
+  const categoryRender = (0,external_react_.useMemo)(() => {
     const renderer = category => {
       return category.map((categoryItem, index) => {
         if (categoryItem.children) {
@@ -265,9 +293,9 @@ function BlogDetail({
       });
     }, 300));
     const clickOutsideDom = clickOutside/* default.addSource */.ZP.addSource(categoryRef.current, (e, dom) => {
-      var _showCategoryIconRef$;
+      var _logoRef$current;
 
-      if (isMobile && !((_showCategoryIconRef$ = showCategoryIconRef.current) !== null && _showCategoryIconRef$ !== void 0 && _showCategoryIconRef$.contains(e.target))) {
+      if (isMobile && !((_logoRef$current = logoRef.current) !== null && _logoRef$current !== void 0 && _logoRef$current.contains(e.target))) {
         setShowCategory(false);
       }
     });
@@ -276,6 +304,11 @@ function BlogDetail({
       clickOutside/* default.deleteSource */.ZP.deleteSource(clickOutsideDom);
     };
   }, []);
+  const {
+    logoRef
+  } = (0,useLogoClick/* default */.Z)(() => {
+    setShowCategory(!showCategory);
+  }, [showCategory]);
   return /*#__PURE__*/(0,jsx_runtime_.jsxs)("div", {
     className: "xl-blog-detail",
     children: [/*#__PURE__*/(0,jsx_runtime_.jsxs)((head_default()), {
@@ -288,21 +321,12 @@ function BlogDetail({
         rel: "icon",
         href: "/my_favicon.ico"
       })]
-    }), /*#__PURE__*/jsx_runtime_.jsx(Icon/* default */.Z, {
-      className: "back",
-      onClick: back
-    }), /*#__PURE__*/jsx_runtime_.jsx(Icon/* default */.Z, {
-      className: "category",
-      ref: showCategoryIconRef,
-      onClick: () => {
-        setShowCategory(!showCategory);
-      }
     }), /*#__PURE__*/jsx_runtime_.jsx("h1", {
       className: "xl-blog-detail-title",
       children: blog.title
     }), /*#__PURE__*/(0,jsx_runtime_.jsxs)("div", {
       className: "xl-blog-detail-main",
-      children: [categoryRender(), /*#__PURE__*/jsx_runtime_.jsx("div", {
+      children: [categoryRender, /*#__PURE__*/jsx_runtime_.jsx("div", {
         ref: blogContentRef,
         className: "xl-blog-detail-content",
         dangerouslySetInnerHTML: {
@@ -512,7 +536,7 @@ module.exports = require("https");
 var __webpack_require__ = require("../../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [400,664,431,264,47,577,397], () => (__webpack_exec__(3098)));
+var __webpack_exports__ = __webpack_require__.X(0, [400,664,431,264,577,397], () => (__webpack_exec__(3098)));
 module.exports = __webpack_exports__;
 
 })();

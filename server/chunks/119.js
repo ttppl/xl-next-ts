@@ -180,7 +180,7 @@ function IndexBlogCard({
           className: "xl-blog-tag",
           children: tag
         }, `tag-${index}`)
-      });
+      }, `tag-${tag}`);
     });
   }, [blog.tags]);
   const container = (0,react__WEBPACK_IMPORTED_MODULE_3__.useRef)(null);

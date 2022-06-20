@@ -427,6 +427,9 @@ const useTheme = theme => {
 /* harmony default export */ const hooks_useTheme = (useTheme);
 // EXTERNAL MODULE: ./utils/check.ts
 var check = __webpack_require__(7549);
+// EXTERNAL MODULE: external "next/head"
+var head_ = __webpack_require__(968);
+var head_default = /*#__PURE__*/__webpack_require__.n(head_);
 ;// CONCATENATED MODULE: ./components/layouts/main.js
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
@@ -440,6 +443,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
  // import Wave from "../svg/Wave";
+
 
 
 
@@ -485,9 +489,11 @@ function MyLayout({
   };
 
   return /*#__PURE__*/(0,jsx_runtime_.jsxs)(jsx_runtime_.Fragment, {
-    children: [/*#__PURE__*/jsx_runtime_.jsx("meta", {
-      name: "viewport",
-      content: "width=device-width, initial-scale=1.0"
+    children: [/*#__PURE__*/jsx_runtime_.jsx((head_default()), {
+      children: /*#__PURE__*/jsx_runtime_.jsx("meta", {
+        name: "viewport",
+        content: "width=device-width, initial-scale=1.0,viewport-fit=cover"
+      })
     }), /*#__PURE__*/(0,jsx_runtime_.jsxs)("header", {
       className: "xl-header",
       children: [/*#__PURE__*/jsx_runtime_.jsx("img", {
