@@ -9,6 +9,7 @@ import useTheme from "../../hooks/useTheme";
 import {addScript} from "../../utils/dom";
 import {getParaByKeys} from "../../request/modules/paraRequest";
 import {isFunction} from "../../utils/check";
+import Head from "next/head";
 
 
 MyLayout.propTypes = {
@@ -50,10 +51,12 @@ function MyLayout({theme, children}) {
 
     return (
         <>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-            <img className='xl-body-bg'/>
+            <Head>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            </Head>
+            {/*<img className='xl-body-bg'/>*/}
            <header className='xl-header'>
-               <img className='xl-header-bg'/>
+               {/*<img className='xl-header-bg'/>*/}
                <img ref={logoRef} onClick={logoClick} className='xl-head-logo' src='/imgs/logo.png'/>
                <span className='xl-head-title'>{para['blog_head_title']}</span>
                <span className='xl-head-motto'>{para['blog_head_motto']}</span>
