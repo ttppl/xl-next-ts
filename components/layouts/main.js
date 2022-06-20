@@ -52,7 +52,7 @@ function MyLayout({theme, children}) {
     return (
         <>
             <Head>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"/>
             </Head>
             {/*<img className='xl-body-bg'/>*/}
            <header className='xl-header'>
