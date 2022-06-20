@@ -132,7 +132,7 @@ function IndexBlogCard({blog}: { blog: Blog }) {
         const blogTags = Array.isArray(blog.tags) ? blog.tags : (blog.tags as string).split(',')
         return blogTags.map((tag: any, index: number) => {
             if (tag)
-                return <Link passHref href={`/blog/search/p1?key=${encryptUrl(tag)}`}><a key={`tag-${index}`}
+                return <Link key={`tag-${tag}`} passHref href={`/blog/search/p1?key=${encryptUrl(tag)}`}><a key={`tag-${index}`}
                                                                                          className='xl-blog-tag'>{tag}</a></Link>
         })
     }, [blog.tags])
