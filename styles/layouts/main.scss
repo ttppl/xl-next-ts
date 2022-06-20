@@ -16,51 +16,50 @@
 }
 
 body{
-  //.xl-body-bg{
-  //  position: fixed;
-  //  left: 0;
-  //  top: 0;
-  //  //width: 100%;
-  //  height: 100%;
-  //  content: var(--base-bg-img);
-  //  object-fit: cover;
-  //  transform: translateZ(0)
-  //  //background-repeat: no-repeat;
-  //  //background-size: 100% 100%;
-  //  //background-size:cover;
-  //  //-webkit-background-size:cover;
-  //  //background-attachment: fixed;
-  //  //background-position: left top;
-  //}
+  &:before{
+    content: '';
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-repeat: no-repeat;
+    background-image: inherit;
+    -webkit-background-size: cover!important;
+    -o-background-size: cover;
+    background-size: cover!important;
+  }
   color:var(--base-color);
   background-color:var(--base-bg-color);
-  background: var(--base-bg-img) no-repeat fixed left top;
+
+  background: var(--base-bg-img) no-repeat left top;
+  background-attachment: fixed;
   background-size: cover;
-  -webkit-background-size: cover; /* safari may need this */
+  -webkit-background-size: cover;
+  -o-background-size: cover;
 }
 .xl-header{
-  //.xl-header-bg{
-  //  //content: '';
-  //  position: absolute;
-  //  z-index: -1;
-  //  left: 0;
-  //  top: 0;
-  //  //width: 100%;
-  //  height: 100vh;
-  //  content: var(--base-bg-img);
-  //  object-fit: cover;
-  //  transform: translateZ(0)
-    //background-repeat: no-repeat;
-    //background-size: 100% 100%;
-    //background-size:cover;
-    //-webkit-background-size:cover;
-    //background-attachment: fixed;
-    //background-position: left top;
-  //}
   background-color:var(--base-bg-color);
-  background: var(--base-bg-img) no-repeat fixed left top;
+  background: var(--base-bg-img) no-repeat left top;
+  background-attachment: fixed;
   background-size: cover;
-  -webkit-background-size: cover; /* safari may need this */
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  &:before{
+    content: '';
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    //height: 100%;
+    z-index: -1;
+    background-repeat: no-repeat;
+    background-image: inherit;
+    -webkit-background-size: cover!important;
+    -o-background-size: cover;
+    background-size: cover!important;
+  }
   height: $headerHeight;
   position: fixed;
   overflow: hidden;
