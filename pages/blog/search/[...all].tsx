@@ -14,7 +14,11 @@ export const getServerSideProps = async ({req, query}: any) => {
     const key = decryptUrl(query.key || '')
     const page = query.all[0]?.slice(1) || 1
     const pageSize = 10
-    const blogRes = await queryBlogs(key, {page, pageSize})
+    const blogRes = await queryBlogs(key, {page,
+        pageSize,
+        isPublish:'Y',
+        isDelete:'N',
+        orderBy:'isTop desc,modifyTime desc'})
     return {
         props: {
             keyWord: key,
