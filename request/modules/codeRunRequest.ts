@@ -28,5 +28,5 @@ export async function getCodeRunById(id:number) {
 }
 
 export async function getCodeRunList(options?:{key?:string,type?:Array<string>,authority?:['PUBLIC'|'PRIVATE'|'AUTH'],page?:number,pageSize?:number,orderBy?:string}) {
-    return await get(`/codeRun/getCodeList`,options)
+    return await get(`/codeRun/getCodeRunList`,options)
 }
