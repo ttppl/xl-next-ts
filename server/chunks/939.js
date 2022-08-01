@@ -233,7 +233,7 @@ async function getCodeRunById(id) {
   return res.data;
 }
 async function getCodeRunList(options) {
-  return await (0,_config__WEBPACK_IMPORTED_MODULE_0__/* .get */ .U2)(`/codeRun/getCodeList`, options);
+  return await (0,_config__WEBPACK_IMPORTED_MODULE_0__/* .get */ .U2)(`/codeRun/getCodeRunList`, options);
 }
 
 /***/ })
