@@ -22,7 +22,7 @@ async function getServerSideProps({
 }) {
   var _query$page, _query$page$slice;
 
-  const pageSize = 10;
+  const pageSize = 12;
   const page = parseFloat((_query$page = query.page) === null || _query$page === void 0 ? void 0 : (_query$page$slice = _query$page.slice) === null || _query$page$slice === void 0 ? void 0 : _query$page$slice.call(_query$page, 1)) || 1;
   const codeRunList = await (0,_request_modules_codeRunRequest__WEBPACK_IMPORTED_MODULE_1__/* .getCodeRunList */ .c)({
     type: ['EXAMPLE', 'UTILS'],

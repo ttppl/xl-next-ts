@@ -90,7 +90,7 @@ var jsx_runtime_ = __webpack_require__(997);
 async function getServerSideProps({
   query
 }) {
-  const pageSize = 10;
+  const pageSize = 12;
   const codeRunList = await (0,codeRunRequest/* getCodeRunList */.c)({
     type: ['EXAMPLE', 'UTILS'],
     pageSize

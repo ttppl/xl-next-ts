@@ -178,11 +178,15 @@ function BlogDetail({
 
   const getHead = (parent, level) => {
     const category = [];
-    Array.from(blogContentRef.current.children).forEach(node => {
+    Array.from(blogContentRef.current.children).forEach((node, index) => {
       var _node$tagName;
 
       if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes((_node$tagName = node.tagName) === null || _node$tagName === void 0 ? void 0 : _node$tagName.toLowerCase())) {
         var _node$innerHTML;
+
+        if (!node.id) {
+          node.id = `title-${index}`;
+        }
 
         category.push({
           id: node.id,
@@ -259,7 +263,7 @@ function BlogDetail({
     const anchorElement = document.getElementById(id);
 
     if (anchorElement) {
-      (0,dom/* scrollTo */.X5)(document.documentElement, anchorElement, -20);
+      (0,dom/* scrollTo */.X5)(document.documentElement, anchorElement, -100);
       setActiveCategory(id);
       anchoring.current = true;
     }
