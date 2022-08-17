@@ -131,6 +131,7 @@ var jsx_runtime_ = __webpack_require__(997);
 
 
 
+
 BlogDetail.layout = main/* getDefaultLayout */.uy;
 async function getServerSideProps({
   req,
@@ -229,21 +230,19 @@ function BlogDetail({
   const categoryRender = (0,external_react_.useMemo)(() => {
     const renderer = category => {
       return category.map((categoryItem, index) => {
-        if (categoryItem.children) {
-          return /*#__PURE__*/jsx_runtime_.jsx("ul", {
-            className: "xl-blog-detail-sub-category",
-            children: renderer(categoryItem.children)
-          });
-        } else {
-          return /*#__PURE__*/(0,jsx_runtime_.jsxs)("li", {
+        return /*#__PURE__*/(0,jsx_runtime_.jsxs)(jsx_runtime_.Fragment, {
+          children: [/*#__PURE__*/(0,jsx_runtime_.jsxs)("li", {
             className: (0,dom/* getClasses */.k)(['xl-blog-detail-category-item', categoryItem.id === activeCategory && 'active']) // style={{paddingLeft: `${(categoryItem.level - 2) * 20}px`}}
             ,
             onClick: () => anchorTo(categoryItem.id),
             children: [categoryItem.text, /*#__PURE__*/jsx_runtime_.jsx("div", {
               className: "item-bar"
             })]
-          }, `categoryItem-${index}`);
-        }
+          }, `categoryItem-${index}`), categoryItem.children && /*#__PURE__*/jsx_runtime_.jsx("ul", {
+            className: "xl-blog-detail-sub-category",
+            children: renderer(categoryItem.children)
+          })]
+        });
       });
     };
 
