@@ -40,8 +40,11 @@ function BlogDetail({blog}) {
     const categoryRef = useRef(null)
     const getHead = (parent, level) => {
         const category = []
-        Array.from(blogContentRef.current.children).forEach(node => {
+        Array.from(blogContentRef.current.children).forEach((node,index) => {
             if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(node.tagName?.toLowerCase())) {
+                if(!node.id){
+                    node.id = `title-${index}`
+                }
                 category.push({
                     id: node.id,
                     level: parseFloat(node.tagName.slice(1)),
@@ -112,7 +115,7 @@ function BlogDetail({blog}) {
     const anchorTo = (id) => { // 锚点跳转
         const anchorElement = document.getElementById(id)
         if (anchorElement) {
-            scrollTo(document.documentElement, anchorElement, -20)
+            scrollTo(document.documentElement, anchorElement, -100)
             setActiveCategory(id)
             anchoring.current = true
         }

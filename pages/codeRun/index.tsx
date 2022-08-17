@@ -10,7 +10,7 @@ import useMobile from "../../hooks/useMobile";
 import Link from "next/link";
 
 export async function getServerSideProps({query}: any) {
-    const pageSize = 10
+    const pageSize = 12
     const codeRunList = await getCodeRunList({type: ['EXAMPLE', 'UTILS'], pageSize})
     return {
         props: {

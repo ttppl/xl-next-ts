@@ -3,7 +3,7 @@ import CodeRunIndex from "./index";
 import {getCodeRunList} from "../../request/modules/codeRunRequest";
 
 export async function getServerSideProps({query}: any) {
-    const pageSize = 10
+    const pageSize = 12
     const page = parseFloat(query.page?.slice?.(1))||1
     const codeRunList = await getCodeRunList({type:['EXAMPLE','UTILS'],pageSize,page})
     return {
