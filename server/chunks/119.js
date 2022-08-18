@@ -248,43 +248,6 @@ Index.layout = _components_layouts_main__WEBPACK_IMPORTED_MODULE_1__/* .getDefau
 
 /***/ }),
 
-/***/ 5577:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "zv": () => (/* binding */ getBlogById),
-/* harmony export */   "_j": () => (/* binding */ queryBlogs),
-/* harmony export */   "Wj": () => (/* binding */ getBlogsByType),
-/* harmony export */   "M0": () => (/* binding */ getBlogsByCategory)
-/* harmony export */ });
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8222);
-
-async function getBlogById(id) {
-  const res = await (0,_config__WEBPACK_IMPORTED_MODULE_0__/* .get */ .U2)(`/blog/getBlog/id/${id}`);
-  return res.data;
-} // export async function getBlogs(userId:number,options?:{key:string,page:number,pageSize:number,orderBy:string}) {
-//     return await get(`/blog/getBlogs/userId/${userId}`,options)
-// }
-
-async function queryBlogs(key, options) {
-  return await (0,_config__WEBPACK_IMPORTED_MODULE_0__/* .get */ .U2)(`/blog/getBlogList`, options);
-}
-async function getBlogsByType(type = 'newest', page = 1, pageSize = 10) {
-  return await (0,_config__WEBPACK_IMPORTED_MODULE_0__/* .get */ .U2)(`/blog/getBlogs/type/${type}`, {
-    page,
-    pageSize
-  });
-}
-async function getBlogsByCategory(categoryId, containsChildren, page = 1, pageSize = 10) {
-  return await (0,_config__WEBPACK_IMPORTED_MODULE_0__/* .get */ .U2)(`/blog/getBlogs/category/${categoryId}`, {
-    children: containsChildren,
-    page,
-    pageSize
-  });
-}
-
-/***/ }),
-
 /***/ 3902:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
