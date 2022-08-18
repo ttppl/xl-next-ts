@@ -1,27 +1,26 @@
 import lodash from "lodash";
 import {isObject} from "./check";
-import {number} from "prop-types";
 import {Buffer} from "buffer";
 
-export function getKeyCode(e:any) {
+export function getKeyCode(e: any) {
     return e.keyCode || e.which || e.charCode
 }
 
-export function isCtrlKey(e:any) {
+export function isCtrlKey(e: any) {
     return e.ctrlKey || e.metaKey
 }
 
-export function isShiftKey(e:any) {
+export function isShiftKey(e: any) {
     return e.shiftKey
 }
 
 export const KEY_CODE = {
     enter: 13,
     P: 80,
-    F:70
+    F: 70
 }
 
-export function insertTextAtCursor(el:HTMLInputElement, text:string, newLine = false,cursorOffset=0) {
+export function insertTextAtCursor(el: HTMLInputElement, text: string, newLine = false, cursorOffset = 0) {
 //IE support
     if ((document as any).selection) {
         el.focus();
@@ -45,8 +44,8 @@ export function insertTextAtCursor(el:HTMLInputElement, text:string, newLine = f
             el.scrollTop = restoreTop;
         }
         el.focus();
-        el.selectionStart = startPos + text.length + newLineString.length+cursorOffset;
-        el.selectionEnd = startPos + text.length + newLineString.length+cursorOffset;
+        el.selectionStart = startPos + text.length + newLineString.length + cursorOffset;
+        el.selectionEnd = startPos + text.length + newLineString.length + cursorOffset;
     } else {
         el.value += text;
         el.focus();
@@ -70,9 +69,10 @@ export function off(
 }
 
 
-export function getClasses(arr:Array<string>) {
-    return arr.filter(n=>n).join(' ')
+export function getClasses(arr: Array<string>) {
+    return arr.filter(n => n).join(' ')
 }
+
 // function splitCamel(str){
 //     return str.replace(/([A-Z])/g,function(s){
 //         return ' '+s.toLowerCase();
@@ -90,19 +90,20 @@ export function getClasses(arr:Array<string>) {
 //         element.style[styleName] = value
 //     }
 // }
-function isNoneDisplay (el:HTMLElement):{isNone:boolean, ele:HTMLElement} {
+function isNoneDisplay(el: HTMLElement): { isNone: boolean, ele: HTMLElement } {
     const display = getStyle(el, 'display')
     if (display !== 'none') {
         if (el && el.parentNode && el.parentNode.nodeName !== 'BODY') {
             return isNoneDisplay(el.parentNode as HTMLElement)
         } else {
-            return { isNone: false, ele: el }
+            return {isNone: false, ele: el}
         }
     } else {
-        return { isNone: true, ele: el }
+        return {isNone: true, ele: el}
     }
 }
-export const getStyle = function (element:HTMLElement, styleName:string):string {
+
+export const getStyle = function (element: HTMLElement, styleName: string): string {
     if (!element || !styleName) return ''
     styleName = lodash.camelCase(styleName)
     if (styleName === 'float') {
@@ -113,13 +114,14 @@ export const getStyle = function (element:HTMLElement, styleName:string):string 
     if (style) return style
     try {
         // @ts-ignore
-        const computed:any = document.defaultView.getComputedStyle(element, '')
+        const computed: any = document.defaultView.getComputedStyle(element, '')
         return computed?.[styleName]
     } catch (e) {
         return style
     }
 }
-export function setStyle (element:HTMLElement, styleName:string, value:string):void {
+
+export function setStyle(element: HTMLElement, styleName: string, value: string): void {
     if (!element || !styleName) return
 
     if (isObject(styleName)) {
@@ -133,7 +135,8 @@ export function setStyle (element:HTMLElement, styleName:string, value:string):v
         element.style[styleName] = value
     }
 }
-export function getElementSize (el:HTMLElement, elPos = 'absolute'):{width:number, height:number} {
+
+export function getElementSize(el: HTMLElement, elPos = 'absolute'): { width: number, height: number } {
     const size = {
         width: 0,
         height: 0
@@ -173,93 +176,100 @@ export const getOffsetTop = (el: HTMLElement) => {
     return offset
 }
 
-export const getOffsetTopDistance = (el:HTMLElement, containerEl:HTMLElement) => {
+export const getOffsetTopDistance = (el: HTMLElement, containerEl: HTMLElement) => {
     return Math.abs(getOffsetTop(el) - getOffsetTop(containerEl))
 }
 
-const cubic = (value:number) => Math.pow(value, 3)
+const cubic = (value: number) => Math.pow(value, 3)
 
-const easeInOutCubic = (value:number) => value < 0.5
+const easeInOutCubic = (value: number) => value < 0.5
     ? cubic(value * 2) / 2
     : 1 - cubic((1 - value) * 2) / 2
 
-export const scrollTo = (container = document.documentElement || document.body || window.pageYOffset, el:HTMLElement, offset = 0) => {
-    const beginTime = Date.now()
-    const beginValue = container.scrollTop
-    const distance = getOffsetTopDistance(container, el) - beginValue + offset
-    const rAF = window.requestAnimationFrame || (func => setTimeout(func, 16))
-    const frameFunc = () => {
-        const progress = (Date.now() - beginTime) / 500
-        if (progress < 1) {
-            container.scrollTop = beginValue + distance * easeInOutCubic(progress)
-            rAF(frameFunc)
-        } else {
-            container.scrollTop = beginValue + distance
+export const scrollTo = (container = document.documentElement || document.body || window.pageYOffset, el: HTMLElement, offset = 0) => {
+    return new Promise((resolve, reject) => {
+        //触底则不滚动
+        if (container.scrollTop + container.clientHeight === container.scrollHeight) {
+            resolve(true)
         }
-    }
-    rAF(frameFunc)
+        const beginTime = Date.now()
+        const beginValue = container.scrollTop
+        const distance = getOffsetTopDistance(container, el) - beginValue + offset
+        const rAF = window.requestAnimationFrame || (func => setTimeout(func, 16))
+        const frameFunc = () => {
+            const progress = (Date.now() - beginTime) / 500
+            if (progress < 1) {
+                container.scrollTop = beginValue + distance * easeInOutCubic(progress)
+                rAF(frameFunc)
+            } else {
+                container.scrollTop = beginValue + distance
+                resolve(true)
+            }
+        }
+        rAF(frameFunc)
+    })
 }
 
 
-export const getScrollTop=(el?:HTMLElement):number=>{
-    if(!el||el===(document as any)) {
+export const getScrollTop = (el?: HTMLElement): number => {
+    if (!el || el === (document as any)) {
         return document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-    }else {
+    } else {
         return el.scrollTop
     }
 }
 
 interface IsInViewOffset {
-    offsetTop?:number,
-    offsetBottom?:number,
-    offsetLeft?:number,
-    offsetRight?:number
+    offsetTop?: number,
+    offsetBottom?: number,
+    offsetLeft?: number,
+    offsetRight?: number
 }
 
-export const isInView = (el:HTMLElement,offset?:IsInViewOffset):boolean=>{
+export const isInView = (el: HTMLElement, offset?: IsInViewOffset): boolean => {
     try {
         const boundingRect = el.getBoundingClientRect()
         // const windowWidth = window.innerWidth||document.documentElement.clientWidth
         // console.log(boundingRect)
-        const windowHeight = window.innerHeight||document.documentElement.clientHeight
-        console.log(boundingRect.top,boundingRect.bottom,windowHeight,offset?.offsetTop,offset?.offsetBottom)
-        return boundingRect.top<(windowHeight-(offset?.offsetBottom||0))
-            &&boundingRect.bottom>(offset?.offsetTop||0)
-    }catch (e) {
+        const windowHeight = window.innerHeight || document.documentElement.clientHeight
+        console.log(boundingRect.top, boundingRect.bottom, windowHeight, offset?.offsetTop, offset?.offsetBottom)
+        return boundingRect.top < (windowHeight - (offset?.offsetBottom || 0))
+            && boundingRect.bottom > (offset?.offsetTop || 0)
+    } catch (e) {
         return false
     }
 }
 
-const DOM_SCRIPTS = new Map<string, { dom:HTMLElement,id:string }>()
+const DOM_SCRIPTS = new Map<string, { dom: HTMLElement, id: string }>()
 
-export const addScript=(src:string,dom?:HTMLElement,async=false)=>{
-    return new Promise((resolve,reject)=>{
-        const target = dom||document.getElementsByTagName('head')[0]
-        if(!DOM_SCRIPTS.get(src)) {
+export const addScript = (src: string, dom?: HTMLElement, async = false) => {
+    return new Promise((resolve, reject) => {
+        const target = dom || document.getElementsByTagName('head')[0]
+        if (!DOM_SCRIPTS.get(src)) {
             const script = document.createElement('script')
             script.src = src
             const id = `xl-script-${DOM_SCRIPTS.size}`
             script.id = id
-            async&&(script.async = async)
+            async && (script.async = async)
             target.appendChild(script);
-            DOM_SCRIPTS.set(src, {dom:target, id})
+            DOM_SCRIPTS.set(src, {dom: target, id})
             script.onload = (e) => {
                 resolve(e)
             }
-        }else {
+        } else {
             resolve('loaded')
         }
     })
 
 }
 
-export const removeScript=(src:string)=>{
-    return new Promise((resolve,reject)=>{
+export const removeScript = (src: string) => {
+    return new Promise((resolve, reject) => {
         const domScript = DOM_SCRIPTS.get(src)
-        if(domScript){
+        if (domScript) {
             const target = domScript.dom
             const script = document.getElementById(domScript.id)
-            if(script) {
+            if (script) {
                 target?.removeChild(script)
                 DOM_SCRIPTS.delete(src)
             }
@@ -269,14 +279,14 @@ export const removeScript=(src:string)=>{
 
 }
 
-export const encryptUrl = (url:string)=>{
-    if(Buffer&&url) {
+export const encryptUrl = (url: string) => {
+    if (Buffer && url) {
         return (new Buffer(encodeURI(url))).toString('base64')
-    }else return url
+    } else return url
 }
 
-export const decryptUrl = (url:string)=>{
-    if(Buffer&&url) {
+export const decryptUrl = (url: string) => {
+    if (Buffer && url) {
         return decodeURI((new Buffer(url, 'base64')).toString())
-    }else return url
+    } else return url
 }

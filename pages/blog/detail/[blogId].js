@@ -8,9 +8,9 @@ import useRunnableScript from "../../../hooks/useRunnableScript";
 import {useRouter} from "next/router";
 import {getClasses, getScrollTop, scrollTo} from "../../../utils/dom";
 import {addListener, removeListenerRS} from "../../../utils/libs/EventManager";
-import lodash from 'lodash'
 import ClickOutside from "../../../utils/libs/clickOutside";
 import useLogoClick from "../../../hooks/useLogoClick";
+import debounce from "lodash/debounce";
 
 BlogDetail.layout = getDefaultLayout
 
@@ -33,26 +33,31 @@ function BlogDetail({blog}) {
     }
     const blogContentRef = useRef(null)
     const [category, setCategory] = useState([])
+    const flattenCategory = useRef([])
     const [activeCategory, setActiveCategory] = useState('')
+    // 滚动事件是否触发activeCategory改变
+    const scrollActiveChange = useRef(true)
     const [categoryOffset, setCategoryOffset] = useState(0)
-    const anchoring = useRef(false)
     const [showCategory, setShowCategory] = useState(true)
     const categoryRef = useRef(null)
+    const topOffset = useRef(100)//顶部偏移量
+    //获取目录
     const getHead = (parent, level) => {
         const category = []
-        Array.from(blogContentRef.current.children).forEach((node,index) => {
+        Array.from(blogContentRef.current.children).forEach((node, index) => {
             if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(node.tagName?.toLowerCase())) {
-                if(!node.id){
-                    node.id = `title-${index}`
+                if (!node.id) {
+                    node.id = `xl-blog-category-title-${index}`
                 }
                 category.push({
                     id: node.id,
                     level: parseFloat(node.tagName.slice(1)),
-                    text: node.innerHTML?.replace(/<[^>]*>/g, "")||'',
+                    text: node.innerHTML?.replace(/<[^>]*>/g, "") || '',
                 })
 
             }
         })
+        flattenCategory.current = category
         const formatCategory = (categoryArray) => {
             const newCategory = [];
             categoryArray.some((categoryItem, index) => {
@@ -83,25 +88,25 @@ function BlogDetail({blog}) {
         }
         return formatCategory(category)
     }
-
+    //获取目录render
     const categoryRender = useMemo(() => {
         const renderer = (category) => {
             return category.map((categoryItem, index) => {
-                if (categoryItem.children) {
-                    return <ul className='xl-blog-detail-sub-category'>
-                        {renderer(categoryItem.children)}
-                    </ul>
-                } else {
-                    return <li
+                return <div key={`category-item-container-${categoryItem.id}`}>
+                    <li
                         className={getClasses(['xl-blog-detail-category-item', categoryItem.id === activeCategory && 'active'])}
                         // style={{paddingLeft: `${(categoryItem.level - 2) * 20}px`}}
                         onClick={() => anchorTo(categoryItem.id)}
-                        key={`categoryItem-${index}`}
+                        key={`category-item-${categoryItem.id}`}
                     >
                         {categoryItem.text}
                         <div className='item-bar'/>
                     </li>
-                }
+                    {categoryItem.children && <ul className='xl-blog-detail-sub-category' key={`category-sub-item-${categoryItem.id}`}>
+                        {renderer(categoryItem.children)}
+                    </ul>}
+                </div>
+
             })
         }
         return <ul className='xl-blog-detail-category' ref={categoryRef} style={{
@@ -110,14 +115,14 @@ function BlogDetail({blog}) {
         }}>
             {renderer(category)}
         </ul>
-    }, [category, categoryOffset, showCategory])
-
+    }, [category, activeCategory,categoryOffset, showCategory])
+    // 滚动到指定目录位置
     const anchorTo = (id) => { // 锚点跳转
         const anchorElement = document.getElementById(id)
         if (anchorElement) {
-            scrollTo(document.documentElement, anchorElement, -100)
+            scrollTo(document.documentElement, anchorElement, topOffset.current*-1)
             setActiveCategory(id)
-            anchoring.current = true
+            scrollActiveChange.current = false
         }
     }
     useEffect(() => {
@@ -126,15 +131,21 @@ function BlogDetail({blog}) {
         setActiveCategory(category[0]?.id)
         const isMobile = window.innerWidth < 900
         isMobile && (setShowCategory(false))
-        const scrollListener = addListener(document, 'scroll', lodash.debounce((e) => {
+        const scrollListener = addListener(document, 'scroll', debounce((e) => {
             const scrollTop = getScrollTop()
             setCategoryOffset(Math.max(scrollTop - 80, 0))
-            category.some((categoryItem, index) => {
-                if (document.getElementById(categoryItem.id)?.getBoundingClientRect()?.top > 21) {
-                    if (!anchoring.current) {
-                        setActiveCategory(category[index - 1]?.id || categoryItem.id)
+            flattenCategory.current.some((categoryItem, index) => {
+                // scroll大于offsetTop则active
+                const offsetTop = document.getElementById(categoryItem.id)?.getBoundingClientRect()?.top
+                if (offsetTop >= topOffset.current) {
+                    if(!scrollActiveChange.current){
+                        scrollActiveChange.current = true
+                        return true
+                    }
+                    if (offsetTop <= (window.innerHeight / 2)) {
+                        setActiveCategory(categoryItem.id)
                     } else {
-                        anchoring.current = false
+                        setActiveCategory(flattenCategory.current[index - 1]?.id || categoryItem.id)
                     }
                     return true
                 }
