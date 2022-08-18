@@ -56,9 +56,10 @@ function TxtDownload(props: Props) {
                 {props.books.map(((book, index) => <BookSearchItem book={book} key={index + book.href}/>))}
                 {props.books.length===0&&<tr><td colSpan={6}>抱歉，小爬虫已经努力了！</td></tr>}
                 </tbody>
-            </table>:<p>
-                推荐
-            </p>}
+            </table>:<div className='xl-bool-list-none'>
+                <h2>推荐</h2>
+                <p>推荐啥呀，自己搜！（趁网站还没把我拉黑之前😂...）</p>
+            </div>}
         </div>
 
     </div>

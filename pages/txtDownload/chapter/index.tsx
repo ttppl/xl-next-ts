@@ -7,6 +7,7 @@ import Link from "next/link";
 export async function getServerSideProps({query}: any) {
     const url = decryptUrl(query.key)
     const chapterInfo = await getChapter(url)
+    chapterInfo.content = chapterInfo.content.replace(/\s+/g,'\n\n        ')
     return {
         props: {
             chapterInfo
@@ -32,7 +33,7 @@ function TxtChapterDetail({chapterInfo}: Props) {
             <Link href={`/txtDownload/detail?key=${encryptUrl(chapterInfo.bookInfo)}`}>目录</Link>
             <Link href={`/txtDownload/chapter?key=${encryptUrl(chapterInfo.next)}`}>下一章</Link>
         </div>
-        <div className='xl-chapter-content'>{chapterInfo.content?.replace(/\n\n/g,'\n')}</div>
+        <div className='xl-chapter-content'>{chapterInfo.content}</div>
         <div className='xl-pre-next-chapter'>
             <Link href={`/txtDownload/chapter?key=${encryptUrl(chapterInfo.pre)}`}>上一章</Link>
             <Link href={`/txtDownload/detail?key=${encryptUrl(chapterInfo.bookInfo)}`}>目录</Link>
