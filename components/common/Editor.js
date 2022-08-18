@@ -27,26 +27,28 @@ function Editor({language,onSubmit,style,defaultCode,theme,submitLabel,children,
         label: '编辑器加载中...'
     })
     async function initEditor() {
-        try {
-            window.require.config({paths: {'vs': '/monacoEditor/min/vs'}});
-            window.require(["vs/editor/editor.main"], () => {
-                document.getElementById('xl-monaco').innerHTML = ''
-                window.monacoEditorModel = window.monaco.editor.create(document.getElementById('xl-monaco'), {
-                    value: defaultCode,
-                    automaticLayout: true,
-                    language: language,
-                    // contextmenu: false,
-                    minimap: {
-                        enabled: enableMinimap // 是否启用预览图
-                    },
-                    theme: theme,
+        return new Promise(async (resolve,reject)=>{
+            try {
+                window.require.config({paths: {'vs': '/monacoEditor/min/vs'}});
+                window.require(["vs/editor/editor.main"], () => {
+                    document.getElementById('xl-monaco').innerHTML = ''
+                    window.monacoEditorModel = window.monaco.editor.create(document.getElementById('xl-monaco'), {
+                        value: defaultCode,
+                        automaticLayout: true,
+                        language: language,
+                        // contextmenu: false,
+                        minimap: {
+                            enabled: enableMinimap // 是否启用预览图
+                        },
+                        theme: theme,
+                    })
+                    resolve(true)
                 })
-            })
-        } catch (e) {
-            await sleep(1000)
-            return await initEditor()
-        }
-
+            } catch (e) {
+                await sleep(1000)
+                resolve(await initEditor())
+            }
+        })
     }
     useEffect(async () => {
         setLoading(true)
