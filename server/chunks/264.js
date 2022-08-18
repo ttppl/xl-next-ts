@@ -1088,24 +1088,32 @@ const cubic = value => Math.pow(value, 3);
 const easeInOutCubic = value => value < 0.5 ? cubic(value * 2) / 2 : 1 - cubic((1 - value) * 2) / 2;
 
 const scrollTo = (container = document.documentElement || document.body || window.pageYOffset, el, offset = 0) => {
-  const beginTime = Date.now();
-  const beginValue = container.scrollTop;
-  const distance = getOffsetTopDistance(container, el) - beginValue + offset;
-
-  const rAF = window.requestAnimationFrame || (func => setTimeout(func, 16));
-
-  const frameFunc = () => {
-    const progress = (Date.now() - beginTime) / 500;
-
-    if (progress < 1) {
-      container.scrollTop = beginValue + distance * easeInOutCubic(progress);
-      rAF(frameFunc);
-    } else {
-      container.scrollTop = beginValue + distance;
+  return new Promise((resolve, reject) => {
+    //触底则不滚动
+    if (container.scrollTop + container.clientHeight === container.scrollHeight) {
+      resolve(true);
     }
-  };
 
-  rAF(frameFunc);
+    const beginTime = Date.now();
+    const beginValue = container.scrollTop;
+    const distance = getOffsetTopDistance(container, el) - beginValue + offset;
+
+    const rAF = window.requestAnimationFrame || (func => setTimeout(func, 16));
+
+    const frameFunc = () => {
+      const progress = (Date.now() - beginTime) / 500;
+
+      if (progress < 1) {
+        container.scrollTop = beginValue + distance * easeInOutCubic(progress);
+        rAF(frameFunc);
+      } else {
+        container.scrollTop = beginValue + distance;
+        resolve(true);
+      }
+    };
+
+    rAF(frameFunc);
+  });
 };
 const getScrollTop = el => {
   if (!el || el === document) {

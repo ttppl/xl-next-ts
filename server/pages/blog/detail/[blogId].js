@@ -106,17 +106,16 @@ var router_ = __webpack_require__(1853);
 var dom = __webpack_require__(2252);
 // EXTERNAL MODULE: ./utils/libs/EventManager.ts
 var EventManager = __webpack_require__(6397);
-// EXTERNAL MODULE: external "lodash"
-var external_lodash_ = __webpack_require__(6517);
-var external_lodash_default = /*#__PURE__*/__webpack_require__.n(external_lodash_);
 // EXTERNAL MODULE: ./utils/libs/clickOutside.ts
 var clickOutside = __webpack_require__(1578);
 // EXTERNAL MODULE: ./hooks/useLogoClick.ts
 var useLogoClick = __webpack_require__(3858);
+// EXTERNAL MODULE: external "lodash/debounce"
+var debounce_ = __webpack_require__(3908);
+var debounce_default = /*#__PURE__*/__webpack_require__.n(debounce_);
 // EXTERNAL MODULE: external "react/jsx-runtime"
 var jsx_runtime_ = __webpack_require__(997);
 ;// CONCATENATED MODULE: ./pages/blog/detail/[blogId].js
-
 
 
 
@@ -162,20 +161,24 @@ function BlogDetail({
     0: category,
     1: setCategory
   } = (0,external_react_.useState)([]);
+  const flattenCategory = (0,external_react_.useRef)([]);
   const {
     0: activeCategory,
     1: setActiveCategory
-  } = (0,external_react_.useState)('');
+  } = (0,external_react_.useState)(''); // 滚动事件是否触发activeCategory改变
+
+  const scrollActiveChange = (0,external_react_.useRef)(true);
   const {
     0: categoryOffset,
     1: setCategoryOffset
   } = (0,external_react_.useState)(0);
-  const anchoring = (0,external_react_.useRef)(false);
   const {
     0: showCategory,
     1: setShowCategory
   } = (0,external_react_.useState)(true);
   const categoryRef = (0,external_react_.useRef)(null);
+  const topOffset = (0,external_react_.useRef)(100); //顶部偏移量
+  //获取目录
 
   const getHead = (parent, level) => {
     const category = [];
@@ -186,7 +189,7 @@ function BlogDetail({
         var _node$innerHTML;
 
         if (!node.id) {
-          node.id = `title-${index}`;
+          node.id = `xl-blog-category-title-${index}`;
         }
 
         category.push({
@@ -196,6 +199,7 @@ function BlogDetail({
         });
       }
     });
+    flattenCategory.current = category;
 
     const formatCategory = categoryArray => {
       const newCategory = [];
@@ -225,12 +229,13 @@ function BlogDetail({
     };
 
     return formatCategory(category);
-  };
+  }; //获取目录render
+
 
   const categoryRender = (0,external_react_.useMemo)(() => {
     const renderer = category => {
       return category.map((categoryItem, index) => {
-        return /*#__PURE__*/(0,jsx_runtime_.jsxs)(jsx_runtime_.Fragment, {
+        return /*#__PURE__*/(0,jsx_runtime_.jsxs)("div", {
           children: [/*#__PURE__*/(0,jsx_runtime_.jsxs)("li", {
             className: (0,dom/* getClasses */.k)(['xl-blog-detail-category-item', categoryItem.id === activeCategory && 'active']) // style={{paddingLeft: `${(categoryItem.level - 2) * 20}px`}}
             ,
@@ -238,11 +243,11 @@ function BlogDetail({
             children: [categoryItem.text, /*#__PURE__*/jsx_runtime_.jsx("div", {
               className: "item-bar"
             })]
-          }, `categoryItem-${index}`), categoryItem.children && /*#__PURE__*/jsx_runtime_.jsx("ul", {
+          }, `category-item-${categoryItem.id}`), categoryItem.children && /*#__PURE__*/jsx_runtime_.jsx("ul", {
             className: "xl-blog-detail-sub-category",
             children: renderer(categoryItem.children)
-          })]
-        });
+          }, `category-sub-item-${categoryItem.id}`)]
+        }, `category-item-container-${categoryItem.id}`);
       });
     };
 
@@ -255,16 +260,16 @@ function BlogDetail({
       },
       children: renderer(category)
     });
-  }, [category, categoryOffset, showCategory]);
+  }, [category, activeCategory, categoryOffset, showCategory]); // 滚动到指定目录位置
 
   const anchorTo = id => {
     // 锚点跳转
     const anchorElement = document.getElementById(id);
 
     if (anchorElement) {
-      (0,dom/* scrollTo */.X5)(document.documentElement, anchorElement, -100);
+      (0,dom/* scrollTo */.X5)(document.documentElement, anchorElement, topOffset.current * -1);
       setActiveCategory(id);
-      anchoring.current = true;
+      scrollActiveChange.current = false;
     }
   };
 
@@ -276,19 +281,27 @@ function BlogDetail({
     setActiveCategory((_category$ = category[0]) === null || _category$ === void 0 ? void 0 : _category$.id);
     const isMobile = window.innerWidth < 900;
     isMobile && setShowCategory(false);
-    const scrollListener = (0,EventManager/* addListener */.NH)(document, 'scroll', external_lodash_default().debounce(e => {
+    const scrollListener = (0,EventManager/* addListener */.NH)(document, 'scroll', debounce_default()(e => {
       const scrollTop = (0,dom/* getScrollTop */.cx)();
       setCategoryOffset(Math.max(scrollTop - 80, 0));
-      category.some((categoryItem, index) => {
+      flattenCategory.current.some((categoryItem, index) => {
         var _document$getElementB, _document$getElementB2;
 
-        if (((_document$getElementB = document.getElementById(categoryItem.id)) === null || _document$getElementB === void 0 ? void 0 : (_document$getElementB2 = _document$getElementB.getBoundingClientRect()) === null || _document$getElementB2 === void 0 ? void 0 : _document$getElementB2.top) > 21) {
-          if (!anchoring.current) {
-            var _category;
+        // scroll大于offsetTop则active
+        const offsetTop = (_document$getElementB = document.getElementById(categoryItem.id)) === null || _document$getElementB === void 0 ? void 0 : (_document$getElementB2 = _document$getElementB.getBoundingClientRect()) === null || _document$getElementB2 === void 0 ? void 0 : _document$getElementB2.top;
 
-            setActiveCategory(((_category = category[index - 1]) === null || _category === void 0 ? void 0 : _category.id) || categoryItem.id);
+        if (offsetTop >= topOffset.current) {
+          if (!scrollActiveChange.current) {
+            scrollActiveChange.current = true;
+            return true;
+          }
+
+          if (offsetTop <= window.innerHeight / 2) {
+            setActiveCategory(categoryItem.id);
           } else {
-            anchoring.current = false;
+            var _flattenCategory$curr;
+
+            setActiveCategory(((_flattenCategory$curr = flattenCategory.current[index - 1]) === null || _flattenCategory$curr === void 0 ? void 0 : _flattenCategory$curr.id) || categoryItem.id);
           }
 
           return true;
@@ -412,6 +425,13 @@ module.exports = require("buffer");
 /***/ ((module) => {
 
 module.exports = require("lodash");
+
+/***/ }),
+
+/***/ 3908:
+/***/ ((module) => {
+
+module.exports = require("lodash/debounce");
 
 /***/ }),
 
