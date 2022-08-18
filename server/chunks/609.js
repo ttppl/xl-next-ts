@@ -109,8 +109,13 @@ function TxtDownload(props) {
             })
           })]
         })
-      }) : /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx("p", {
-        children: "\u63A8\u8350"
+      }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+        className: "xl-bool-list-none",
+        children: [/*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx("h2", {
+          children: "\u63A8\u8350"
+        }), /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx("p", {
+          children: "\u63A8\u8350\u5565\u5440\uFF0C\u81EA\u5DF1\u641C\uFF01\uFF08\u8D81\u7F51\u7AD9\u8FD8\u6CA1\u628A\u6211\u62C9\u9ED1\u4E4B\u524D\uD83D\uDE02...\uFF09"
+        })]
       })
     })]
   });

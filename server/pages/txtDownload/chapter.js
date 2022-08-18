@@ -31,6 +31,7 @@ async function getServerSideProps({
 }) {
   const url = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_0__/* .decryptUrl */ .yt)(query.key);
   const chapterInfo = await (0,_request_modules_txtDownloadRequest__WEBPACK_IMPORTED_MODULE_1__/* .getChapter */ .bR)(url);
+  chapterInfo.content = chapterInfo.content.replace(/\s+/g, '\n\n        ');
   return {
     props: {
       chapterInfo
@@ -41,8 +42,6 @@ async function getServerSideProps({
 function TxtChapterDetail({
   chapterInfo
 }) {
-  var _chapterInfo$content;
-
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
     className: "xl-chapter-main",
     children: [/*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx("p", {
@@ -62,7 +61,7 @@ function TxtChapterDetail({
       })]
     }), /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx("div", {
       className: "xl-chapter-content",
-      children: (_chapterInfo$content = chapterInfo.content) === null || _chapterInfo$content === void 0 ? void 0 : _chapterInfo$content.replace(/\n\n/g, '\n')
+      children: chapterInfo.content
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
       className: "xl-pre-next-chapter",
       children: [/*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx(next_link__WEBPACK_IMPORTED_MODULE_3__["default"], {
