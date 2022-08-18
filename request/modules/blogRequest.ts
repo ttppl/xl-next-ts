@@ -27,7 +27,7 @@ export async function getBlogById(id:number) {
 export async function queryBlogs(key:string,options?:{userId?:number,
     isPublish?:string,isDelete?:string,
     page?:number,pageSize?:number,orderBy?:string}) {
-    return await get(`/blog/getBlogList`,options)
+    return await get(`/blog/getBlogList`, {key,...options})
 }
 
 
