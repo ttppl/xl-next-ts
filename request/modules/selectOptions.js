@@ -64,8 +64,8 @@ export async function deleteTag(id) {
 }
 
 
-export async function getBlogCategory(userId=1) {
-    return (await get(`/category/getUserCategory/user/${userId}/type/blog`)).data
+export async function getBlogCategory(userId) {
+    return (await get(`/category/getUserCategory/type/blog`,{userId})).data
 }
 
 export async function getCategoryTreeList(userId, page = 1, pageSize = 10, name, type, parent) {
