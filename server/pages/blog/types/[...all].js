@@ -136,8 +136,10 @@ async function modifyTag(tag = {
 async function deleteTag(id) {
   return get(`/tag/deleteTag/id/${id}`);
 }
-async function getBlogCategory(userId = 1) {
-  return (await (0,config/* get */.U2)(`/category/getUserCategory/user/${userId}/type/blog`)).data;
+async function getBlogCategory(userId) {
+  return (await (0,config/* get */.U2)(`/category/getUserCategory/type/blog`, {
+    userId
+  })).data;
 }
 async function getCategoryTreeList(userId, page = 1, pageSize = 10, name, type, parent) {
   return get('/category/getCategoryTreeList', {
