@@ -226,7 +226,7 @@ CodeRunIndex.layout = main/* getDefaultLayout */.uy;
 /* harmony export */   "C": () => (/* binding */ getCodeRunById),
 /* harmony export */   "c": () => (/* binding */ getCodeRunList)
 /* harmony export */ });
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8222);
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4716);
 
 async function getCodeRunById(id) {
   const res = await (0,_config__WEBPACK_IMPORTED_MODULE_0__/* .get */ .U2)(`/codeRun/getCodeRun/id/${id}`);

@@ -46,8 +46,8 @@ __webpack_require__.d(__webpack_exports__, {
 
 // EXTERNAL MODULE: ./components/layouts/main.js + 4 modules
 var main = __webpack_require__(7264);
-// EXTERNAL MODULE: ./request/config.js + 1 modules
-var config = __webpack_require__(8222);
+// EXTERNAL MODULE: ./request/config.js
+var config = __webpack_require__(4716);
 ;// CONCATENATED MODULE: ./request/modules/selectOptions.js
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
@@ -451,6 +451,13 @@ function BlogTypes({
 /***/ ((module) => {
 
 module.exports = require("buffer");
+
+/***/ }),
+
+/***/ 4071:
+/***/ ((module) => {
+
+module.exports = require("clipboard");
 
 /***/ }),
 

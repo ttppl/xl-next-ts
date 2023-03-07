@@ -255,7 +255,7 @@ Index.layout = _components_layouts_main__WEBPACK_IMPORTED_MODULE_1__/* .getDefau
 /* harmony export */   "T": () => (/* binding */ getBlogUser)
 /* harmony export */ });
 /* unused harmony export login */
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8222);
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4716);
 
 const module = '/user';
 const {

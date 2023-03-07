@@ -19,9 +19,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var highlight_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1000);
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1742);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(997);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1742);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(997);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([highlight_js__WEBPACK_IMPORTED_MODULE_3__]);
 highlight_js__WEBPACK_IMPORTED_MODULE_3__ = (__webpack_async_dependencies__.then ? await __webpack_async_dependencies__ : __webpack_async_dependencies__)[0];
 
@@ -76,36 +76,36 @@ function CodeRunDetail({
     }
   };
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
     className: "xl-code-run-detail",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
       className: "xl-lang-tags",
-      children: [/*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx("div", {
-        className: (0,_utils__WEBPACK_IMPORTED_MODULE_5__/* .getClass */ .ll)(['xl-lang-tag', {
+      children: [/*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx("div", {
+        className: (0,_utils__WEBPACK_IMPORTED_MODULE_4__/* .getClass */ .ll)(['xl-lang-tag', {
           'active': code === 'preview'
         }]),
         onClick: () => setCode('preview'),
         children: "preview"
-      }), /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx("div", {
-        className: (0,_utils__WEBPACK_IMPORTED_MODULE_5__/* .getClass */ .ll)(['xl-lang-tag', {
+      }), /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx("div", {
+        className: (0,_utils__WEBPACK_IMPORTED_MODULE_4__/* .getClass */ .ll)(['xl-lang-tag', {
           'active': code === 'html'
         }]),
         onClick: () => setCode('html'),
         children: "html"
-      }), /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx("div", {
-        className: (0,_utils__WEBPACK_IMPORTED_MODULE_5__/* .getClass */ .ll)(['xl-lang-tag', {
+      }), /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx("div", {
+        className: (0,_utils__WEBPACK_IMPORTED_MODULE_4__/* .getClass */ .ll)(['xl-lang-tag', {
           'active': code === 'script'
         }]),
         onClick: () => setCode('script'),
         children: "script"
-      }), /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx("div", {
-        className: (0,_utils__WEBPACK_IMPORTED_MODULE_5__/* .getClass */ .ll)(['xl-lang-tag', {
+      }), /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx("div", {
+        className: (0,_utils__WEBPACK_IMPORTED_MODULE_4__/* .getClass */ .ll)(['xl-lang-tag', {
           'active': code === 'style'
         }]),
         onClick: () => setCode('style'),
         children: "style"
       })]
-    }), /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx("iframe", {
+    }), /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx("iframe", {
       width: "100%",
       id: "xl-iframe",
       style: {
@@ -115,28 +115,28 @@ function CodeRunDetail({
       srcDoc: codeRun.htmlValue,
       onLoad: setIframeHeight,
       children: "\u52A0\u8F7D\u4E2D"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-      children: [/*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx("pre", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+      children: [/*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx("pre", {
         style: {
           display: code === 'html' ? '' : 'none'
         },
-        children: /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx("code", {
+        children: /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx("code", {
           lang: codeRun.xmlLanguage,
           children: codeRun.xmlText
         })
-      }), /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx("pre", {
+      }), /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx("pre", {
         style: {
           display: code === 'script' ? '' : 'none'
         },
-        children: /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx("code", {
+        children: /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx("code", {
           lang: codeRun.scriptLanguage,
           children: codeRun.scriptText
         })
-      }), /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx("pre", {
+      }), /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx("pre", {
         style: {
           display: code === 'style' ? '' : 'none'
         },
-        children: /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx("code", {
+        children: /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx("code", {
           lang: codeRun.styleLanguage,
           children: codeRun.styleText
         })
@@ -158,7 +158,7 @@ CodeRunDetail.layout = _components_layouts_main__WEBPACK_IMPORTED_MODULE_1__/* .
 /* harmony export */   "C": () => (/* binding */ getCodeRunById),
 /* harmony export */   "c": () => (/* binding */ getCodeRunList)
 /* harmony export */ });
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8222);
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4716);
 
 async function getCodeRunById(id) {
   const res = await (0,_config__WEBPACK_IMPORTED_MODULE_0__/* .get */ .U2)(`/codeRun/getCodeRun/id/${id}`);
@@ -174,6 +174,13 @@ async function getCodeRunList(options) {
 /***/ ((module) => {
 
 module.exports = require("buffer");
+
+/***/ }),
+
+/***/ 4071:
+/***/ ((module) => {
+
+module.exports = require("clipboard");
 
 /***/ }),
 

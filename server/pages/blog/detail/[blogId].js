@@ -55,7 +55,10 @@ var blogRequest = __webpack_require__(5577);
 var main = __webpack_require__(7264);
 // EXTERNAL MODULE: ./request/modules/utilRequest.ts
 var utilRequest = __webpack_require__(8031);
+// EXTERNAL MODULE: ./utils/index.ts
+var utils = __webpack_require__(1742);
 ;// CONCATENATED MODULE: ./hooks/useRunnableScript.ts
+
 
 
 
@@ -95,6 +98,13 @@ const useRunnableScript = (dependencies = []) => {
       const container = (_e$target3 = e.target) === null || _e$target3 === void 0 ? void 0 : (_e$target3$parentNode = _e$target3.parentNode) === null || _e$target3$parentNode === void 0 ? void 0 : _e$target3$parentNode.getElementsByClassName('xl-runnable-output')[0];
       container.innerHTML = '';
       container.style.display = 'none';
+    };
+
+    global.xlCopyCode = function (e) {
+      var _e$target4;
+
+      const code = (_e$target4 = e.target) === null || _e$target4 === void 0 ? void 0 : _e$target4.getElementsByTagName('textarea')[0].value;
+      (0,utils/* copyToclipboard */.$i)(code);
     };
   }, [...dependencies]);
 };
@@ -364,7 +374,7 @@ function BlogDetail({
 /* harmony export */   "O": () => (/* binding */ runScripts)
 /* harmony export */ });
 /* unused harmony export getCodeRunPreview */
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8222);
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4716);
 
 async function runScripts(script) {
   return await (0,_config__WEBPACK_IMPORTED_MODULE_0__/* .post */ .v_)(`/runScript`, {
@@ -381,6 +391,13 @@ async function getCodeRunPreview(id) {
 /***/ ((module) => {
 
 module.exports = require("buffer");
+
+/***/ }),
+
+/***/ 4071:
+/***/ ((module) => {
+
+module.exports = require("clipboard");
 
 /***/ }),
 

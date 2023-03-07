@@ -11,10 +11,10 @@ exports.modules = {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1742);
-/* harmony import */ var _utils_check__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7549);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(997);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1742);
+/* harmony import */ var _utils_check__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7549);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(997);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__);
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -61,20 +61,20 @@ function XlTransition({
     if (show) {
       //enter
       if (initTransition.current) {
-        setMyStyle(_objectSpread(_objectSpread({}, defaultStyles), (0,_utils_check__WEBPACK_IMPORTED_MODULE_2__/* .isFunction */ .mf)(status.beforeEnter) ? status.beforeEnter(container.current) : status.beforeEnter));
+        setMyStyle(_objectSpread(_objectSpread({}, defaultStyles), (0,_utils_check__WEBPACK_IMPORTED_MODULE_3__/* .isFunction */ .mf)(status.beforeEnter) ? status.beforeEnter(container.current) : status.beforeEnter));
         currentState.current = 'beforeEnter';
       } else {
-        setMyStyle(_objectSpread(_objectSpread({}, defaultStyles), (0,_utils_check__WEBPACK_IMPORTED_MODULE_2__/* .isFunction */ .mf)(status.entered) ? status.entered(container.current) : status.entered));
+        setMyStyle(_objectSpread(_objectSpread({}, defaultStyles), (0,_utils_check__WEBPACK_IMPORTED_MODULE_3__/* .isFunction */ .mf)(status.entered) ? status.entered(container.current) : status.entered));
         currentState.current = 'entered';
         initTransition.current = true;
       }
     } else {
       //exit
       if (initTransition.current) {
-        setMyStyle(_objectSpread(_objectSpread({}, defaultStyles), (0,_utils_check__WEBPACK_IMPORTED_MODULE_2__/* .isFunction */ .mf)(status.beforeExit) ? status.beforeExit(container.current) : status.beforeExit));
+        setMyStyle(_objectSpread(_objectSpread({}, defaultStyles), (0,_utils_check__WEBPACK_IMPORTED_MODULE_3__/* .isFunction */ .mf)(status.beforeExit) ? status.beforeExit(container.current) : status.beforeExit));
         currentState.current = 'beforeExit';
       } else {
-        setMyStyle(_objectSpread(_objectSpread({}, defaultStyles), (0,_utils_check__WEBPACK_IMPORTED_MODULE_2__/* .isFunction */ .mf)(status.exited) ? status.exited(container.current) : status.exited));
+        setMyStyle(_objectSpread(_objectSpread({}, defaultStyles), (0,_utils_check__WEBPACK_IMPORTED_MODULE_3__/* .isFunction */ .mf)(status.exited) ? status.exited(container.current) : status.exited));
         currentState.current = 'exited';
         initTransition.current = true;
       }
@@ -87,21 +87,21 @@ function XlTransition({
 
   const changeStatus = async () => {
     if (currentState.current === 'beforeEnter') {
-      await (0,_utils__WEBPACK_IMPORTED_MODULE_3__/* .sleep */ ._v)(16 + delay); //浏览器每一帧绘制需要16ms时间
+      await (0,_utils__WEBPACK_IMPORTED_MODULE_1__/* .sleep */ ._v)(16 + delay); //浏览器每一帧绘制需要16ms时间
 
-      setMyStyle(_objectSpread(_objectSpread({}, defaultStyles), (0,_utils_check__WEBPACK_IMPORTED_MODULE_2__/* .isFunction */ .mf)(status.entering) ? status.entering(container.current) : status.entering));
+      setMyStyle(_objectSpread(_objectSpread({}, defaultStyles), (0,_utils_check__WEBPACK_IMPORTED_MODULE_3__/* .isFunction */ .mf)(status.entering) ? status.entering(container.current) : status.entering));
       currentState.current = 'entering';
     } else if (currentState.current === 'entering') {
-      await (0,_utils__WEBPACK_IMPORTED_MODULE_3__/* .sleep */ ._v)(duration);
-      setMyStyle(_objectSpread(_objectSpread({}, defaultStyles), (0,_utils_check__WEBPACK_IMPORTED_MODULE_2__/* .isFunction */ .mf)(status.entered) ? status.entered(container.current) : status.entered));
+      await (0,_utils__WEBPACK_IMPORTED_MODULE_1__/* .sleep */ ._v)(duration);
+      setMyStyle(_objectSpread(_objectSpread({}, defaultStyles), (0,_utils_check__WEBPACK_IMPORTED_MODULE_3__/* .isFunction */ .mf)(status.entered) ? status.entered(container.current) : status.entered));
       currentState.current = 'entered';
     } else if (currentState.current === 'beforeExit') {
-      await (0,_utils__WEBPACK_IMPORTED_MODULE_3__/* .sleep */ ._v)(16 + delay);
-      setMyStyle(_objectSpread(_objectSpread({}, defaultStyles), (0,_utils_check__WEBPACK_IMPORTED_MODULE_2__/* .isFunction */ .mf)(status.exiting) ? status.exiting(container.current) : status.exiting));
+      await (0,_utils__WEBPACK_IMPORTED_MODULE_1__/* .sleep */ ._v)(16 + delay);
+      setMyStyle(_objectSpread(_objectSpread({}, defaultStyles), (0,_utils_check__WEBPACK_IMPORTED_MODULE_3__/* .isFunction */ .mf)(status.exiting) ? status.exiting(container.current) : status.exiting));
       currentState.current = 'exiting';
     } else if (currentState.current === 'exiting') {
-      await (0,_utils__WEBPACK_IMPORTED_MODULE_3__/* .sleep */ ._v)(duration);
-      setMyStyle(_objectSpread(_objectSpread({}, defaultStyles), (0,_utils_check__WEBPACK_IMPORTED_MODULE_2__/* .isFunction */ .mf)(status.exited) ? status.exited(container.current) : status.exited));
+      await (0,_utils__WEBPACK_IMPORTED_MODULE_1__/* .sleep */ ._v)(duration);
+      setMyStyle(_objectSpread(_objectSpread({}, defaultStyles), (0,_utils_check__WEBPACK_IMPORTED_MODULE_3__/* .isFunction */ .mf)(status.exited) ? status.exited(container.current) : status.exited));
       currentState.current = 'exited';
     }
   };
@@ -109,7 +109,7 @@ function XlTransition({
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     changeStatus();
   }, [myStyle]);
-  return /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx("div", {
+  return /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx("div", {
     ref: container,
     style: myStyle,
     children: children
@@ -344,8 +344,8 @@ function MenuItem(props) {
 // EXTERNAL MODULE: external "next/script"
 var script_ = __webpack_require__(4780);
 var script_default = /*#__PURE__*/__webpack_require__.n(script_);
-// EXTERNAL MODULE: ./request/config.js + 1 modules
-var config = __webpack_require__(8222);
+// EXTERNAL MODULE: ./request/config.js
+var config = __webpack_require__(4716);
 ;// CONCATENATED MODULE: ./request/modules/paraRequest.ts
 
 async function addPara(para) {
@@ -573,90 +573,23 @@ function getDefaultLayout(page, layoutProps) {
 
 /***/ }),
 
-/***/ 8222:
+/***/ 4716:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "ZP": () => (/* binding */ request),
-  "U2": () => (/* binding */ get),
-  "v_": () => (/* binding */ post)
-});
-
-// UNUSED EXPORTS: postOrig, restGet, restPost
-
-// EXTERNAL MODULE: ./utils/check.ts
-var check = __webpack_require__(7549);
-// EXTERNAL MODULE: external "rc-message"
-var external_rc_message_ = __webpack_require__(805);
-var external_rc_message_default = /*#__PURE__*/__webpack_require__.n(external_rc_message_);
-;// CONCATENATED MODULE: ./utils/antdUtil.ts
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ZP": () => (/* binding */ request),
+/* harmony export */   "U2": () => (/* binding */ get),
+/* harmony export */   "v_": () => (/* binding */ post)
+/* harmony export */ });
+/* unused harmony exports postOrig, restGet, restPost */
+/* harmony import */ var _utils_check__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7549);
+/* harmony import */ var _utils_antdUtil__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(970);
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-// @ts-ignore
-
-function formatFormData(data) {
-  var _data$map;
-
-  const tmpData = {};
-  data === null || data === void 0 ? void 0 : (_data$map = data.map) === null || _data$map === void 0 ? void 0 : _data$map.call(data, d => {
-    var _d$name;
-
-    if (((_d$name = d.name) === null || _d$name === void 0 ? void 0 : _d$name.length) > 0 && d.value) {
-      tmpData[d.name[0]] = d.value;
-    }
-  });
-  return tmpData;
-}
-function assignKey(data, columnName) {
-  return data.map(d => {
-    const keyedData = _objectSpread({
-      key: d[columnName]
-    }, d);
-
-    if (d.children) {
-      keyedData.children = assignKey(d.children, columnName);
-    }
-
-    return keyedData;
-  });
-}
-function findItem(data, keyName, value) {
-  for (const d of data) {
-    if (d[keyName] === value) {
-      return d;
-    } else if (d.children) {
-      const found = findItem(d.children, keyName, value);
-      if (found) return found;
-    }
-  }
-
-  return null;
-}
-function formatSwitchValue(data, ...columns) {
-  columns.forEach(column => {
-    data[column] = data[column] === 'Y' || data[column] === 'y';
-  });
-  return data;
-}
-function showfailMessage(msg) {
-  external_rc_message_default().error(msg === null || msg === void 0 ? void 0 : msg.toString(), 8);
-}
-function showSuccessMessage(msg) {
-  message.success(msg, 5);
-}
-;// CONCATENATED MODULE: ./request/config.js
-function config_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
-
-function config_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { config_ownKeys(Object(source), true).forEach(function (key) { config_defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { config_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function config_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
@@ -689,7 +622,7 @@ function request(moduleUrl) {
 const https = __webpack_require__(5687);
 
 const options = {
-  headers: config_objectSpread(config_objectSpread({}, headers), {}, {
+  headers: _objectSpread(_objectSpread({}, headers), {}, {
     'Authorization': 'xl-blog-next-app'
   })
 };
@@ -710,15 +643,15 @@ function get(url, params = {}) {
     }
   });
   const encodedParam = encodedParams.length > 0 ? `?${encodedParams.join('&')}` : '';
-  const reqUrl = encodeURI(`${check/* isServer */.sk ? baseUrl : baseClientUrl}${url}${encodedParam}`);
+  const reqUrl = encodeURI(`${_utils_check__WEBPACK_IMPORTED_MODULE_1__/* .isServer */ .sk ? baseUrl : baseClientUrl}${url}${encodedParam}`);
   return new Promise((resolve, reject) => {
-    fetch(reqUrl, config_objectSpread({
+    fetch(reqUrl, _objectSpread({
       method: 'GET'
     }, options)).then(response => {
       // console.log(response,response.status)
       return response.json();
     }).then(data => {
-      if (!data.success && !check/* isServer */.sk) {
+      if (!data.success && !_utils_check__WEBPACK_IMPORTED_MODULE_1__/* .isServer */ .sk) {
         // showfailMessage(data.msg)
         // throw new Error(data.msg)
         reject(data.msg);
@@ -728,8 +661,8 @@ function get(url, params = {}) {
     }).catch(function (err) {
       console.log(err);
 
-      if (!check/* isServer */.sk) {
-        showfailMessage(err);
+      if (!_utils_check__WEBPACK_IMPORTED_MODULE_1__/* .isServer */ .sk) {
+        (0,_utils_antdUtil__WEBPACK_IMPORTED_MODULE_0__/* .showFailMessage */ .jl)(err);
       }
 
       reject(err);
@@ -738,14 +671,14 @@ function get(url, params = {}) {
 }
 function post(url, params = {}) {
   return new Promise((resolve, reject) => {
-    fetch(encodeURI(`${check/* isServer */.sk ? baseUrl : baseClientUrl}${url}`), config_objectSpread({
+    fetch(encodeURI(`${_utils_check__WEBPACK_IMPORTED_MODULE_1__/* .isServer */ .sk ? baseUrl : baseClientUrl}${url}`), _objectSpread({
       method: 'POST',
       headers,
       body: JSON.stringify(params)
     }, options)).then(response => {
       return response.json();
     }).then(data => {
-      if (!data.success && !check/* isServer */.sk) {
+      if (!data.success && !_utils_check__WEBPACK_IMPORTED_MODULE_1__/* .isServer */ .sk) {
         // showfailMessage(data.msg)
         // throw new Error(data.msg)
         reject(data.msg);
@@ -753,8 +686,8 @@ function post(url, params = {}) {
 
       resolve(data);
     }).catch(function (err) {
-      if (!check/* isServer */.sk) {
-        showfailMessage(err);
+      if (!_utils_check__WEBPACK_IMPORTED_MODULE_1__/* .isServer */ .sk) {
+        (0,_utils_antdUtil__WEBPACK_IMPORTED_MODULE_0__/* .showFailMessage */ .jl)(err);
       }
 
       reject(err);
@@ -885,6 +818,86 @@ const LIGHT_THEME = {
 
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (LIGHT_THEME);
+
+/***/ }),
+
+/***/ 970:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "jl": () => (/* binding */ showFailMessage),
+/* harmony export */   "rO": () => (/* binding */ showSuccessMessage)
+/* harmony export */ });
+/* unused harmony exports formatFormData, assignKey, findItem, formatSwitchValue */
+/* harmony import */ var rc_message__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(805);
+/* harmony import */ var rc_message__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(rc_message__WEBPACK_IMPORTED_MODULE_0__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+// @ts-ignore
+
+ // 文档地址：https://www.npmjs.com/package/rc-message
+
+function formatFormData(data) {
+  var _data$map;
+
+  const tmpData = {};
+  data === null || data === void 0 ? void 0 : (_data$map = data.map) === null || _data$map === void 0 ? void 0 : _data$map.call(data, d => {
+    var _d$name;
+
+    if (((_d$name = d.name) === null || _d$name === void 0 ? void 0 : _d$name.length) > 0 && d.value) {
+      tmpData[d.name[0]] = d.value;
+    }
+  });
+  return tmpData;
+}
+function assignKey(data, columnName) {
+  return data.map(d => {
+    const keyedData = _objectSpread({
+      key: d[columnName]
+    }, d);
+
+    if (d.children) {
+      keyedData.children = assignKey(d.children, columnName);
+    }
+
+    return keyedData;
+  });
+}
+function findItem(data, keyName, value) {
+  for (const d of data) {
+    if (d[keyName] === value) {
+      return d;
+    } else if (d.children) {
+      const found = findItem(d.children, keyName, value);
+      if (found) return found;
+    }
+  }
+
+  return null;
+}
+function formatSwitchValue(data, ...columns) {
+  columns.forEach(column => {
+    data[column] = data[column] === 'Y' || data[column] === 'y';
+  });
+  return data;
+}
+function showFailMessage(msg) {
+  rc_message__WEBPACK_IMPORTED_MODULE_0___default().error({
+    content: (msg === null || msg === void 0 ? void 0 : msg.toString()) || '未知错误',
+    duration: 8
+  });
+}
+function showSuccessMessage(msg) {
+  rc_message__WEBPACK_IMPORTED_MODULE_0___default().success({
+    content: msg,
+    duration: 3
+  });
+}
 
 /***/ }),
 
@@ -1194,10 +1207,16 @@ const decryptUrl = url => {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "_v": () => (/* binding */ sleep),
 /* harmony export */   "ll": () => (/* binding */ getClass),
-/* harmony export */   "B8": () => (/* binding */ asyncDownloadFile)
+/* harmony export */   "B8": () => (/* binding */ asyncDownloadFile),
+/* harmony export */   "$i": () => (/* binding */ copyToclipboard)
 /* harmony export */ });
 /* unused harmony export downloadFile */
-/* harmony import */ var _check__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7549);
+/* harmony import */ var _check__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7549);
+/* harmony import */ var clipboard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4071);
+/* harmony import */ var clipboard__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(clipboard__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _antdUtil__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(970);
+
+
 
 const sleep = timeountMS => new Promise(resolve => {
   // console.log('timeBegin')
@@ -1209,7 +1228,7 @@ const sleep = timeountMS => new Promise(resolve => {
 const getClass = className => {
   const classNames = [];
 
-  if ((0,_check__WEBPACK_IMPORTED_MODULE_0__/* .isString */ .HD)(className)) {
+  if ((0,_check__WEBPACK_IMPORTED_MODULE_2__/* .isString */ .HD)(className)) {
     classNames.push(className);
   }
 
@@ -1217,7 +1236,7 @@ const getClass = className => {
     className.forEach(classNameItem => classNames.push(getClass(classNameItem)));
   }
 
-  if ((0,_check__WEBPACK_IMPORTED_MODULE_0__/* .isObject */ .Kn)(className)) {
+  if ((0,_check__WEBPACK_IMPORTED_MODULE_2__/* .isObject */ .Kn)(className)) {
     Object.keys(className).forEach(key => {
       if (className[key]) {
         classNames.push(key);
@@ -1245,7 +1264,7 @@ function asyncDownloadFile(url, options) {
       }
     };
 
-    if ((0,_check__WEBPACK_IMPORTED_MODULE_0__/* .isFunction */ .mf)(options === null || options === void 0 ? void 0 : options.onProgress)) {
+    if ((0,_check__WEBPACK_IMPORTED_MODULE_2__/* .isFunction */ .mf)(options === null || options === void 0 ? void 0 : options.onProgress)) {
       xhr.addEventListener("progress", function (evt) {
         if (evt.lengthComputable) {
           const percentComplete = evt.loaded / evt.total;
@@ -1286,6 +1305,20 @@ function getFileName(url) {
   fileName = decodeURI(fileName.split("?")[0]);
   return fileName;
 }
+
+const copyToclipboard = text => {
+  if (!text) return;
+  const button = document.createElement('button');
+  button.style.display = 'none';
+  button.setAttribute('data-clipboard-text', text);
+  document.body.appendChild(button);
+  var clipboard = new (clipboard__WEBPACK_IMPORTED_MODULE_0___default())(button);
+  clipboard.on('success', function () {
+    (0,_antdUtil__WEBPACK_IMPORTED_MODULE_1__/* .showSuccessMessage */ .rO)(`复制成功：${text.length > 100 ? text.slice(0, 100) + '...' : text}`);
+  });
+  button.click();
+  document.body.removeChild(button);
+};
 
 /***/ }),
 

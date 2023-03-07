@@ -59,6 +59,13 @@ module.exports = require("buffer");
 
 /***/ }),
 
+/***/ 4071:
+/***/ ((module) => {
+
+module.exports = require("clipboard");
+
+/***/ }),
+
 /***/ 6517:
 /***/ ((module) => {
 

@@ -81,6 +81,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 // @ts-ignore
 
+ // 文档地址：https://www.npmjs.com/package/rc-message
+
 function formatFormData(data) {
   var _data$map;
 
@@ -125,11 +127,17 @@ function formatSwitchValue(data, ...columns) {
   });
   return data;
 }
-function showfailMessage(msg) {
-  external_rc_message_default().error(msg === null || msg === void 0 ? void 0 : msg.toString(), 8);
+function showFailMessage(msg) {
+  external_rc_message_default().error({
+    content: (msg === null || msg === void 0 ? void 0 : msg.toString()) || '未知错误',
+    duration: 8
+  });
 }
 function showSuccessMessage(msg) {
-  message.success(msg, 5);
+  message.success({
+    content: msg,
+    duration: 3
+  });
 }
 ;// CONCATENATED MODULE: ./request/config.js
 function config_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
@@ -209,7 +217,7 @@ function get(url, params = {}) {
       console.log(err);
 
       if (!isServer) {
-        showfailMessage(err);
+        showFailMessage(err);
       }
 
       reject(err);
@@ -234,7 +242,7 @@ function post(url, params = {}) {
       resolve(data);
     }).catch(function (err) {
       if (!isServer) {
-        showfailMessage(err);
+        showFailMessage(err);
       }
 
       reject(err);
