@@ -1,4 +1,6 @@
 import {isFunction, isObject, isString} from "./check";
+import ClipboardJS from "clipboard";
+import {showSuccessMessage} from "./antdUtil";
 
 export const sleep = (timeountMS:number) => new Promise((resolve) => {
     // console.log('timeBegin')
@@ -89,4 +91,19 @@ function getFileName(url: string) {
     //把参数和文件名分割开
     fileName = decodeURI(fileName.split("?")[0]);
     return fileName;
+}
+
+
+export const copyToclipboard = (text:string)=>{
+    if(!text) return
+    const button = document.createElement('button')
+    button.style.display = 'none'
+    button.setAttribute('data-clipboard-text',text)
+    document.body.appendChild(button)
+    var clipboard = new ClipboardJS(button);
+    clipboard.on('success', function() {
+        showSuccessMessage(`复制成功：${text.length>100?text.slice(0,100)+'...':text}`)
+    })
+    button.click()
+    document.body.removeChild(button)
 }

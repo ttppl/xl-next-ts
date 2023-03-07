@@ -1,5 +1,5 @@
 import {isServer} from "../utils/check";
-import {showfailMessage} from "../utils/antdUtil";
+import {showFailMessage} from "../utils/antdUtil";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_REQUEST_URL
 const baseClientUrl = process.env.NEXT_PUBLIC_BASE_CLIENT_REQUEST_URL
@@ -63,7 +63,7 @@ export function get(url, params = {}) {
         }).catch(function (err) {
             console.log(err)
             if (!isServer) {
-                showfailMessage(err)
+                showFailMessage(err)
             }
             reject(err)
         })
@@ -87,7 +87,7 @@ export function post(url, params = {}) {
             resolve(data)
         }).catch(function (err) {
             if (!isServer) {
-                showfailMessage(err)
+                showFailMessage(err)
             }
             reject(err)
         })

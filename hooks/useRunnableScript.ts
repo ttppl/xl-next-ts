@@ -1,5 +1,6 @@
 import {useEffect} from "react";
 import {runScripts} from "../request/modules/utilRequest";
+import {copyToclipboard} from "../utils";
 
 const useRunnableScript = (dependencies=[]) => {
     useEffect(() => {
@@ -32,6 +33,10 @@ const useRunnableScript = (dependencies=[]) => {
             const container:any = ((e.target as HTMLElement)?.parentNode as HTMLElement)?.getElementsByClassName('xl-runnable-output')[0]
             container.innerHTML = ''
             container.style.display='none'
+        }
+        global.xlCopyCode  = function (e:Event) {
+            const code = (e.target as HTMLElement)?.getElementsByTagName('textarea')[0].value
+            copyToclipboard(code)
         }
     }, [...dependencies])
 }

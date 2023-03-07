@@ -1,5 +1,7 @@
 // @ts-ignore
 import message from "rc-message"
+import 'rc-message/assets/index.css'
+// 文档地址：https://www.npmjs.com/package/rc-message
 
 export function formatFormData(data: Array<{ name: Array<string>, value: string }>) {
     const tmpData: any = {}
@@ -44,10 +46,16 @@ export function formatSwitchValue(data:any,...columns:Array<string>){
     return data
 }
 
-export function showfailMessage(msg:string){
-    message.error(msg?.toString(),8)
+export function showFailMessage(msg:string){
+    message.error({
+        content:msg?.toString()||'未知错误',
+        duration:8
+    })
 }
 
 export function showSuccessMessage(msg:string){
-    message.success(msg,5)
+    message.success({
+        content:msg,
+        duration:3
+    })
 }
