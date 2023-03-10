@@ -826,10 +826,9 @@ const LIGHT_THEME = {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "jl": () => (/* binding */ showFailMessage),
-/* harmony export */   "rO": () => (/* binding */ showSuccessMessage)
+/* harmony export */   "jl": () => (/* binding */ showFailMessage)
 /* harmony export */ });
-/* unused harmony exports formatFormData, assignKey, findItem, formatSwitchValue */
+/* unused harmony exports formatFormData, assignKey, findItem, formatSwitchValue, showSuccessMessage */
 /* harmony import */ var rc_message__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(805);
 /* harmony import */ var rc_message__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(rc_message__WEBPACK_IMPORTED_MODULE_0__);
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
@@ -893,7 +892,7 @@ function showFailMessage(msg) {
   });
 }
 function showSuccessMessage(msg) {
-  rc_message__WEBPACK_IMPORTED_MODULE_0___default().success({
+  message.success({
     content: msg,
     duration: 3
   });
@@ -914,9 +913,10 @@ function showSuccessMessage(msg) {
 /* harmony export */   "cx": () => (/* binding */ getScrollTop),
 /* harmony export */   "Gx": () => (/* binding */ addScript),
 /* harmony export */   "bl": () => (/* binding */ encryptUrl),
-/* harmony export */   "yt": () => (/* binding */ decryptUrl)
+/* harmony export */   "yt": () => (/* binding */ decryptUrl),
+/* harmony export */   "Oo": () => (/* binding */ loadJsResource)
 /* harmony export */ });
-/* unused harmony exports getKeyCode, isCtrlKey, isShiftKey, KEY_CODE, insertTextAtCursor, getStyle, setStyle, getOffsetTop, getOffsetTopDistance, isInView, removeScript */
+/* unused harmony exports getKeyCode, isCtrlKey, isShiftKey, KEY_CODE, insertTextAtCursor, getStyle, setStyle, getOffsetTop, getOffsetTopDistance, isInView, removeScript, loadCssResource */
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6517);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _check__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7549);
@@ -1197,6 +1197,45 @@ const decryptUrl = url => {
     return decodeURI(new buffer__WEBPACK_IMPORTED_MODULE_1__.Buffer(url, 'base64').toString());
   } else return url;
 };
+const loadJsResource = url => {
+  return new Promise((resolve, reject) => {
+    if (url) {
+      console.info(`准备加载js文件：${url}`);
+      const script = document.createElement("script");
+      script.type = 'text/javascript';
+      script.src = url;
+      document.getElementsByTagName("head")[0].appendChild(script);
+
+      script.onload = () => {
+        console.info(`js文件加载完成：${url}`);
+        resolve(true);
+      };
+    } else {
+      reject(new Error('url不能为空'));
+    }
+  });
+};
+/** 加载css资源 */
+
+const loadCssResource = url => {
+  return new Promise((resolve, reject) => {
+    if (url) {
+      console.info(`准备加载css文件：${url}`);
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.type = "text/css";
+      link.href = url;
+      document.getElementsByTagName("head")[0].appendChild(link);
+
+      link.onload = () => {
+        console.info(`css文件加载完成：${url}`);
+        resolve(true);
+      };
+    } else {
+      reject(new Error('url不能为空'));
+    }
+  });
+};
 
 /***/ }),
 
@@ -1207,10 +1246,9 @@ const decryptUrl = url => {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "_v": () => (/* binding */ sleep),
 /* harmony export */   "ll": () => (/* binding */ getClass),
-/* harmony export */   "B8": () => (/* binding */ asyncDownloadFile),
-/* harmony export */   "$i": () => (/* binding */ copyToclipboard)
+/* harmony export */   "B8": () => (/* binding */ asyncDownloadFile)
 /* harmony export */ });
-/* unused harmony export downloadFile */
+/* unused harmony exports downloadFile, copyToclipboard */
 /* harmony import */ var _check__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7549);
 /* harmony import */ var clipboard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4071);
 /* harmony import */ var clipboard__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(clipboard__WEBPACK_IMPORTED_MODULE_0__);
@@ -1312,9 +1350,9 @@ const copyToclipboard = text => {
   button.style.display = 'none';
   button.setAttribute('data-clipboard-text', text);
   document.body.appendChild(button);
-  var clipboard = new (clipboard__WEBPACK_IMPORTED_MODULE_0___default())(button);
+  var clipboard = new ClipboardJS(button);
   clipboard.on('success', function () {
-    (0,_antdUtil__WEBPACK_IMPORTED_MODULE_1__/* .showSuccessMessage */ .rO)(`复制成功：${text.length > 100 ? text.slice(0, 100) + '...' : text}`);
+    showSuccessMessage(`复制成功：${text.length > 100 ? text.slice(0, 100) + '...' : text}`);
   });
   button.click();
   document.body.removeChild(button);

@@ -55,8 +55,8 @@ var blogRequest = __webpack_require__(5577);
 var main = __webpack_require__(7264);
 // EXTERNAL MODULE: ./request/modules/utilRequest.ts
 var utilRequest = __webpack_require__(8031);
-// EXTERNAL MODULE: ./utils/index.ts
-var utils = __webpack_require__(1742);
+// EXTERNAL MODULE: ./utils/dom.ts
+var dom = __webpack_require__(2252);
 ;// CONCATENATED MODULE: ./hooks/useRunnableScript.ts
 
 
@@ -64,56 +64,42 @@ var utils = __webpack_require__(1742);
 
 const useRunnableScript = (dependencies = []) => {
   (0,external_react_.useEffect)(() => {
-    const global = window;
+    (0,dom/* loadJsResource */.Oo)('https://ttppl.xyz/file/lib/xlUtils.js').then(res => {
+      (0,dom/* loadJsResource */.Oo)('https://ttppl.xyz/file/lib/blog.js').then(() => {
+        //重写runscript方法
+        window.runXlScript = function (e) {
+          try {
+            var _e$target, _e$target2, _e$target2$parentNode;
 
-    global.runXlScript = function (e) {
-      try {
-        var _e$target, _e$target2, _e$target2$parentNode;
-
-        const code = (_e$target = e.target) === null || _e$target === void 0 ? void 0 : _e$target.getElementsByTagName('textarea')[0].value;
-        const container = (_e$target2 = e.target) === null || _e$target2 === void 0 ? void 0 : (_e$target2$parentNode = _e$target2.parentNode) === null || _e$target2$parentNode === void 0 ? void 0 : _e$target2$parentNode.getElementsByClassName('xl-runnable-output')[0];
-        (0,utilRequest/* runScripts */.O)(code).then(res => {
-          if (res.success) {
-            let output = '';
-            res.data.map(column => {
-              output += column + '\n';
+            const code = (_e$target = e.target) === null || _e$target === void 0 ? void 0 : _e$target.getElementsByTagName('textarea')[0].value;
+            const container = (_e$target2 = e.target) === null || _e$target2 === void 0 ? void 0 : (_e$target2$parentNode = _e$target2.parentNode) === null || _e$target2$parentNode === void 0 ? void 0 : _e$target2$parentNode.getElementsByClassName('xl-runnable-output')[0];
+            (0,utilRequest/* runScripts */.O)(code).then(res => {
+              if (res.success) {
+                let output = '';
+                res.data.map(column => {
+                  output += column + '\n';
+                });
+                output = output.replace(/\\/g, '\\').replace(/\</g, '&lt').replace(/\>/g, '&gt');
+                container.innerHTML = `<pre><code>${output}</code></pre>`;
+              } else {
+                container.innerHTML = JSON.stringify(res.msg);
+              }
+            }).catch(e => {
+              container.innerHTML = e.toString();
             });
-            output = output.replace(/\\/g, '\\').replace(/\</g, '&lt').replace(/\>/g, '&gt');
-            container.innerHTML = `<pre><code>${output}</code></pre>`;
-          } else {
-            container.innerHTML = JSON.stringify(res.msg);
+            container.style.display = 'block';
+          } catch (e) {
+            console.error(e);
           }
-        }).catch(e => {
-          container.innerHTML = e.toString();
-        });
-        container.style.display = 'block';
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    global.clearXlScriptOutput = function (e) {
-      var _e$target3, _e$target3$parentNode;
-
-      const container = (_e$target3 = e.target) === null || _e$target3 === void 0 ? void 0 : (_e$target3$parentNode = _e$target3.parentNode) === null || _e$target3$parentNode === void 0 ? void 0 : _e$target3$parentNode.getElementsByClassName('xl-runnable-output')[0];
-      container.innerHTML = '';
-      container.style.display = 'none';
-    };
-
-    global.xlCopyCode = function (e) {
-      var _e$target4;
-
-      const code = (_e$target4 = e.target) === null || _e$target4 === void 0 ? void 0 : _e$target4.getElementsByTagName('textarea')[0].value;
-      (0,utils/* copyToclipboard */.$i)(code);
-    };
+        };
+      });
+    });
   }, [...dependencies]);
 };
 
 /* harmony default export */ const hooks_useRunnableScript = (useRunnableScript);
 // EXTERNAL MODULE: external "next/router"
 var router_ = __webpack_require__(1853);
-// EXTERNAL MODULE: ./utils/dom.ts
-var dom = __webpack_require__(2252);
 // EXTERNAL MODULE: ./utils/libs/EventManager.ts
 var EventManager = __webpack_require__(6397);
 // EXTERNAL MODULE: ./utils/libs/clickOutside.ts
