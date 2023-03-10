@@ -290,3 +290,40 @@ export const decryptUrl = (url: string) => {
         return decodeURI((new Buffer(url, 'base64')).toString())
     } else return url
 }
+
+export const loadJsResource = (url:string) => {
+    return new Promise((resolve, reject) => {
+        if (url) {
+            console.info(`准备加载js文件：${url}`)
+            const script = document.createElement("script");
+            script.type = 'text/javascript';
+            script.src = url;
+            document.getElementsByTagName("head")[0].appendChild(script)
+            script.onload = () => {
+                console.info(`js文件加载完成：${url}`)
+                resolve(true)
+            }
+        } else {
+            reject(new Error('url不能为空'))
+        }
+    })
+}
+/** 加载css资源 */
+export const loadCssResource = (url:string) => {
+    return new Promise((resolve, reject) => {
+        if (url) {
+            console.info(`准备加载css文件：${url}`)
+            const link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.type = "text/css";
+            link.href = url;
+            document.getElementsByTagName("head")[0].appendChild(link)
+            link.onload = () => {
+                console.info(`css文件加载完成：${url}`)
+                resolve(true)
+            }
+        } else {
+            reject(new Error('url不能为空'))
+        }
+    })
+}
