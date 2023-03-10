@@ -1,1 +1,67 @@
-@import url("https://ttppl.xyz/file/lib/blog.css");
+@import "variable";
+
+//可执行代码段
+.xl-runnable-script-operation {
+  >button{
+    background-color: var(--code-bg);
+    border-radius: 4px;
+    padding: 5px 10px;
+    border: $border;
+    cursor: pointer;
+    &:hover,&:focus{
+      filter: brightness(1.1);
+    }
+  }
+  .xl-run-script-button{
+    &:before{
+      content: "运行";
+    }
+  }
+  .xl-run-script-clear-button {
+    margin-left: 20px;
+    &:before{
+      content: "清空";
+    }
+  }
+  .xl-runnable-output{
+    margin: 10px 10px 10px 0;
+    background-color: #f8f6f6;
+    border-radius: 4px;
+    border: none;
+    outline: none;
+    padding: 10px;
+    display: none;
+  }
+}
+
+.xl-block-code{
+  position: relative;
+  .xl-code-copy-button{
+    position: absolute;
+    right: 10px;
+    top: -6px;
+    cursor: pointer;
+    border-radius: 4px;
+    border: 1px solid gray;
+    font-size: 12px;
+    outline: none;
+    &::after{
+      content:'复制'
+    }
+  }
+  pre {
+    background-color: var(--code-bg);
+    color: var(--base-color);
+    border-radius: 4px;
+    overflow-x: auto;
+    padding: 10px;
+    margin: 10px 10px 10px 0;
+  }
+}
+
+//iframe
+.xl-local-run-preview{
+  border: $border;
+  outline: none;
+  border-radius: 4px;
+}

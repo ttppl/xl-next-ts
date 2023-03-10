@@ -1,9 +1,10 @@
 import {useEffect} from "react";
 import {runScripts} from "../request/modules/utilRequest";
-import {loadJsResource} from "../utils/dom";
+import {loadCssResource, loadJsResource} from "../utils/dom";
 
 const useRunnableScript = (dependencies=[]) => {
     useEffect(() => {
+        loadCssResource('https://ttppl.xyz/file/lib/blog.css')
         loadJsResource('https://ttppl.xyz/file/lib/xlUtils.js').then(res=>{
             loadJsResource('https://ttppl.xyz/file/lib/blog.js').then(()=>{
                 //重写runscript方法
