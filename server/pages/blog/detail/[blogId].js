@@ -64,6 +64,7 @@ var dom = __webpack_require__(2252);
 
 const useRunnableScript = (dependencies = []) => {
   (0,external_react_.useEffect)(() => {
+    (0,dom/* loadCssResource */.J3)('https://ttppl.xyz/file/lib/blog.css');
     (0,dom/* loadJsResource */.Oo)('https://ttppl.xyz/file/lib/xlUtils.js').then(res => {
       (0,dom/* loadJsResource */.Oo)('https://ttppl.xyz/file/lib/blog.js').then(() => {
         //重写runscript方法

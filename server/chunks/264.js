@@ -750,7 +750,7 @@ const LIGHT_THEME = {
   //菜单弹出框背景色
   'category-bg': '#4e4b4b',
   //目录背景颜色（手机端弹出框目录）
-  'code-bg': '#8d8787',
+  'code-bg': '#a9a6a6',
   //代码背景颜色
   'list-bar-bg': '#909399',
   //列表项的bar
@@ -914,9 +914,10 @@ function showSuccessMessage(msg) {
 /* harmony export */   "Gx": () => (/* binding */ addScript),
 /* harmony export */   "bl": () => (/* binding */ encryptUrl),
 /* harmony export */   "yt": () => (/* binding */ decryptUrl),
-/* harmony export */   "Oo": () => (/* binding */ loadJsResource)
+/* harmony export */   "Oo": () => (/* binding */ loadJsResource),
+/* harmony export */   "J3": () => (/* binding */ loadCssResource)
 /* harmony export */ });
-/* unused harmony exports getKeyCode, isCtrlKey, isShiftKey, KEY_CODE, insertTextAtCursor, getStyle, setStyle, getOffsetTop, getOffsetTopDistance, isInView, removeScript, loadCssResource */
+/* unused harmony exports getKeyCode, isCtrlKey, isShiftKey, KEY_CODE, insertTextAtCursor, getStyle, setStyle, getOffsetTop, getOffsetTopDistance, isInView, removeScript */
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6517);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _check__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7549);
