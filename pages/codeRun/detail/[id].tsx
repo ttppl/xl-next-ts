@@ -1,4 +1,4 @@
-import {CodeRun, getCodeRunById} from "../../../request/modules/codeRunRequest";
+import {CodeRunType, getCodeRunById} from "../../../request/modules/codeRunRequest";
 import {getDefaultLayout} from "../../../components/layouts/main";
 import {useEffect, useState} from "react";
 import 'highlight.js/styles/xcode.css';
@@ -15,7 +15,7 @@ export async function getServerSideProps({query}: any) {
     }
 }
 
-function CodeRunDetail({codeRun}: { codeRun: CodeRun }) {
+function CodeRunDetail({codeRun}: { codeRun: CodeRunType }) {
     const [showCode, setShowCode] = useState(false)
     const [code, setCode] = useState('preview')
     useEffect(() => {

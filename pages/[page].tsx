@@ -3,7 +3,7 @@ import {getBlogsByType} from "../request/modules/blogRequest";
 import React from "react";
 import Home from "./index";
 import {isNum} from "../utils/check";
-import {getBlogUser} from "../request/modules/userReq";
+import {getBlogUser} from "../request/modules/userRequest";
 
 export async function getServerSideProps({query}: any) {
     const page = parseFloat(query.page.slice(1))

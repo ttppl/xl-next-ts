@@ -1,4 +1,4 @@
-import {Blog} from "../../request/modules/blogRequest";
+import {BlogType, TagType} from "../../request/modules/blogRequest";
 import '../../styles/components/common/BlogCard.scss'
 import Icon from './Icon'
 import Link from "next/link";
@@ -15,15 +15,24 @@ function Tag({name,color}:any) {
     return <div className='xl-blog-tag' style={color}>{name}</div>
 }
 
-function BlogCard({blog, openBlank, style, className}: { blog: Blog, openBlank: boolean, style?: object, className?: string }) {
+function BlogCard({blog, openBlank, style, className}: { blog: BlogType, openBlank: boolean, style?: object, className?: string }) {
+    // const tags = useMemo(() => {
+    //     const blogTags = Array.isArray(blog.tags) ? blog.tags : (blog.tags as string).split(',')
+    //     return blogTags.map((tag: any,index:number) => {
+    //         if (tag) {
+    //             // return <Tag name={tag} key={`tag-${index}`}/>
+    //             return <Link key={`tag-${index}`} passHref href={`/blog/search/p1?key=${encryptUrl(tag)}`}><a key={`tag-${index}`}
+    //                                                                                      className='xl-blog-tag'>{tag}</a></Link>
+    //         }
+    //     })
+    // }, [blog.tags])
     const tags = useMemo(() => {
-        const blogTags = Array.isArray(blog.tags) ? blog.tags : (blog.tags as string).split(',')
-        return blogTags.map((tag: any,index:number) => {
-            if (tag) {
-                // return <Tag name={tag} key={`tag-${index}`}/>
-                return <Link key={`tag-${index}`} passHref href={`/blog/search/p1?key=${encryptUrl(tag)}`}><a key={`tag-${index}`}
-                                                                                         className='xl-blog-tag'>{tag}</a></Link>
-            }
+        const blogTags:TagType[] = blog.tags||[]
+        return blogTags.map((tag: any, index: number) => {
+            if (tag)
+                return <Link key={`tag-${tag.tagId}`} passHref href={`/blog/search/p1?key=${encryptUrl(tag.tagName)}`}>
+                    <a key={`tag-${index}`} className='xl-blog-tag'>{tag.tagName}</a>
+                </Link>
         })
     }, [blog.tags])
     return <article className={`xl-blog-card ${className||''}`} style={style} key={`index-blog-${blog.blogId}`}>
@@ -47,9 +56,10 @@ function BlogCard({blog, openBlank, style, className}: { blog: Blog, openBlank: 
                 {/*<span><Icon className='view'/>{blog.viewCount}</span>*/}
                 {/*<span><Icon className='heart'/>{blog.likeCount}</span>*/}
                 {/*<span><Icon className='comment'/>{blog.commentCount}</span>*/}
-                {blog.category && <span className='xl-blog-card-category'>分类：
-                <Link passHref href={`/blog/search/p1?key=${encryptUrl(blog.category as string)}`}>
-                <a >{blog.category}</a>
+
+                {blog.category?.length>0 && <span className='xl-blog-card-category'>分类：
+                <Link passHref href={`/blog/search/p1?key=${encryptUrl(blog.category.map(category=>category.categoryId).join(','))}`}>
+                <a >{blog.category.map(category=>category.categoryName).join('/')}</a>
             </Link></span>}
                 <span>{tags}</span>
             </footer>

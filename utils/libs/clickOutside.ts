@@ -1,12 +1,16 @@
 import {isNull} from "../check";
 import {off, on} from "../dom";
+import {Nullable} from "../types";
 
 type Callback = (e: Event, el: HTMLElement) => void
 
 const listeners: Map<HTMLElement, Array<Callback>> = new Map()
 let isListening = false
 
-export function addSource(dom: HTMLElement, callback: Callback) {
+export function addSource(dom: Nullable<HTMLElement>, callback: Callback) {
+    if(isNull(dom)){
+        return
+    }
     const callbacks = listeners.get(dom)
     if (isNull(callbacks)) {
         listeners.set(dom, [callback])

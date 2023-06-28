@@ -53,9 +53,13 @@
     overflow: hidden;
 
     .xl-blog-detail-category {
+      @include hideScrollBar;
+      display: block;
       flex-basis: 300px;
       box-sizing: border-box;
       flex-shrink: 0;
+      height: 70vh;
+      overflow: auto;
       //list-style-type: decimal;
       //padding-right: 20px;
       list-style: none;

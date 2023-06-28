@@ -1,6 +1,7 @@
-import {isFunction, isObject, isString} from "./check";
+import {isFunction, isNum, isObject, isString} from "./check";
 import ClipboardJS from "clipboard";
 import {showSuccessMessage} from "./antdUtil";
+import {Nullable} from "./types";
 
 export const sleep = (timeountMS:number) => new Promise((resolve) => {
     // console.log('timeBegin')
@@ -106,4 +107,32 @@ export const copyToclipboard = (text:string)=>{
     })
     button.click()
     document.body.removeChild(button)
+}
+
+/** 获取文件的地址 */
+export const getFileUrl = (url:string)=>{
+    return isNum(url)?`${process.env.NEXT_PUBLIC_BASE_FILE_URL}${url}`:url
+}
+
+/** 获取对象值 */
+export function getObjectValue(obj: object | null | undefined, path: string): any {
+    if (!obj) {
+        return undefined;
+    }
+
+    const keys = path.split('.');
+    let value = obj;
+
+    for (const key of keys) {
+        if (typeof value !== 'object' || value === null) {
+            return undefined;
+        }
+        // @ts-ignore
+        value = value[key];
+        if (value === undefined) {
+            return undefined;
+        }
+    }
+
+    return value;
 }

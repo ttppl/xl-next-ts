@@ -1,3 +1,5 @@
+import {Nullable} from "./types";
+
 export const isObject = function (obj: unknown): boolean {
     return Object.prototype.toString.call(obj) === '[object Object]'
 }
@@ -6,7 +8,7 @@ export const isArray = function (obj: unknown): boolean {
     return Object.prototype.toString.call(obj) === '[object Array]'
 }
 
-export const isString = function (obj: unknown): boolean {
+export const isString = function (obj: unknown): obj is string {
     return Object.prototype.toString.call(obj) === '[object String]'
 }
 
@@ -26,7 +28,7 @@ export const isNum = function (num: unknown): boolean {
     return isNumber(num) ? true : /^-?\d*\.?\d*$/.test(num as any)
 }
 
-export const isNull = function (obj: unknown): boolean {
+export const isNull = function (obj: unknown): obj is Nullable<typeof obj> {
     return ['[object Null]', '[object Undefined]'].includes(Object.prototype.toString.call(obj))
 }
 

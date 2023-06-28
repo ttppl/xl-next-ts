@@ -5,7 +5,6 @@ import MenuItem from "../menu/MenuItem";
 import Menu from "../menu/menu";
 import Script from "next/script";
 import useTheme from "../../hooks/useTheme";
-// import Wave from "../svg/Wave";
 import {addScript} from "../../utils/dom";
 import {getParaByKeys} from "../../request/modules/paraRequest";
 import {isFunction} from "../../utils/check";
@@ -25,10 +24,11 @@ export const LayoutContext = createContext(null)
 function MyLayout({theme, children}) {
     // 主题
     const [appTheme, changeTheme] = useTheme(theme)
-    // 菜单过度效果
-    const [para,setPara] = useState({})
-    //logo点击事件回调函数
-
+    // 标题参数
+    const [para,setPara] = useState({
+        'blog_head_title':"ttppl",
+        "blog_head_motto":"不积跬步，无以至千里！"
+    })
     useEffect(()=>{
         getParaByKeys(['blog_head_title','blog_head_motto']).then((res)=>{
             const newPara = {}
@@ -54,28 +54,24 @@ function MyLayout({theme, children}) {
             <Head>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"/>
             </Head>
-            {/*<img className='xl-body-bg'/>*/}
            <header className='xl-header'>
-               {/*<img className='xl-header-bg'/>*/}
                <img ref={logoRef} onClick={logoClick} className='xl-head-logo' src='/imgs/logo.png'/>
                <span className='xl-head-title'>{para['blog_head_title']}</span>
                <span className='xl-head-motto'>{para['blog_head_motto']}</span>
            </header>
+            {/*菜单栏*/}
             <Menu style={{position: 'fixed', right: '20px', top: '20px'}} activeKey='index' title={'导航'}>
                 <MenuItem menuKey='index' to='/' label='首页'/>
-                <MenuItem menuKey='types' to='/blog/types/init' label='博客分类'/>
+                <MenuItem menuKey='types' to='/blog/types/' label='博客分类'/>
                 <MenuItem menuKey='codeRun' to='/codeRun' label='localCode'/>
                 <MenuItem menuKey='search' to='/blog/search/key' label='搜索'/>
                 <MenuItem menuKey='jsEditor' to='/editor' label='JS在线测试'/>
-                <MenuItem menuKey='txtDownload' to='/txtDownload' label='网文爬取'/>
+                {/*<MenuItem menuKey='txtDownload' to='/txtDownload' label='网文爬取'/>*/}
                 {/*<MenuItem menuKey='localEditor' to='/editor/localEditor' label='本地测试'/>*/}
                 <MenuItem menuKey='changeTheme' label={`${appTheme === 'light' ? 'dark' : 'light'}主题`}
                           onClick={changeTheme}/>
             </Menu>
-
-            {/*波浪纹*/}
-            {/*<Wave className='xl-wave' height={40} color={appTheme === 'light'?'#92c3d3':'white'} waveCount={5}  radius={40} width={3000} />*/}
-            {/*菜单对应界面*/}
+            {/*主应用页面*/}
             <main className='xl-main-content'>
                 <LayoutContext.Provider value={{logoClickCallback,logoRef}}>
                     {children}

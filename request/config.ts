@@ -1,33 +1,49 @@
 import {isServer} from "../utils/check";
 import {showFailMessage} from "../utils/antdUtil";
 
+// const https = require("https");
+import https from 'https'
+
 const baseUrl = process.env.NEXT_PUBLIC_BASE_REQUEST_URL
 const baseClientUrl = process.env.NEXT_PUBLIC_BASE_CLIENT_REQUEST_URL
 const headers = {
     'Content-Type': 'application/json'
 }
 
+/** HTTP基本返回类型 */
+export interface BaseResultType<DataType>{
+    data:DataType,
+    msg:string,
+    code:number,
+    status:number,
+    total?: number,
+    size?: number,
+    statusDesc: string,
+    success: boolean
+}
 
-export default function request(moduleUrl) {
+type ParamsType = Record<string, any>
+
+
+export default function request(moduleUrl:string) {
     return {
-        doGet(url, params) {
-            return get(moduleUrl + url, params)
+        doGet<T=any>(url:string, params?:ParamsType) {
+            return get<T>(moduleUrl + url, params)
         },
-        doPost(url, params) {
-            return post(moduleUrl + url, params)
+        doPost<T=any>(url:string, params:ParamsType) {
+            return post<T>(moduleUrl + url, params)
         },
-        doRestGet(url, param, query) {
-            return restGet(moduleUrl + url, param, query)
+        doRestGet<T=any>(url:string, param:ParamsType, query:ParamsType) {
+            return restGet<T>(moduleUrl + url, param, query)
         },
-        doRestPost(url, param, query) {
-            return restPost(moduleUrl + url, param, query)
+        doRestPos<T=any>(url:string, param:ParamsType, query:ParamsType) {
+            return restPost<T>(moduleUrl + url, param, query)
         }
     }
 }
 
-const https = require("https");
 
-const options = {
+const options:any = {
     headers:{
         ...headers,
         'Authorization':'xl-blog-next-app'
@@ -39,8 +55,8 @@ if(process.env.NEXT_PUBLIC_IS_HTTPS==='TRUE') {
     })
 }
 
-export function get(url, params = {}) {
-    const encodedParams = []
+export function get<T=any>(url:string, params:ParamsType = {}):Promise<T> {
+    const encodedParams:string[] = []
     Object.keys(params || {})?.forEach(k => {
         if (params[k]) {
             encodedParams.push(`${k}=${params[k]}`)
@@ -70,9 +86,9 @@ export function get(url, params = {}) {
     })
 }
 
-export function post(url, params = {}) {
+export function post<T=any>(urls:string, params:ParamsType = {}):Promise<T> {
     return new Promise((resolve, reject) => {
-        fetch(encodeURI(`${isServer?baseUrl:baseClientUrl}${url}`), {
+        fetch(encodeURI(`${isServer?baseUrl:baseClientUrl}${urls}`), {
             method: 'POST', headers,
             body: JSON.stringify(params),
             ...options
@@ -94,7 +110,7 @@ export function post(url, params = {}) {
     })
 }
 
-export function postOrig(url, params = {}) {
+export function postOrig(url:string, params:ParamsType = {}) {
     return new Promise((resolve, reject) => {
         fetch(url, {
             method: 'POST', headers,
@@ -115,12 +131,12 @@ export function postOrig(url, params = {}) {
     })
 }
 
-export function restGet(url, param, query) {
+export function restGet<T>(url:string, param:ParamsType, query:ParamsType):Promise<T> {
     let encodedUrl = Array.isArray(param) ? param.join("/") : param
     return get([url, encodedUrl].filter(n => n).join('/'), query)
 }
 
-export function restPost(url, param, query) {
+export function restPost<T>(url:string, param:ParamsType, query:ParamsType):Promise<T> {
     let encodedUrl = Array.isArray(param) ? param.join("/") : param
     return post([url, encodedUrl].filter(n => n).join('/'), query)
 }

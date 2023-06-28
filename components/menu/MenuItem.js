@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import '/styles/components/common/Menu.scss'
 import {useContext, useMemo} from "react";
-import {getClasses} from "../../utils/dom";
+import {getClass} from "../../utils/dom";
 import Link from 'next/link'
 import {MenuContext} from "./menu";
 import setGlobalLoading from "../../utils/libs/setGlobalLoading";

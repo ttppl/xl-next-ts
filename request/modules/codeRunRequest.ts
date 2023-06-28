@@ -1,6 +1,6 @@
-import {get, post} from "../config";
+import {BaseResultType, get, post} from "../config";
 
-export interface CodeRun {
+export interface CodeRunType {
     id: string,
     userId: number,
     title: string,
@@ -23,10 +23,10 @@ export interface CodeRun {
 }
 
 export async function getCodeRunById(id:number) {
-    const res = await get(`/codeRun/getCodeRun/id/${id}`)
+    const res = await get<BaseResultType<CodeRunType[]>>(`/codeRun/getCodeRun/id/${id}`)
     return res.data
 }
 
 export async function getCodeRunList(options?:{key?:string,type?:Array<string>,authority?:['PUBLIC'|'PRIVATE'|'AUTH'],page?:number,pageSize?:number,orderBy?:string}) {
-    return await get(`/codeRun/getCodeRunList`,options)
+    return await get<BaseResultType<CodeRunType[]>>(`/codeRun/getCodeRunList`,options)
 }

@@ -1,5 +1,5 @@
 import lodash from "lodash";
-import {isObject} from "./check";
+import {isObject, isString} from "./check";
 import {Buffer} from "buffer";
 
 export function getKeyCode(e: any) {
@@ -69,8 +69,27 @@ export function off(
 }
 
 
-export function getClasses(arr: Array<string>) {
-    return arr.filter(n => n).join(' ')
+/** 获取className */
+type ClassType = Array<ClassType> | string | object
+export const getClass = (className: ClassType, ...rest: Array<ClassType>): string => {
+    const classNames: Array<string> = []
+    if (rest.length > 0) {
+        className = [className, ...rest]
+    }
+    if (isString(className)) {
+        classNames.push(className as string)
+    }
+    if (Array.isArray(className)) {
+        className.forEach(classNameItem => classNames.push(getClass(classNameItem)))
+    }
+    if (isObject(className)) {
+        Object.keys(className).forEach(key => {
+            if ((className as any)[key]) {
+                classNames.push(key)
+            }
+        })
+    }
+    return classNames.join(' ')
 }
 
 // function splitCamel(str){

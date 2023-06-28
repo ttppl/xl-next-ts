@@ -1,7 +1,7 @@
 import {getDefaultLayout} from "../../components/layouts/main";
 import '../../styles/pages/codeRun/index.scss'
 import React, {useState} from "react";
-import {CodeRun, getCodeRunList} from "../../request/modules/codeRunRequest";
+import {CodeRunType, getCodeRunList} from "../../request/modules/codeRunRequest";
 import Head from "next/head";
 import XlPagination from "../../components/common/XlPagination";
 import {getClass} from "../../utils";
@@ -11,7 +11,7 @@ import Link from "next/link";
 
 export async function getServerSideProps({query}: any) {
     const pageSize = 12
-    const codeRunList = await getCodeRunList({type: ['EXAMPLE', 'UTILS'], pageSize})
+    const codeRunList = await getCodeRunList({type: ['EXAMPLE', 'UTILS'],authority:['PUBLIC'], pageSize})
     return {
         props: {
             total: codeRunList.total,
@@ -26,7 +26,7 @@ interface Props {
     page: number,
     pageSize: number,
     total: number,
-    codeRunList: Array<CodeRun>
+    codeRunList: Array<CodeRunType>
 }
 
 function CodeRunIndex({codeRunList, pageSize, page, total}: Props) {
@@ -56,7 +56,7 @@ function CodeRunIndex({codeRunList, pageSize, page, total}: Props) {
     </>
 }
 
-function CodeRunCube({codeRun,isMobile}: { codeRun:CodeRun,isMobile:boolean }){
+function CodeRunCube({codeRun,isMobile}: { codeRun:CodeRunType,isMobile:boolean }){
     const [showDetail,setShowDetail] = useState(false)
 
     const mobileShowDetail = (e:Event) => {

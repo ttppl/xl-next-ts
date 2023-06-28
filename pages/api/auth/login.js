@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import {login} from "../../../request/modules/userReq";
+import {login} from "../../../request/modules/userRequest";
 import jwt from 'jsonwebtoken'
 import {createCookie} from "../../../utils/libs/cookieParser";
 

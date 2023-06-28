@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from "react";
 import Loading from "/components/common/Loading";
 import ReactDOM from 'react-dom'
-import {getClasses} from "../utils/dom";
+import {getClass} from "../utils/dom";
 import {addListener, removeListenerRS} from "../utils/libs/EventManager";
 
 const useLoading = (show, target,props={}) => {
@@ -13,7 +13,7 @@ const useLoading = (show, target,props={}) => {
         div.current = div.current || document.createElement('div')
         const mask = props?.mask&&'mask'
         props.containerCssText&&((div.current.style.cssText = props.containerCssText))
-        div.current.className=getClasses(['xl-loading-container',mask,props.className])
+        div.current.className=getClass(['xl-loading-container',mask,props.className])
         const clickListener = addListener(div.current,'click',(e)=>{
             props.maskClose&&(setShowLoading(false))
         })

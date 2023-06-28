@@ -1,22 +1,31 @@
 import Head from 'next/head'
 import React, {useEffect, useMemo, useRef, useState} from "react";
-import {getBlogById} from "../../../request/modules/blogRequest";
+import {BlogType, getBlogById} from "../../../request/modules/blogRequest";
 import {getDefaultLayout} from "../../../components/layouts/main";
 import '../../../styles/pages/blog/blogDetail.scss'
 import 'highlight.js/styles/xcode.css';
 import useRunnableScript from "../../../hooks/useRunnableScript";
 import {useRouter} from "next/router";
-import {getClasses, getScrollTop, scrollTo} from "../../../utils/dom";
+import {getClass, getScrollTop, scrollTo} from "../../../utils/dom";
 import {addListener, removeListenerRS} from "../../../utils/libs/EventManager";
 import ClickOutside from "../../../utils/libs/clickOutside";
 import useLogoClick from "../../../hooks/useLogoClick";
 import debounce from "lodash/debounce";
+import {GetServerSidePropsContext, GetServerSidePropsResult} from "next";
+import {Nullable} from "../../../utils/types";
 
-BlogDetail.layout = getDefaultLayout
+interface Props{
+    blog:BlogType
+}
+interface Category{
+    id: string
+    level: number
+    text: string
+    children?:Category[]
+}
 
-
-export async function getServerSideProps({req, res, params}) {
-    const blogId = params.blogId
+export async function getServerSideProps({req, res, params}:GetServerSidePropsContext<{ blogId: string }>):Promise<GetServerSidePropsResult<Props>> {
+    const blogId = params?.blogId||''
     const blog = await getBlogById(blogId)
     return {
         props: {
@@ -25,26 +34,26 @@ export async function getServerSideProps({req, res, params}) {
     }
 }
 
-function BlogDetail({blog}) {
+function BlogDetail({blog}:Props) {
     useRunnableScript()
     const router = useRouter()
     const back = () => {
         router.back()
     }
-    const blogContentRef = useRef(null)
-    const [category, setCategory] = useState([])
-    const flattenCategory = useRef([])
-    const [activeCategory, setActiveCategory] = useState('')
+    const blogContentRef = useRef<HTMLDivElement>(null)
+    const [category, setCategory] = useState<Category[]>([])
+    const flattenCategory = useRef<Omit<Category, 'children'>[]>([])
+    const [activeCategory, setActiveCategory] = useState<string>('')
     // 滚动事件是否触发activeCategory改变
     const scrollActiveChange = useRef(true)
     const [categoryOffset, setCategoryOffset] = useState(0)
     const [showCategory, setShowCategory] = useState(true)
-    const categoryRef = useRef(null)
+    const categoryRef = useRef<HTMLUListElement>(null)
     const topOffset = useRef(100)//顶部偏移量
-    //获取目录
-    const getHead = (parent, level) => {
-        const category = []
-        Array.from(blogContentRef.current.children).forEach((node, index) => {
+    /** 获取目录 */
+    const getHead = (parent:Nullable<HTMLElement>, level:number) => {
+        const category:Category[] = []
+        Array.from(parent?.children||[]).forEach((node, index) => {
             if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(node.tagName?.toLowerCase())) {
                 if (!node.id) {
                     node.id = `xl-blog-category-title-${index}`
@@ -58,8 +67,8 @@ function BlogDetail({blog}) {
             }
         })
         flattenCategory.current = category
-        const formatCategory = (categoryArray) => {
-            const newCategory = [];
+        const formatCategory = (categoryArray:Category[]) => {
+            const newCategory:Category[] = [];
             categoryArray.some((categoryItem, index) => {
                 const last = newCategory[newCategory.length - 1];
                 if (newCategory.length > 0 && last.level < categoryItem.level) {
@@ -88,14 +97,13 @@ function BlogDetail({blog}) {
         }
         return formatCategory(category)
     }
-    //获取目录render
+    /** 获取目录render */
     const categoryRender = useMemo(() => {
-        const renderer = (category) => {
+        const renderer = (category:Category[]) => {
             return category.map((categoryItem, index) => {
                 return <div key={`category-item-container-${categoryItem.id}`}>
                     <li
-                        className={getClasses(['xl-blog-detail-category-item', categoryItem.id === activeCategory && 'active'])}
-                        // style={{paddingLeft: `${(categoryItem.level - 2) * 20}px`}}
+                        className={getClass(['xl-blog-detail-category-item',{active:categoryItem.id === activeCategory}])}
                         onClick={() => anchorTo(categoryItem.id)}
                         key={`category-item-${categoryItem.id}`}
                     >
@@ -116,8 +124,8 @@ function BlogDetail({blog}) {
             {renderer(category)}
         </ul>
     }, [category, activeCategory,categoryOffset, showCategory])
-    // 滚动到指定目录位置
-    const anchorTo = (id) => { // 锚点跳转
+    /** 滚动到指定目录位置 */
+    const anchorTo = (id:string) => { // 锚点跳转
         const anchorElement = document.getElementById(id)
         if (anchorElement) {
             scrollTo(document.documentElement, anchorElement, topOffset.current*-1)
@@ -125,6 +133,7 @@ function BlogDetail({blog}) {
             scrollActiveChange.current = false
         }
     }
+    /** 初始化数据 */
     useEffect(() => {
         const category = getHead(blogContentRef.current, 2)
         setCategory(category)
@@ -136,7 +145,7 @@ function BlogDetail({blog}) {
             setCategoryOffset(Math.max(scrollTop - 80, 0))
             flattenCategory.current.some((categoryItem, index) => {
                 // scroll大于offsetTop则active
-                const offsetTop = document.getElementById(categoryItem.id)?.getBoundingClientRect()?.top
+                const offsetTop = document.getElementById(categoryItem.id)?.getBoundingClientRect()?.top||0
                 if (offsetTop >= topOffset.current) {
                     if(!scrollActiveChange.current){
                         scrollActiveChange.current = true
@@ -152,13 +161,15 @@ function BlogDetail({blog}) {
             })
         }, 300))
         const clickOutsideDom = ClickOutside.addSource(categoryRef.current, (e, dom) => {
-            if (isMobile && !logoRef.current?.contains(e.target)) {
+            if (isMobile && e.target && !logoRef.current?.contains(e.target as Node)) {
                 setShowCategory(false)
             }
         })
         return () => {
             removeListenerRS(scrollListener)
-            ClickOutside.deleteSource(clickOutsideDom)
+            if(clickOutsideDom) {
+                ClickOutside.deleteSource(clickOutsideDom)
+            }
         }
     }, [])
     const {logoRef} = useLogoClick(() => {
@@ -181,5 +192,6 @@ function BlogDetail({blog}) {
     </div>
 }
 
+BlogDetail.layout = getDefaultLayout
 
 export default BlogDetail

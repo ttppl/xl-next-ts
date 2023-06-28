@@ -2,7 +2,7 @@ import Head from 'next/head'
 import '/styles/pages/Index.scss'
 import {getDefaultLayout} from "../../components/layouts/main";
 import {NextPageWithLayout} from "../_app";
-import {Blog, getBlogsByType} from "../../request/modules/blogRequest";
+import {BlogType, getBlogsByType} from "../../request/modules/blogRequest";
 import React, { useEffect, useRef, useState} from "react";
 // @ts-ignore
 import ReactDOM from 'react-dom'
@@ -77,7 +77,7 @@ const Home: NextPageWithLayout = (props: any) => {
                 <link rel="icon" href="/my_favicon.ico"/>
             </Head>
             <main className='main' ref={main} id="main">
-                {blogs.map((blog: Blog) => {
+                {blogs.map((blog: BlogType) => {
                     return <BlogCard key={blog.blogId} openBlank={true} blog={blog}/>
                 })}
                 {loadingMore && <Loading>玩命加载中...</Loading>}

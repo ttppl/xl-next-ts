@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types'
 import '/styles/components/common/Icon.scss'
 import {forwardRef, useMemo} from "react";
-import {getClasses} from "/utils/dom";
+import {getClass} from "/utils/dom";
 
 
 const IconFun=(props,ref)=> {
     const className = useMemo(() => {
         const classNames = props.className.split(' ')
-        return getClasses(['xl-iconfont', `xl-icon-${classNames[0]}`,...classNames.slice(1,classNames.length)])
+        return getClass(['xl-iconfont', `xl-icon-${classNames[0]}`,...classNames.slice(1,classNames.length)])
     }, [props.className])
     const style = useMemo(() => {
         const stl = {...props.style}

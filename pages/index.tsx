@@ -2,29 +2,32 @@ import Head from 'next/head'
 import '../styles/pages/Index.scss'
 import {getDefaultLayout} from "../components/layouts/main";
 import {NextPageWithLayout} from "./_app";
-import {Blog, getBlogsByType} from "../request/modules/blogRequest";
-import React, {useEffect, useMemo, useRef} from "react";
+import {BlogType, getBlogsByType, TagType} from "../request/modules/blogRequest";
+import React, {useMemo, useRef} from "react";
 import XlPagination from "../components/common/XlPagination";
 import Link from "next/link";
 import {encryptUrl} from "../utils/dom";
-import {getBlogUser} from '../request/modules/userReq'
-import {isNum, isNumber} from "../utils/check";
+import {getBlogUser, UserType} from '../request/modules/userRequest'
+import {isNum} from "../utils/check";
 import Icon from "../components/common/Icon";
+import {getFileUrl} from "../utils";
 
-// import Bingdundun from '../components/threejs/Bingdundun'
+interface Props {
+    blogs: Array<BlogType>
+    user:UserType,
+    total: number,
+    page: number,
+    pageSize: number
+}
 
-export async function getServerSideProps(context: any) {
+/** 获取数据 */
+export async function getServerSideProps(context: any):Promise<{props:Props}> {
     const pageSize = 20
-    // 获取最新博客
+    /** 获取最新博客 */
     const res = await getBlogsByType('newest', 1, pageSize)
     const userRes = await getBlogUser()
-    const user:User = userRes.data||{}
-    user.avatar = isNum(user.avatar)?`${process.env.NEXT_PUBLIC_BASE_FILE_URL}${user.avatar}`:user.avatar
-    try{
-        user.detailInfo = JSON.parse(user.detailInfo)
-    }catch (e) {
-       console.error(e)
-    }
+    const user= userRes.data
+    user.avatar = getFileUrl(user.avatar)
     return {
         props: {
             blogs: res.data,
@@ -35,26 +38,8 @@ export async function getServerSideProps(context: any) {
         }
     }
 }
-interface User {
-    userId?:number,
-    userName?:string,
-    password?:string,
-    avatar?:string,
-    lastToken?:string,
-    detailInfo?:any,
-    modifyTimestamp?:string
-}
 
-interface HomePageProps {
-    blogs: Array<any>
-    user:User,
-    total: number,
-    page: number,
-    pageSize: number
-}
-
-// @ts-ignore
-const Index: NextPageWithLayout = ({blogs,user,...props}: HomePageProps) => {
+const Index = ({blogs,user,...props}: Props) => {
     const columnCount = 3//列数量
     return (
         <>
@@ -63,25 +48,21 @@ const Index: NextPageWithLayout = ({blogs,user,...props}: HomePageProps) => {
                 <meta name="description" content="吞天泡泡龙的主页"/>
                 <link rel="icon" href="/my_favicon.ico"/>
             </Head>
-            {/*冰墩墩*/}
-            {/*<Bingdundun className='xl-bing-dun-dun'/>*/}
-            {/*<img className='header' src={`${process.env.NEXT_PUBLIC_BASE_CLIENT_REQUEST_URL}/file/defaultCoverImg`}/>*/}
             <main className='index-main'>
-                {/*<div className='xl-user-info'></div>*/}
                 <div className='xl-user-info'>
                     <div className='xl-user-main'>
                         <img className='xl-user-avatar' src={user.avatar}/>
-                        <p className='xl-user-nickname'>{user.detailInfo.nickname}</p>
-                        <p className='xl-user-introduction'>{user.detailInfo.introduction}</p>
+                        <p className='xl-user-nickname'>{user.detailInfo?.nickname}</p>
+                        <p className='xl-user-introduction'>{user.detailInfo?.introduction}</p>
                         <div className='xl-user-contact'>
-                            {user.detailInfo.contact.map((contactInfo:any)=><Icon key={contactInfo.name} size={30} className={contactInfo.name} title={contactInfo.value} />)}
+                            {user.detailInfo?.contact.map((contactInfo:any)=><Icon key={contactInfo.name} size={30} className={contactInfo.name} title={contactInfo.value} />)}
                         </div>
                     </div>
                 </div>
                 <div className='xl-index-blogs'>
                     {Array.from({length: columnCount}).map((i, columnIndex) => {
                         return <div key={`index-blog-column-${columnIndex}`} className='xl-index-blogs-column'>
-                            {blogs.map((blog: Blog, index: number) => {
+                            {blogs.map((blog: BlogType, index: number) => {
                                 if (index % columnCount === columnIndex) {
                                     return <IndexBlogCard key={blog.blogId} blog={blog}/>
                                 }
@@ -91,17 +72,11 @@ const Index: NextPageWithLayout = ({blogs,user,...props}: HomePageProps) => {
 
                 </div>
                 <div className='xl-index-right-side'>
-                    <div className='xl-rank-card xl-top'>
-                        <p className='xl-rank-card-title'><span>这里应该有点什么</span></p>
-                        <p>但是我还没想好</p>
-                    </div>
-
-                    <div className='xl-rank-card xl-tags'>
-                        <p className='xl-rank-card-title'><span>它必须做点什么</span></p>
-                        <p>辉煌一刻，谁都别拿一刻当永久</p>
-                    </div>
+                    {user.detailInfo?.blogIndexRightSide?.map(item=><div key={item.title} className='xl-rank-card'>
+                        <p className='xl-rank-card-title'><span>{item.title}</span></p>
+                        <p>{item.content}</p>
+                    </div>)}
                 </div>
-
             </main>
             <XlPagination
                 defaultPageSize={props.pageSize}
@@ -127,33 +102,19 @@ const Index: NextPageWithLayout = ({blogs,user,...props}: HomePageProps) => {
     )
 }
 
-function IndexBlogCard({blog}: { blog: Blog }) {
+/** 主页博客卡片 */
+function IndexBlogCard({blog}: { blog: BlogType }) {
     const tags = useMemo(() => {
-        const blogTags = Array.isArray(blog.tags) ? blog.tags : (blog.tags as string).split(',')
+        const blogTags:TagType[] = blog.tags||[]
         return blogTags.map((tag: any, index: number) => {
             if (tag)
-                return <Link key={`tag-${tag}`} passHref href={`/blog/search/p1?key=${encryptUrl(tag)}`}><a key={`tag-${index}`}
-                                                                                         className='xl-blog-tag'>{tag}</a></Link>
+                return <Link key={`tag-${tag.tagId}`} passHref href={`/blog/search/p1?key=${encryptUrl(tag.tagName)}`}>
+                    <a key={`tag-${index}`} className='xl-blog-tag'>{tag.tagName}</a>
+            </Link>
         })
     }, [blog.tags])
     const container = useRef<HTMLDivElement>(null)
     const abstract = useRef<HTMLDivElement>(null)
-    // useEffect(()=>{
-    //     const el:HTMLElement = container.current as HTMLElement
-    //     const containerHeight = el.clientHeight
-    //     const padding = parseFloat(window.getComputedStyle(el).getPropertyValue('padding-bottom'))
-    //     const lastChild = el.lastChild as HTMLElement
-    //     const childMargin = parseFloat(window.getComputedStyle(lastChild).getPropertyValue('margin-bottom'))
-    //     const restHeight:number = containerHeight-padding-lastChild.offsetTop -lastChild.clientHeight -childMargin
-    //     if(restHeight>0){
-    //         const abstEl = abstract.current as HTMLElement
-    //         const style = window.getComputedStyle(abstEl)
-    //         const lineHeight:number = parseFloat(style.getPropertyValue('line-height'))
-    //         const line = parseFloat(style.getPropertyValue('-webkit-line-clamp'))
-    //         // @ts-ignore
-    //         abstEl.style['-webkit-line-clamp'] = line+Math.floor(restHeight/lineHeight)
-    //     }
-    // },[])
     return <div ref={container} className='xl-index-blog-card'>
         <Link href={`/blog/detail/${blog.blogId}`} passHref>
             <a className='xl-blog-info'>
@@ -166,8 +127,8 @@ function IndexBlogCard({blog}: { blog: Blog }) {
             </a>
         </Link>
         <div className='xl-blog-card-category'>
-            {blog.category && <>分类：<Link passHref href={`/blog/search/p1?key=${encryptUrl(blog.category as string)}`}>
-                <a>{blog.category}</a>
+            {blog.category && <>分类：<Link passHref href={`/blog/search/p1?key=${encryptUrl(blog.category.map(category=>category.categoryId).join(','))}`}>
+                <a>{blog.category.map(category=>category.categoryName).join('/')}</a>
             </Link></>}
         </div>
         {tags.length>1&&<div className='xl-blog-tags'>{tags}</div>}
