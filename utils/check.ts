@@ -20,11 +20,11 @@ export const isBoolean = function (obj: unknown): boolean {
     return Object.prototype.toString.call(obj) === '[object Boolean]'
 }
 
-export const isNumber = function (obj: unknown): boolean {
+export const isNumber = function (obj: unknown): obj is number {
     return Object.prototype.toString.call(obj) === '[object Number]'
 }
 
-export const isNum = function (num: unknown): boolean {
+export const isNum = function (num: unknown): num is number|string {
     return isNumber(num) ? true : /^-?\d*\.?\d*$/.test(num as any)
 }
 

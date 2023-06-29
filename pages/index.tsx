@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import '../styles/pages/Index.scss'
 import {getDefaultLayout} from "../components/layouts/main";
-import {NextPageWithLayout} from "./_app";
 import {BlogType, getBlogsByType, TagType} from "../request/modules/blogRequest";
 import React, {useMemo, useRef} from "react";
 import XlPagination from "../components/common/XlPagination";
@@ -11,8 +10,9 @@ import {getBlogUser, UserType} from '../request/modules/userRequest'
 import {isNum} from "../utils/check";
 import Icon from "../components/common/Icon";
 import {getFileUrl} from "../utils";
+import {GetServerSideProps} from "next";
 
-interface Props {
+export interface HomePageProps {
     blogs: Array<BlogType>
     user:UserType,
     total: number,
@@ -21,7 +21,7 @@ interface Props {
 }
 
 /** 获取数据 */
-export async function getServerSideProps(context: any):Promise<{props:Props}> {
+export const getServerSideProps:GetServerSideProps<HomePageProps> = async function() {
     const pageSize = 20
     /** 获取最新博客 */
     const res = await getBlogsByType('newest', 1, pageSize)
@@ -39,7 +39,7 @@ export async function getServerSideProps(context: any):Promise<{props:Props}> {
     }
 }
 
-const Index = ({blogs,user,...props}: Props) => {
+const Index = ({blogs,user,...props}: HomePageProps) => {
     const columnCount = 3//列数量
     return (
         <>
@@ -51,7 +51,7 @@ const Index = ({blogs,user,...props}: Props) => {
             <main className='index-main'>
                 <div className='xl-user-info'>
                     <div className='xl-user-main'>
-                        <img className='xl-user-avatar' src={user.avatar}/>
+                        <img className='xl-user-avatar' alt='用户头像' src={user.avatar}/>
                         <p className='xl-user-nickname'>{user.detailInfo?.nickname}</p>
                         <p className='xl-user-introduction'>{user.detailInfo?.introduction}</p>
                         <div className='xl-user-contact'>

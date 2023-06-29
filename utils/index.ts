@@ -1,7 +1,6 @@
-import {isFunction, isNum, isObject, isString} from "./check";
+import {isFunction, isNum, isNumber, isObject, isString} from "./check";
 import ClipboardJS from "clipboard";
 import {showSuccessMessage} from "./antdUtil";
-import {Nullable} from "./types";
 
 export const sleep = (timeountMS:number) => new Promise((resolve) => {
     // console.log('timeBegin')
@@ -115,24 +114,15 @@ export const getFileUrl = (url:string)=>{
 }
 
 /** 获取对象值 */
-export function getObjectValue(obj: object | null | undefined, path: string): any {
-    if (!obj) {
-        return undefined;
-    }
-
-    const keys = path.split('.');
-    let value = obj;
-
-    for (const key of keys) {
-        if (typeof value !== 'object' || value === null) {
-            return undefined;
-        }
-        // @ts-ignore
-        value = value[key];
-        if (value === undefined) {
-            return undefined;
+export function parseNumber(value:any,defaultValue:number):number{
+    if(isNum(value)){
+        if(isNumber(value))
+            return value
+        try {
+            return parseFloat(value)
+        }catch (e){
+            return defaultValue||0
         }
     }
-
-    return value;
+    return defaultValue||0
 }

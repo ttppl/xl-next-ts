@@ -1,28 +1,25 @@
 import '/styles/pages/Index.scss'
 import {getBlogsByType} from "../request/modules/blogRequest";
 import React from "react";
-import Home from "./index";
-import {isNum} from "../utils/check";
+import Home, {HomePageProps} from "./index";
 import {getBlogUser} from "../request/modules/userRequest";
+import {getFileUrl, parseNumber} from "../utils";
+import {GetServerSideProps} from "next";
 
-export async function getServerSideProps({query}: any) {
-    const page = parseFloat(query.page.slice(1))
+export const getServerSideProps:GetServerSideProps<HomePageProps,{page:string}> =  async function ({params}) {
     const pageSize = 20
+    const page = parseNumber(params?.page.slice(1),1)
+    /** 获取最新博客 */
     const res = await getBlogsByType('newest', page, pageSize)
     const userRes = await getBlogUser()
-    const user = userRes.data||{}
-    user.avatar = isNum(user.avatar)?`${process.env.NEXT_PUBLIC_BASE_FILE_URL}${user.avatar}`:user.avatar
-    try{
-        user.detailInfo = JSON.parse(user.detailInfo)
-    }catch (e) {
-        console.error(e)
-    }
+    const user= userRes.data
+    user.avatar = getFileUrl(user.avatar)
     return {
         props: {
             blogs: res.data,
             total: res.total,
             user,
-            page,
+            page: 1,
             pageSize
         }
     }
