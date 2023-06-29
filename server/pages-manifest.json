@@ -5,7 +5,7 @@
   "/api/auth/logoutUser": "pages/api/auth/logoutUser.js",
   "/blog/detail/[blogId]": "pages/blog/detail/[blogId].js",
   "/blog/search/[...all]": "pages/blog/search/[...all].js",
-  "/blog/types/[...all]": "pages/blog/types/[...all].js",
+  "/blog/types": "pages/blog/types.js",
   "/codeRun/[page]": "pages/codeRun/[page].js",
   "/codeRun/detail/[id]": "pages/codeRun/detail/[id].js",
   "/codeRun": "pages/codeRun.js",

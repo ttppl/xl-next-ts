@@ -344,8 +344,8 @@ function MenuItem(props) {
 // EXTERNAL MODULE: external "next/script"
 var script_ = __webpack_require__(4780);
 var script_default = /*#__PURE__*/__webpack_require__.n(script_);
-// EXTERNAL MODULE: ./request/config.js
-var config = __webpack_require__(4716);
+// EXTERNAL MODULE: ./request/config.ts
+var config = __webpack_require__(480);
 ;// CONCATENATED MODULE: ./request/modules/paraRequest.ts
 
 async function addPara(para) {
@@ -442,7 +442,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
- // import Wave from "../svg/Wave";
 
 
 
@@ -461,13 +460,15 @@ function MyLayout({
   children
 }) {
   // 主题
-  const [appTheme, changeTheme] = hooks_useTheme(theme); // 菜单过度效果
+  const [appTheme, changeTheme] = hooks_useTheme(theme); // 标题参数
 
   const {
     0: para,
     1: setPara
-  } = (0,external_react_.useState)({}); //logo点击事件回调函数
-
+  } = (0,external_react_.useState)({
+    'blog_head_title': "ttppl",
+    "blog_head_motto": "不积跬步，无以至千里！"
+  });
   (0,external_react_.useEffect)(() => {
     getParaByKeys(['blog_head_title', 'blog_head_motto']).then(res => {
       const newPara = {};
@@ -522,7 +523,7 @@ function MyLayout({
         label: "\u9996\u9875"
       }), /*#__PURE__*/jsx_runtime_.jsx(menu_MenuItem, {
         menuKey: "types",
-        to: "/blog/types/init",
+        to: "/blog/types/",
         label: "\u535A\u5BA2\u5206\u7C7B"
       }), /*#__PURE__*/jsx_runtime_.jsx(menu_MenuItem, {
         menuKey: "codeRun",
@@ -536,10 +537,6 @@ function MyLayout({
         menuKey: "jsEditor",
         to: "/editor",
         label: "JS\u5728\u7EBF\u6D4B\u8BD5"
-      }), /*#__PURE__*/jsx_runtime_.jsx(menu_MenuItem, {
-        menuKey: "txtDownload",
-        to: "/txtDownload",
-        label: "\u7F51\u6587\u722C\u53D6"
       }), /*#__PURE__*/jsx_runtime_.jsx(menu_MenuItem, {
         menuKey: "changeTheme",
         label: `${appTheme === 'light' ? 'dark' : 'light'}主题`,
@@ -573,7 +570,7 @@ function getDefaultLayout(page, layoutProps) {
 
 /***/ }),
 
-/***/ 4716:
+/***/ 480:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -583,8 +580,10 @@ function getDefaultLayout(page, layoutProps) {
 /* harmony export */   "v_": () => (/* binding */ post)
 /* harmony export */ });
 /* unused harmony exports postOrig, restGet, restPost */
-/* harmony import */ var _utils_check__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7549);
+/* harmony import */ var _utils_check__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7549);
 /* harmony import */ var _utils_antdUtil__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(970);
+/* harmony import */ var https__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5687);
+/* harmony import */ var https__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(https__WEBPACK_IMPORTED_MODULE_1__);
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -592,12 +591,16 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
+ // const https = require("https");
+
 
 const baseUrl = "https://ttppl.xyz";
 const baseClientUrl = "https://ttppl.xyz";
 const headers = {
   'Content-Type': 'application/json'
 };
+/** HTTP基本返回类型 */
+
 function request(moduleUrl) {
   return {
     doGet(url, params) {
@@ -612,15 +615,12 @@ function request(moduleUrl) {
       return restGet(moduleUrl + url, param, query);
     },
 
-    doRestPost(url, param, query) {
+    doRestPos(url, param, query) {
       return restPost(moduleUrl + url, param, query);
     }
 
   };
 }
-
-const https = __webpack_require__(5687);
-
 const options = {
   headers: _objectSpread(_objectSpread({}, headers), {}, {
     'Authorization': 'xl-blog-next-app'
@@ -628,7 +628,7 @@ const options = {
 };
 
 if (true) {
-  options.agent = new https.Agent({
+  options.agent = new (https__WEBPACK_IMPORTED_MODULE_1___default().Agent)({
     rejectUnauthorized: false
   });
 }
@@ -643,7 +643,7 @@ function get(url, params = {}) {
     }
   });
   const encodedParam = encodedParams.length > 0 ? `?${encodedParams.join('&')}` : '';
-  const reqUrl = encodeURI(`${_utils_check__WEBPACK_IMPORTED_MODULE_1__/* .isServer */ .sk ? baseUrl : baseClientUrl}${url}${encodedParam}`);
+  const reqUrl = encodeURI(`${_utils_check__WEBPACK_IMPORTED_MODULE_2__/* .isServer */ .sk ? baseUrl : baseClientUrl}${url}${encodedParam}`);
   return new Promise((resolve, reject) => {
     fetch(reqUrl, _objectSpread({
       method: 'GET'
@@ -651,7 +651,7 @@ function get(url, params = {}) {
       // console.log(response,response.status)
       return response.json();
     }).then(data => {
-      if (!data.success && !_utils_check__WEBPACK_IMPORTED_MODULE_1__/* .isServer */ .sk) {
+      if (!data.success && !_utils_check__WEBPACK_IMPORTED_MODULE_2__/* .isServer */ .sk) {
         // showfailMessage(data.msg)
         // throw new Error(data.msg)
         reject(data.msg);
@@ -661,7 +661,7 @@ function get(url, params = {}) {
     }).catch(function (err) {
       console.log(err);
 
-      if (!_utils_check__WEBPACK_IMPORTED_MODULE_1__/* .isServer */ .sk) {
+      if (!_utils_check__WEBPACK_IMPORTED_MODULE_2__/* .isServer */ .sk) {
         (0,_utils_antdUtil__WEBPACK_IMPORTED_MODULE_0__/* .showFailMessage */ .jl)(err);
       }
 
@@ -669,16 +669,16 @@ function get(url, params = {}) {
     });
   });
 }
-function post(url, params = {}) {
+function post(urls, params = {}) {
   return new Promise((resolve, reject) => {
-    fetch(encodeURI(`${_utils_check__WEBPACK_IMPORTED_MODULE_1__/* .isServer */ .sk ? baseUrl : baseClientUrl}${url}`), _objectSpread({
+    fetch(encodeURI(`${_utils_check__WEBPACK_IMPORTED_MODULE_2__/* .isServer */ .sk ? baseUrl : baseClientUrl}${urls}`), _objectSpread({
       method: 'POST',
       headers,
       body: JSON.stringify(params)
     }, options)).then(response => {
       return response.json();
     }).then(data => {
-      if (!data.success && !_utils_check__WEBPACK_IMPORTED_MODULE_1__/* .isServer */ .sk) {
+      if (!data.success && !_utils_check__WEBPACK_IMPORTED_MODULE_2__/* .isServer */ .sk) {
         // showfailMessage(data.msg)
         // throw new Error(data.msg)
         reject(data.msg);
@@ -686,7 +686,7 @@ function post(url, params = {}) {
 
       resolve(data);
     }).catch(function (err) {
-      if (!_utils_check__WEBPACK_IMPORTED_MODULE_1__/* .isServer */ .sk) {
+      if (!_utils_check__WEBPACK_IMPORTED_MODULE_2__/* .isServer */ .sk) {
         (0,_utils_antdUtil__WEBPACK_IMPORTED_MODULE_0__/* .showFailMessage */ .jl)(err);
       }
 
@@ -907,7 +907,7 @@ function showSuccessMessage(msg) {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "on": () => (/* binding */ on),
 /* harmony export */   "S1": () => (/* binding */ off),
-/* harmony export */   "k": () => (/* binding */ getClasses),
+/* harmony export */   "ll": () => (/* binding */ getClass),
 /* harmony export */   "j3": () => (/* binding */ getElementSize),
 /* harmony export */   "X5": () => (/* binding */ scrollTo),
 /* harmony export */   "cx": () => (/* binding */ getScrollTop),
@@ -979,9 +979,33 @@ function on(element, event, handler, useCapture = false) {
 function off(element, event, handler, useCapture = false) {
   element.removeEventListener(event, handler, useCapture);
 }
-function getClasses(arr) {
-  return arr.filter(n => n).join(' ');
-} // function splitCamel(str){
+/** 获取className */
+
+const getClass = (className, ...rest) => {
+  const classNames = [];
+
+  if (rest.length > 0) {
+    className = [className, ...rest];
+  }
+
+  if ((0,_check__WEBPACK_IMPORTED_MODULE_2__/* .isString */ .HD)(className)) {
+    classNames.push(className);
+  }
+
+  if (Array.isArray(className)) {
+    className.forEach(classNameItem => classNames.push(getClass(classNameItem)));
+  }
+
+  if ((0,_check__WEBPACK_IMPORTED_MODULE_2__/* .isObject */ .Kn)(className)) {
+    Object.keys(className).forEach(key => {
+      if (className[key]) {
+        classNames.push(key);
+      }
+    });
+  }
+
+  return classNames.join(' ');
+}; // function splitCamel(str){
 //     return str.replace(/([A-Z])/g,function(s){
 //         return ' '+s.toLowerCase();
 //     }).trim().split(' ');
@@ -1247,7 +1271,9 @@ const loadCssResource = url => {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "_v": () => (/* binding */ sleep),
 /* harmony export */   "ll": () => (/* binding */ getClass),
-/* harmony export */   "B8": () => (/* binding */ asyncDownloadFile)
+/* harmony export */   "B8": () => (/* binding */ asyncDownloadFile),
+/* harmony export */   "qm": () => (/* binding */ getFileUrl),
+/* harmony export */   "p3": () => (/* binding */ parseNumber)
 /* harmony export */ });
 /* unused harmony exports downloadFile, copyToclipboard */
 /* harmony import */ var _check__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7549);
@@ -1358,6 +1384,26 @@ const copyToclipboard = text => {
   button.click();
   document.body.removeChild(button);
 };
+/** 获取文件的地址 */
+
+const getFileUrl = url => {
+  return (0,_check__WEBPACK_IMPORTED_MODULE_2__/* .isNum */ .e9)(url) ? `${"https://ttppl.xyz/file/id/"}${url}` : url;
+};
+/** 获取对象值 */
+
+function parseNumber(value, defaultValue) {
+  if ((0,_check__WEBPACK_IMPORTED_MODULE_2__/* .isNum */ .e9)(value)) {
+    if ((0,_check__WEBPACK_IMPORTED_MODULE_2__/* .isNumber */ .hj)(value)) return value;
+
+    try {
+      return parseFloat(value);
+    } catch (e) {
+      return defaultValue || 0;
+    }
+  }
+
+  return defaultValue || 0;
+}
 
 /***/ }),
 
@@ -1376,6 +1422,10 @@ const copyToclipboard = text => {
 const listeners = new Map();
 let isListening = false;
 function addSource(dom, callback) {
+  if ((0,_check__WEBPACK_IMPORTED_MODULE_1__/* .isNull */ .Ft)(dom)) {
+    return;
+  }
+
   const callbacks = listeners.get(dom);
 
   if ((0,_check__WEBPACK_IMPORTED_MODULE_1__/* .isNull */ .Ft)(callbacks)) {

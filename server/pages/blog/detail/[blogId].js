@@ -32,7 +32,7 @@ function useLogoClick(callback, deps) {
 
 /***/ }),
 
-/***/ 3098:
+/***/ 3115:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 // ESM COMPAT FLAG
@@ -112,7 +112,7 @@ var debounce_ = __webpack_require__(3908);
 var debounce_default = /*#__PURE__*/__webpack_require__.n(debounce_);
 // EXTERNAL MODULE: external "react/jsx-runtime"
 var jsx_runtime_ = __webpack_require__(997);
-;// CONCATENATED MODULE: ./pages/blog/detail/[blogId].js
+;// CONCATENATED MODULE: ./pages/blog/detail/[blogId].tsx
 
 
 
@@ -128,13 +128,12 @@ var jsx_runtime_ = __webpack_require__(997);
 
 
 
-BlogDetail.layout = main/* getDefaultLayout */.uy;
 async function getServerSideProps({
   req,
   res,
   params
 }) {
-  const blogId = params.blogId;
+  const blogId = (params === null || params === void 0 ? void 0 : params.blogId) || '';
   const blog = await (0,blogRequest/* getBlogById */.zv)(blogId);
   return {
     props: {
@@ -175,11 +174,12 @@ function BlogDetail({
   } = (0,external_react_.useState)(true);
   const categoryRef = (0,external_react_.useRef)(null);
   const topOffset = (0,external_react_.useRef)(100); //顶部偏移量
-  //获取目录
+
+  /** 获取目录 */
 
   const getHead = (parent, level) => {
     const category = [];
-    Array.from(blogContentRef.current.children).forEach((node, index) => {
+    Array.from((parent === null || parent === void 0 ? void 0 : parent.children) || []).forEach((node, index) => {
       var _node$tagName;
 
       if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes((_node$tagName = node.tagName) === null || _node$tagName === void 0 ? void 0 : _node$tagName.toLowerCase())) {
@@ -226,7 +226,8 @@ function BlogDetail({
     };
 
     return formatCategory(category);
-  }; //获取目录render
+  };
+  /** 获取目录render */
 
 
   const categoryRender = (0,external_react_.useMemo)(() => {
@@ -234,8 +235,9 @@ function BlogDetail({
       return category.map((categoryItem, index) => {
         return /*#__PURE__*/(0,jsx_runtime_.jsxs)("div", {
           children: [/*#__PURE__*/(0,jsx_runtime_.jsxs)("li", {
-            className: (0,dom/* getClasses */.k)(['xl-blog-detail-category-item', categoryItem.id === activeCategory && 'active']) // style={{paddingLeft: `${(categoryItem.level - 2) * 20}px`}}
-            ,
+            className: (0,dom/* getClass */.ll)(['xl-blog-detail-category-item', {
+              active: categoryItem.id === activeCategory
+            }]),
             onClick: () => anchorTo(categoryItem.id),
             children: [categoryItem.text, /*#__PURE__*/jsx_runtime_.jsx("div", {
               className: "item-bar"
@@ -257,7 +259,8 @@ function BlogDetail({
       },
       children: renderer(category)
     });
-  }, [category, activeCategory, categoryOffset, showCategory]); // 滚动到指定目录位置
+  }, [category, activeCategory, categoryOffset, showCategory]);
+  /** 滚动到指定目录位置 */
 
   const anchorTo = id => {
     // 锚点跳转
@@ -269,6 +272,8 @@ function BlogDetail({
       scrollActiveChange.current = false;
     }
   };
+  /** 初始化数据 */
+
 
   (0,external_react_.useEffect)(() => {
     var _category$;
@@ -285,7 +290,7 @@ function BlogDetail({
         var _document$getElementB, _document$getElementB2;
 
         // scroll大于offsetTop则active
-        const offsetTop = (_document$getElementB = document.getElementById(categoryItem.id)) === null || _document$getElementB === void 0 ? void 0 : (_document$getElementB2 = _document$getElementB.getBoundingClientRect()) === null || _document$getElementB2 === void 0 ? void 0 : _document$getElementB2.top;
+        const offsetTop = ((_document$getElementB = document.getElementById(categoryItem.id)) === null || _document$getElementB === void 0 ? void 0 : (_document$getElementB2 = _document$getElementB.getBoundingClientRect()) === null || _document$getElementB2 === void 0 ? void 0 : _document$getElementB2.top) || 0;
 
         if (offsetTop >= topOffset.current) {
           if (!scrollActiveChange.current) {
@@ -308,13 +313,16 @@ function BlogDetail({
     const clickOutsideDom = clickOutside/* default.addSource */.ZP.addSource(categoryRef.current, (e, dom) => {
       var _logoRef$current;
 
-      if (isMobile && !((_logoRef$current = logoRef.current) !== null && _logoRef$current !== void 0 && _logoRef$current.contains(e.target))) {
+      if (isMobile && e.target && !((_logoRef$current = logoRef.current) !== null && _logoRef$current !== void 0 && _logoRef$current.contains(e.target))) {
         setShowCategory(false);
       }
     });
     return () => {
       (0,EventManager/* removeListenerRS */.yM)(scrollListener);
-      clickOutside/* default.deleteSource */.ZP.deleteSource(clickOutsideDom);
+
+      if (clickOutsideDom) {
+        clickOutside/* default.deleteSource */.ZP.deleteSource(clickOutsideDom);
+      }
     };
   }, []);
   const {
@@ -350,6 +358,7 @@ function BlogDetail({
   });
 }
 
+BlogDetail.layout = main/* getDefaultLayout */.uy;
 /* harmony default export */ const _blogId_ = (BlogDetail);
 
 /***/ }),
@@ -361,7 +370,7 @@ function BlogDetail({
 /* harmony export */   "O": () => (/* binding */ runScripts)
 /* harmony export */ });
 /* unused harmony export getCodeRunPreview */
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4716);
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(480);
 
 async function runScripts(script) {
   return await (0,_config__WEBPACK_IMPORTED_MODULE_0__/* .post */ .v_)(`/runScript`, {
@@ -563,7 +572,7 @@ module.exports = require("https");
 var __webpack_require__ = require("../../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [400,664,431,264,577,397], () => (__webpack_exec__(3098)));
+var __webpack_exports__ = __webpack_require__.X(0, [400,664,431,264,577,397], () => (__webpack_exec__(3115)));
 module.exports = __webpack_exports__;
 
 })();

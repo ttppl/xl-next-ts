@@ -48,22 +48,29 @@ function BlogCard({
   style,
   className
 }) {
-  var _blog$plainText;
+  var _blog$plainText, _blog$category;
 
+  // const tags = useMemo(() => {
+  //     const blogTags = Array.isArray(blog.tags) ? blog.tags : (blog.tags as string).split(',')
+  //     return blogTags.map((tag: any,index:number) => {
+  //         if (tag) {
+  //             // return <Tag name={tag} key={`tag-${index}`}/>
+  //             return <Link key={`tag-${index}`} passHref href={`/blog/search/p1?key=${encryptUrl(tag)}`}><a key={`tag-${index}`}
+  //                                                                                      className='xl-blog-tag'>{tag}</a></Link>
+  //         }
+  //     })
+  // }, [blog.tags])
   const tags = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => {
-    const blogTags = Array.isArray(blog.tags) ? blog.tags : blog.tags.split(',');
+    const blogTags = blog.tags || [];
     return blogTags.map((tag, index) => {
-      if (tag) {
-        // return <Tag name={tag} key={`tag-${index}`}/>
-        return /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx(next_link__WEBPACK_IMPORTED_MODULE_0__["default"], {
-          passHref: true,
-          href: `/blog/search/p1?key=${(0,_utils_dom__WEBPACK_IMPORTED_MODULE_3__/* .encryptUrl */ .bl)(tag)}`,
-          children: /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx("a", {
-            className: "xl-blog-tag",
-            children: tag
-          }, `tag-${index}`)
-        }, `tag-${index}`);
-      }
+      if (tag) return /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx(next_link__WEBPACK_IMPORTED_MODULE_0__["default"], {
+        passHref: true,
+        href: `/blog/search/p1?key=${(0,_utils_dom__WEBPACK_IMPORTED_MODULE_3__/* .encryptUrl */ .bl)(tag.tagName)}`,
+        children: /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx("a", {
+          className: "xl-blog-tag",
+          children: tag.tagName
+        }, `tag-${index}`)
+      }, `tag-${tag.tagId}`);
     });
   }, [blog.tags]);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("article", {
@@ -99,13 +106,13 @@ function BlogCard({
         children: [/*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx("span", {
           className: "xl-blog-card-publish-date",
           children: new Date(blog.publishTime).toLocaleDateString()
-        }), blog.category && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
+        }), ((_blog$category = blog.category) === null || _blog$category === void 0 ? void 0 : _blog$category.length) > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
           className: "xl-blog-card-category",
           children: ["\u5206\u7C7B\uFF1A", /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx(next_link__WEBPACK_IMPORTED_MODULE_0__["default"], {
             passHref: true,
-            href: `/blog/search/p1?key=${(0,_utils_dom__WEBPACK_IMPORTED_MODULE_3__/* .encryptUrl */ .bl)(blog.category)}`,
+            href: `/blog/search/p1?key=${(0,_utils_dom__WEBPACK_IMPORTED_MODULE_3__/* .encryptUrl */ .bl)(blog.category.map(category => category.categoryId).join(','))}`,
             children: /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx("a", {
-              children: blog.category
+              children: blog.category.map(category => category.categoryName).join('/')
             })
           })]
         }), /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx("span", {

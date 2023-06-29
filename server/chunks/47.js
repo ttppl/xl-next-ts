@@ -31,7 +31,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 const IconFun = (props, ref) => {
   const className = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => {
     const classNames = props.className.split(' ');
-    return (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__/* .getClasses */ .k)(['xl-iconfont', `xl-icon-${classNames[0]}`, ...classNames.slice(1, classNames.length)]);
+    return (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__/* .getClass */ .ll)(['xl-iconfont', `xl-icon-${classNames[0]}`, ...classNames.slice(1, classNames.length)]);
   }, [props.className]);
   const style = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => {
     const stl = _objectSpread({}, props.style);

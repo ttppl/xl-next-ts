@@ -5,14 +5,7 @@ exports.id = 908;
 exports.ids = [908];
 exports.modules = {
 
-/***/ 5687:
-/***/ ((module) => {
-
-module.exports = require("https");
-
-/***/ }),
-
-/***/ 7610:
+/***/ 7018:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 // ESM COMPAT FLAG
@@ -139,7 +132,10 @@ function showSuccessMessage(msg) {
     duration: 3
   });
 }
-;// CONCATENATED MODULE: ./request/config.js
+;// CONCATENATED MODULE: external "https"
+const external_https_namespaceObject = require("https");
+var external_https_default = /*#__PURE__*/__webpack_require__.n(external_https_namespaceObject);
+;// CONCATENATED MODULE: ./request/config.ts
 function config_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function config_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { config_ownKeys(Object(source), true).forEach(function (key) { config_defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { config_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -147,12 +143,16 @@ function config_objectSpread(target) { for (var i = 1; i < arguments.length; i++
 function config_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
+ // const https = require("https");
+
 
 const baseUrl = "https://ttppl.xyz";
 const baseClientUrl = "https://ttppl.xyz";
 const headers = {
   'Content-Type': 'application/json'
 };
+/** HTTP基本返回类型 */
+
 function request(moduleUrl) {
   return {
     doGet(url, params) {
@@ -167,15 +167,12 @@ function request(moduleUrl) {
       return restGet(moduleUrl + url, param, query);
     },
 
-    doRestPost(url, param, query) {
+    doRestPos(url, param, query) {
       return restPost(moduleUrl + url, param, query);
     }
 
   };
 }
-
-const https = __webpack_require__(5687);
-
 const options = {
   headers: config_objectSpread(config_objectSpread({}, headers), {}, {
     'Authorization': 'xl-blog-next-app'
@@ -183,7 +180,7 @@ const options = {
 };
 
 if (true) {
-  options.agent = new https.Agent({
+  options.agent = new (external_https_default()).Agent({
     rejectUnauthorized: false
   });
 }
@@ -224,9 +221,9 @@ function get(url, params = {}) {
     });
   });
 }
-function post(url, params = {}) {
+function post(urls, params = {}) {
   return new Promise((resolve, reject) => {
-    fetch(encodeURI(`${isServer ? baseUrl : baseClientUrl}${url}`), config_objectSpread({
+    fetch(encodeURI(`${isServer ? baseUrl : baseClientUrl}${urls}`), config_objectSpread({
       method: 'POST',
       headers,
       body: JSON.stringify(params)
@@ -281,17 +278,13 @@ function restPost(url, param, query) {
   let encodedUrl = Array.isArray(param) ? param.join("/") : param;
   return post([url, encodedUrl].filter(n => n).join('/'), query);
 }
-;// CONCATENATED MODULE: ./request/modules/userReq.js
+;// CONCATENATED MODULE: ./request/modules/userRequest.ts
 
-const userReq_module = '/user';
+const userRequest_module = '/user';
 const {
   doGet,
-  doPost,
-  doRestGet
-} = request(userReq_module); // export function getUser(name) {
-//     return doRestGet('/getUser', name)
-// }
-
+  doPost
+} = request(userRequest_module);
 async function login(userName, password) {
   return await doPost(`/login`, {
     userName,
@@ -348,7 +341,7 @@ async function handler(req, res) {
 var __webpack_require__ = require("../../../webpack-api-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [678], () => (__webpack_exec__(7610)));
+var __webpack_exports__ = __webpack_require__.X(0, [678], () => (__webpack_exec__(7018)));
 module.exports = __webpack_exports__;
 
 })();

@@ -91,7 +91,7 @@ TxtChapterDetail.layout = _components_layouts_main__WEBPACK_IMPORTED_MODULE_2__/
 /* harmony export */   "RR": () => (/* binding */ getTxtInfo),
 /* harmony export */   "bR": () => (/* binding */ getChapter)
 /* harmony export */ });
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4716);
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(480);
 
 async function search(key) {
   const res = await (0,_config__WEBPACK_IMPORTED_MODULE_0__/* .get */ .U2)(`/txtDownload/search`, {

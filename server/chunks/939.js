@@ -93,6 +93,7 @@ async function getServerSideProps({
   const pageSize = 12;
   const codeRunList = await (0,codeRunRequest/* getCodeRunList */.c)({
     type: ['EXAMPLE', 'UTILS'],
+    authority: ['PUBLIC'],
     pageSize
   });
   return {
@@ -226,7 +227,7 @@ CodeRunIndex.layout = main/* getDefaultLayout */.uy;
 /* harmony export */   "C": () => (/* binding */ getCodeRunById),
 /* harmony export */   "c": () => (/* binding */ getCodeRunList)
 /* harmony export */ });
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4716);
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(480);
 
 async function getCodeRunById(id) {
   const res = await (0,_config__WEBPACK_IMPORTED_MODULE_0__/* .get */ .U2)(`/codeRun/getCodeRun/id/${id}`);
